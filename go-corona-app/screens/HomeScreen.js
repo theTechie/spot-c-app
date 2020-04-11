@@ -1,23 +1,17 @@
 import React, { useEffect } from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import { MonoText } from '../components/StyledText';
 import { useNavigation } from '@react-navigation/native';
-import { getItem } from '../utils/Storage';
+import { getItem, removeItem } from '../utils/Storage';
 
 export default function HomeScreen() {
   const navigation = useNavigation()
 
-  useEffect(() => {
-    window.setTimeout(async () => {
-      const loggedInUser = await getItem('login');
-
-      if (!loggedInUser) {
-        navigation.navigate('Login');
-      }
-    }, 2000);
-  }, [])
+  const resetLocalStorage = async () => {
+    await removeItem("login")
+  }
 
   return (
     <View style={styles.container}>
@@ -31,6 +25,7 @@ export default function HomeScreen() {
             }
             style={styles.welcomeImage}
           />
+          <Button onPress={resetLocalStorage} title="Clear Local storage" />
         </View>
       </ScrollView>
     </View>

@@ -1,14 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ActivityIndicator, Button, View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { signInWithGoogleAsync } from '../utils/Login';
-import { setItem } from '../utils/Storage';
+import { setItem, getItem, clear } from '../utils/Storage';
 
 export default function LoginScreen() {
     const [loginProgress, setLoginProgress] = useState(false)
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [loggedInUser, setloggedInUser] = useState(null)
 
     const navigation = useNavigation()
+    const goToHome = () => navigation.replace('Root');
+
+    // get login info from local storage
+    useEffect(() => {
+        async function getLoginUser() {
+            setloggedInUser(await getItem("login"))
+        }
+        getLoginUser();
+    }, [])
+
+    // navigate away if already logged-in
+    useEffect(() => {
+        loggedInUser && goToHome()
+    }, [loggedInUser])
 
     const onLoginPress = async () => {
         setLoginProgress(true)
@@ -19,24 +33,20 @@ export default function LoginScreen() {
             await setItem('login', result);
 
             setLoginProgress(false)
-            setIsLoggedIn(true)
+            setloggedInUser(result)
 
-            navigation.navigate('Home');
+            goToHome()
         } else {
             console.log('failed to login')
-            // alert('Failed to authenticate !');
         }
-
-        // if there is no result.error or result.cancelled, the user is logged in
-        // do something with the result
     };
 
     return (
         <View style={styles.container}>
-            {loginProgress || isLoggedIn ? (
+            {loginProgress ? (
                 <ActivityIndicator size="large" color="gray" />
             ) :
-                <Button onPress={this.onLoginPress} title="Login using Google" />
+                <Button onPress={onLoginPress} title="Login using Google" />
             }
         </View>
     )

@@ -1,15 +1,14 @@
 import queryString from 'query-string';
+import * as Google from 'expo-google-app-auth';
+
 import ClientSecrets from './client_secret.json';
 
 export async function signInWithGoogleAsync() {
   try {
-    const result = await Expo.Google.logInAsync({
-      webClientId: ClientSecrets.webClientId,
+    const result = await Google.logInAsync({
       androidClientId: ClientSecrets.androidClientId,
       iosClientId: ClientSecrets.iosClientId,
-      iosStandaloneAppClientId: ClientSecrets.iosClientId,
       scopes: ['profile', 'email'],
-      // behavior: 'web',
     });
 
     if (result.type === 'success') {
@@ -19,6 +18,11 @@ export async function signInWithGoogleAsync() {
   } catch (e) {
     return { error: e };
   }
+}
+
+export async function logoutOfGoogleAsync(accessToken) {
+    const result = await Google.logOutAsync({ accessToken, ...config });
+    return result;
 }
 
 export async function getNewAccessTokenAsync(refreshToken) {

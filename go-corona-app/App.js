@@ -6,32 +6,12 @@ import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import BottomTabNavigator from './navigation/BottomTabNavigator';
+import RootView from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
 import LoginScreen from './screens/LoginScreen';
 import { getItem } from './utils/Storage';
 
-const LoginStack = createStackNavigator();
-const MainStack = createStackNavigator();
-// const RootStack = createStackNavigator();
-
-const LoginStackScreen = () => {
-  return (
-    <LoginStack.Navigator mode="modal">
-      <LoginStack.Screen name="Login" component={LoginScreen} />
-    </LoginStack.Navigator>
-  )
-}
-
-const MainStackScreen = () => {
-  return (
-    <MainStack.Navigator>
-      <MainStack.Screen
-        name="Root"
-        component={BottomTabNavigator} />
-    </MainStack.Navigator>
-  )
-}
+const AppStack = createStackNavigator();
 
 // const RootStackScreen = () => {
 //   return (
@@ -86,7 +66,10 @@ export default function App(props) {
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
         <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
-          {loggedInUser ? <MainStackScreen /> : <LoginStackScreen />}
+          <AppStack.Navigator initialRouteName={"Login"}>
+            <AppStack.Screen name="Login" component={LoginScreen} />
+            <AppStack.Screen name="Root" component={RootView} />
+          </AppStack.Navigator>
         </NavigationContainer>
       </View>
     );
