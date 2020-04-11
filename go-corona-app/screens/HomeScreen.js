@@ -5,8 +5,9 @@ import { ScrollView } from 'react-native-gesture-handler';
 import MapView, { PROVIDER_GOOGLE, Heatmap } from 'react-native-maps';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
-
+import Http from '../services/Http';
 import data from '../test_data/location_history.js'
+import { csoptsApi } from '../constants/AppSettings';
 
 // TODO: move to constants
 const latitudeDelta = 0.09;
@@ -26,11 +27,13 @@ export default class HomeScreen extends Component {
     if (status !== 'granted') {
       // TODO: move to string constants
       this.setState({ error: 'Location permission is needed' })
+      return;
     }
     const location = await Location.getCurrentPositionAsync({});
     const { latitude, longitude } = location.coords;
     // TODO: call rest api to get nearby hotspots providing current location details
-    var points = this.getHeatMapPoints(data)
+    const cspotsResponse = await Http.post(csoptsApi);
+    var points = this.getHeatMapPoints(cspotsResponse.data);
     this.setHeatMapPoints(latitude, longitude, points);
   }
 
