@@ -7,6 +7,9 @@ import { CalendarList } from "react-native-calendars";
 
 export default function QuarantineScreen() {
   const [quarantinedDays,setQuarantinedDays] = React.useState(["2020-04-13","2020-04-14","2020-04-15","2020-04-16","2020-04-17"])
+  const CALENDAR = "CALENDAR";
+  const DATE_SELECTOR = "DATE_SELECTOR";
+  const [currentScreen, setCurrentScreen] = React.useState(CALENDAR);
   const getQuarantineDays = (quarantinedDays) =>{
     let days  ={};
     quarantinedDays.forEach((day) => days[day] = {marked:true})
@@ -27,10 +30,12 @@ export default function QuarantineScreen() {
           flexWrap: "wrap",
         }}
       >
-        <OptionButton label="Quarantine" />
+        <OptionButton label="Quarantine" onPress={()=>{
+          setCurrentScreen(currentScreen === CALENDAR ? DATE_SELECTOR : CALENDAR);
+        }}/>
       </View>
       <View style={{ marginTop: 14 }}>
-        <CalendarList
+        {currentScreen ===CALENDAR  ? <CalendarList
           pastScrollRange={0}
           futureScrollRange={4}
           current={Date()}
@@ -66,11 +71,17 @@ export default function QuarantineScreen() {
             );
           }}
           markedDates={getQuarantineDays(quarantinedDays)}
-        />
+        /> : <Text>
+          Add Dates
+          </Text>}
+        
       </View>
     </View>
   );
 }
+
+
+
 
 function ScreenHeader({ label, iconName }) {
   return (
@@ -100,7 +111,7 @@ function Divider({ marginTop }) {
 
 function OptionButton({ label, onPress, backgroundColor }) {
   return (
-    <RectButton style={styles.buttonStyle}>
+    <RectButton style={styles.buttonStyle} onPress={onPress}>
       <Text style={styles.buttonTextStyle}>{label}</Text>
     </RectButton>
   );
