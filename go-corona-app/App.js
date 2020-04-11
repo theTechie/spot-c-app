@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { SplashScreen } from 'expo';
 import * as Font from 'expo-font';
@@ -8,23 +8,59 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
+import LoginScreen from './screens/LoginScreen';
+import { getItem } from './utils/Storage';
 
-const Stack = createStackNavigator();
+const LoginStack = createStackNavigator();
+const MainStack = createStackNavigator();
+// const RootStack = createStackNavigator();
+
+const LoginStackScreen = () => {
+  return (
+    <LoginStack.Navigator mode="modal">
+      <LoginStack.Screen name="Login" component={LoginScreen} />
+    </LoginStack.Navigator>
+  )
+}
+
+const MainStackScreen = () => {
+  return (
+    <MainStack.Navigator>
+      <MainStack.Screen
+        name="Root"
+        component={BottomTabNavigator} />
+    </MainStack.Navigator>
+  )
+}
+
+// const RootStackScreen = () => {
+//   return (
+//     <RootStack.Navigator mode="modal">
+//       <RootStack.Screen
+//         name="App"
+//         component={MainStackScreen}
+//         options={{ headerShown: false }} />
+//       <RootStack.Screen name="Login" component={LoginScreen} />
+//     </RootStack.Navigator>
+//   )
+// }
 
 export default function App(props) {
-  const [isLoadingComplete, setLoadingComplete] = React.useState(false);
-  const [initialNavigationState, setInitialNavigationState] = React.useState();
-  const containerRef = React.useRef();
+  const [isLoadingComplete, setLoadingComplete] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState(null);
+  const [initialNavigationState, setInitialNavigationState] = useState();
+  const containerRef = useRef();
   const { getInitialState } = useLinking(containerRef);
 
   // Load any resources or data that we need prior to rendering the app
-  React.useEffect(() => {
+  useEffect(() => {
     async function loadResourcesAndDataAsync() {
       try {
         SplashScreen.preventAutoHide();
 
         // Load our initial navigation state
         setInitialNavigationState(await getInitialState());
+        setLoggedInUser(await getItem('login'));
 
         // Load fonts
         await Font.loadAsync({
@@ -50,9 +86,7 @@ export default function App(props) {
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
         <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
-          <Stack.Navigator>
-            <Stack.Screen name="Root" component={BottomTabNavigator} />
-          </Stack.Navigator>
+          {loggedInUser ? <MainStackScreen /> : <LoginStackScreen />}
         </NavigationContainer>
       </View>
     );
