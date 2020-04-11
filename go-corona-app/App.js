@@ -14,18 +14,6 @@ import { byPassLogin } from './constants/DevSettings';
 
 const AppStack = createStackNavigator();
 
-// const RootStackScreen = () => {
-//   return (
-//     <RootStack.Navigator mode="modal">
-//       <RootStack.Screen
-//         name="App"
-//         component={MainStackScreen}
-//         options={{ headerShown: false }} />
-//       <RootStack.Screen name="Login" component={LoginScreen} />
-//     </RootStack.Navigator>
-//   )
-// }
-
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
