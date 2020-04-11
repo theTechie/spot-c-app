@@ -21,7 +21,7 @@ export async function signInWithGoogleAsync() {
 }
 
 export async function logoutOfGoogleAsync(accessToken) {
-    const result = await Google.logOutAsync({ accessToken, ...config });
+    const result = await Google.logOutAsync({ accessToken, ...ClientSecrets });
     return result;
 }
 

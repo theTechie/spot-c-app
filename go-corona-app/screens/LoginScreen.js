@@ -14,18 +14,18 @@ export default function LoginScreen() {
     // NOTE: this won't be needed anymore since we are conditionally adding LoginScreen to Navigator
     // keeping this for a while
     
-    // // get login info from local storage
-    // useEffect(() => {
-    //     async function getLoginUser() {
-    //         setloggedInUser(await getItem("login"))
-    //     }
-    //     getLoginUser();
-    // }, [])
+    // get login info from local storage
+    useEffect(() => {
+        async function getLoginUser() {
+            setloggedInUser(await getItem("login"))
+        }
+        getLoginUser();
+    }, [])
 
-    // // navigate away if already logged-in
-    // useEffect(() => {
-    //     loggedInUser && goToHome()
-    // }, [loggedInUser])
+    // navigate away if already logged-in
+    useEffect(() => {
+        loggedInUser && goToHome()
+    }, [loggedInUser])
 
     const onLoginPress = async () => {
         setLoginProgress(true)
@@ -34,6 +34,8 @@ export default function LoginScreen() {
 
         if (!result.cancelled && !result.error) {
             await setItem('login', result);
+
+            console.log('user logged-in successfully! - ', result.accessToken)
 
             setLoginProgress(false)
             setloggedInUser(result)

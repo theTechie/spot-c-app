@@ -1,10 +1,24 @@
 import { Ionicons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
-import * as React from 'react';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
+import { logoutOfGoogleAsync } from '../utils/Login';
+import { getItem, removeItem } from '../utils/Storage';
 
 export default function LinksScreen() {
+  const navigation = useNavigation()
+
+  const handleLogoutPress = async () => {
+    const loggedInuser = await getItem("login")
+    await logoutOfGoogleAsync(loggedInuser.accessToken)
+    await removeItem("login")
+    console.log('user logged out successfully!')
+
+    navigation.replace('Login')
+  }
+
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
       <OptionButton
@@ -23,6 +37,12 @@ export default function LinksScreen() {
         icon="ios-chatboxes"
         label="Ask a question on the forums"
         onPress={() => WebBrowser.openBrowserAsync('https://forums.expo.io')}
+      />
+
+      <OptionButton
+        icon="ios-log-out"
+        label="Logout"
+        onPress={handleLogoutPress}
         isLastOption
       />
     </ScrollView>
