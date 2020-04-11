@@ -21,6 +21,11 @@ npm install -g expo-cli
 - Get into `go-corona-app` on your CLI and use command `yarn start` to start the development server.
 - You will then have more options to open iOS or Android simulator
 
+## Setup Google OAuth Credentials
+
+We need to create an app on Google Developer Console to be able to login with google.
+
+Follow this to do so - https://docs.expo.io/versions/latest/sdk/google/#using-it-inside-of-the-expo-app
 
 ## Development Test
 
