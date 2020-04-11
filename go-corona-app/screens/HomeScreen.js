@@ -8,10 +8,6 @@ import * as Location from 'expo-location';
 
 import data from '../test_data/location_history.js'
 
-
-import { MonoText } from '../components/StyledText';
-import { renderer } from 'react-test-renderer';
-
 // TODO: move to constants
 const latitudeDelta = 0.09;
 const longitudeDelta = 0.0121;

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { SplashScreen } from 'expo';
 import * as Font from 'expo-font';
@@ -6,25 +6,30 @@ import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import BottomTabNavigator from './navigation/BottomTabNavigator';
+import RootView from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
+import LoginScreen from './screens/LoginScreen';
+import { getItem } from './utils/Storage';
+import { byPassLogin } from './constants/DevSettings';
 
-const Stack = createStackNavigator();
+const AppStack = createStackNavigator();
 
 export default function App(props) {
-  const [isLoadingComplete, setLoadingComplete] = React.useState(false);
-  const [initialNavigationState, setInitialNavigationState] = React.useState();
-  const containerRef = React.useRef();
+  const [isLoadingComplete, setLoadingComplete] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState(null);
+  const [initialNavigationState, setInitialNavigationState] = useState();
+  const containerRef = useRef();
   const { getInitialState } = useLinking(containerRef);
 
   // Load any resources or data that we need prior to rendering the app
-  React.useEffect(() => {
+  useEffect(() => {
     async function loadResourcesAndDataAsync() {
       try {
         SplashScreen.preventAutoHide();
 
         // Load our initial navigation state
         setInitialNavigationState(await getInitialState());
+        setLoggedInUser(await getItem('login'));
 
         // Load fonts
         await Font.loadAsync({
@@ -50,9 +55,10 @@ export default function App(props) {
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
         <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
-          <Stack.Navigator>
-            <Stack.Screen name="Root" component={BottomTabNavigator} />
-          </Stack.Navigator>
+          <AppStack.Navigator initialRouteName={byPassLogin ? "Root" : "Login"}>
+            <AppStack.Screen name="Login" component={LoginScreen} />
+            <AppStack.Screen name="Root" component={RootView} />
+          </AppStack.Navigator>
         </NavigationContainer>
       </View>
     );
