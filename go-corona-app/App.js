@@ -67,7 +67,7 @@ export default function App(props) {
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
         <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
           <AppStack.Navigator initialRouteName={"Login"}>
-            <AppStack.Screen name="Login" component={LoginScreen} />
+            {!loggedInUser ? <AppStack.Screen name="Login" component={LoginScreen} /> : null}
             <AppStack.Screen name="Root" component={RootView} />
           </AppStack.Navigator>
         </NavigationContainer>
