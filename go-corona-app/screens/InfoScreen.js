@@ -6,6 +6,7 @@ import { RectButton, ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { logoutOfGoogleAsync } from '../utils/Login';
 import { getItem, removeItem } from '../utils/Storage';
+import { byPassLogin } from '../constants/DevSettings';
 
 export default function LinksScreen() {
   const navigation = useNavigation()
@@ -39,12 +40,16 @@ export default function LinksScreen() {
         onPress={() => WebBrowser.openBrowserAsync('https://forums.expo.io')}
       />
 
-      <OptionButton
-        icon="ios-log-out"
-        label="Logout"
-        onPress={handleLogoutPress}
-        isLastOption
-      />
+      {
+        byPassLogin ?
+          null :
+          <OptionButton
+            icon="ios-log-out"
+            label="Logout"
+            onPress={handleLogoutPress}
+            isLastOption
+          />
+      }
     </ScrollView>
   );
 }

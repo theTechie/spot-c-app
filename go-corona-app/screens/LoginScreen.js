@@ -43,6 +43,7 @@ export default function LoginScreen() {
             goToHome()
         } else {
             console.log('failed to login')
+            setLoginProgress(false)
         }
     };
 

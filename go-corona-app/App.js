@@ -10,6 +10,7 @@ import RootView from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
 import LoginScreen from './screens/LoginScreen';
 import { getItem } from './utils/Storage';
+import { byPassLogin } from './constants/DevSettings';
 
 const AppStack = createStackNavigator();
 
@@ -66,7 +67,7 @@ export default function App(props) {
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
         <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
-          <AppStack.Navigator initialRouteName={"Login"}>
+          <AppStack.Navigator initialRouteName={byPassLogin ? "Root" : "Login"}>
             <AppStack.Screen name="Login" component={LoginScreen} />
             <AppStack.Screen name="Root" component={RootView} />
           </AppStack.Navigator>
