@@ -12,3 +12,5 @@ web-report/
 
 # macOS
 .DS_Store
+
+utils/client_secret.json
