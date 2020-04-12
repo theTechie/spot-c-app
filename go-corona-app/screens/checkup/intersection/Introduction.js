@@ -3,23 +3,23 @@ import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
-import TermsImage from '../../assets/images/IntersectionTerms.svg'
+import IntroductionImage from '../../../assets/images/IntersectionIntroduction.svg'
 
 
-export default function IntersectionTerms() {
+export default function IntersectionScreen() {
   return (
     <View style={styles.container}>
-      <TermsImage style={styles.image} width="200" height="200" />
+      <IntroductionImage style={styles.image} width="200" height="200" />
       <View style={styles.introduction}>
-        <Text style={styles.title}>Terms of Service</Text>
+        <Text style={styles.title}>Hello!</Text>
         <Text style={styles.description}>
-          Before using the intersection calculator, please read Terms of Service. 
-          Remember that: {'\n\n'}
-          - <Text style={styles.boldText}>Intersects does not mean virus transfer.</Text> Crossing paths with a COVID +ve does not mean you have been infected. {'\n'}
-          - <Text style={styles.boldText}>The results are probabilistic.</Text> Even if you have come in contact with a COVID +ve person, this is only a probabilistic model to know if you have been infected. {'\n'}
-          - <Text style={styles.boldText}>Your data is safe.</Text> Information that you provide is anonymous and not shared with anyone.{'\n'}
+          Intersection calculator helps us understand if you have 
+          crossed paths with a COVID positive person. It could have been a shopkeeper, 
+          a person who stood next to you on a local train/bus or even a cab driver. 
+          This increases the probablity of you getting infected. 
+          Let us know the locations you have been to the last 30 days using Google maps. 
+          Go through our tutorial on how to downlaod your location history from Google and upload it back here on our calculator.
         </Text>
-        <Text> I read and accept Terms of Service and Privacy Policy</Text>
       </View>
     </View>
   );
@@ -52,19 +52,16 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   introduction: {
-    margin: 35,
+    margin: 40,
   },
   title: {
     fontSize: 18,
     fontWeight: "bold",
     marginTop: 1,
   },
-  boldText: {
-    fontWeight: "bold"
-  },
   description: {
-    fontSize: 14,
+    fontSize: 16,
     marginTop: 10,
-    lineHeight: 25
+    lineHeight: 30
   }
 });

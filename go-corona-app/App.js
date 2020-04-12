@@ -6,14 +6,15 @@ import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
+import { getItem } from './utils/Storage';
+import { byPassLogin } from './constants/DevSettings';
+
 import RootView from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
 import LoginScreen from './screens/LoginScreen';
 import QuestionnaireScreen from "./screens/checkup/QuestionnaireScreen";
-import IntersectionScreen from "./screens/checkup/IntersectionScreen";
-import { getItem } from './utils/Storage';
-import { byPassLogin } from './constants/DevSettings';
-import IntersectionTerms from './screens/checkup/IntersectionTerms';
+import IntersectionIntroduction from "./screens/checkup/intersection/Introduction";
+import IntersectionTerms from './screens/checkup/intersection/Terms';
 
 const AppStack = createStackNavigator();
 
@@ -62,7 +63,7 @@ export default function App(props) {
             <AppStack.Screen name="Login" component={LoginScreen} />
             <AppStack.Screen name="Root" component={RootView} />
             <AppStack.Screen name="QuestionnaireScreen" options={{ title: "Questionnaire" }} component={QuestionnaireScreen} />
-            <AppStack.Screen name="IntersectionScreen" options={{ title: "Intersection Calculator" }} component={IntersectionScreen} />
+            <AppStack.Screen name="IntersectionIntroduction" options={{ title: "Intersection Calculator" }} component={IntersectionIntroduction} />
             <AppStack.Screen name="IntersectionTerms" options={{ title: "Terms" }} component={IntersectionTerms} />
           </AppStack.Navigator>
         </NavigationContainer>

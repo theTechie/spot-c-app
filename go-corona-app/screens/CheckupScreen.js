@@ -26,7 +26,7 @@ export default function CheckupScreen() {
         title="Know if you have met a COVID +ve person"
         Image={IntersectionImage}
         buttonTitle="Open intersection calculator"
-        onPress={() => navigation.navigate('IntersectionScreen')}
+        onPress={() => navigation.navigate('IntersectionIntroduction')}
       />
     </View>
   );
