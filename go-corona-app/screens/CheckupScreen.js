@@ -1,29 +1,47 @@
 import { Ionicons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image, Button } from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
+
+import Separator from '../components/Separator';
+const questionnaireImage = require('../assets/images/robot-prod.png')
 
 export default function CheckupScreen() {
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <View>
-          <Text style={styles.text}>CheckupScreen</Text>
-        </View>
-    </ScrollView>
+    <View style={styles.container}>
+      <CheckupType
+        title="AI based symptoms check for COVID-19"
+        image={questionnaireImage}
+        buttonTitle="Start questionnaire"
+        onPress={() => console.log('start questionnaire..')}
+      />
+      <Separator />
+      <CheckupType
+        title="Know if you have met a COVID +ve person"
+        image={questionnaireImage}
+        buttonTitle="Open intersection calculator"
+        onPress={() => console.log('start intersection calculator..')}
+      />
+    </View>
   );
 }
 
-function OptionButton({ icon, label, onPress, isLastOption }) {
+function CheckupType({ title, image, buttonTitle, onPress }) {
   return (
-    <RectButton style={[styles.option, isLastOption && styles.lastOption]} onPress={onPress}>
-      <View style={{ flexDirection: 'row' }}>
-        <View style={styles.optionIconContainer}>
-          <Ionicons name={icon} size={22} color="rgba(0,0,0,0.35)" />
-        </View>
-        <View>
-          <Text style={styles.optionText}>{label}</Text>
-        </View>
+    <View style={styles.checkupTypeContainer}>
+      <Text style={styles.checkupTypeTitle}>{title}</Text>
+      <Image style={styles.checkupTypeImage} source={image} />
+      <CustomButton label={buttonTitle} backgroundColor="#e4dfdf" onPress={onPress} />
+    </View>
+  )
+}
+
+function CustomButton({ label, backgroundColor, onPress }) {
+  return (
+    <RectButton style={[styles.option, {backgroundColor}]} onPress={onPress}>
+      <View style={styles.optionTextContainer}>
+        <Text style={styles.optionText}>{label}</Text>
       </View>
     </RectButton>
   );
@@ -33,13 +51,32 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fafafa',
+    justifyContent: 'space-evenly',
   },
-  contentContainer: {
-    paddingTop: 15,
+  checkupTypeContainer: {
+    alignItems: 'center'
   },
-  text: {
+  checkupTypeTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  checkupTypeImage: {
+    width: 150,
+    height: 150,
+    marginTop: 30,
+    marginBottom: 15,
+  },
+  option: {
+    backgroundColor: '#fdfdfd',
+    paddingHorizontal: 15,
+    paddingVertical: 15,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: 0,
+    borderColor: '#ededed',
+  },
+  optionText: {
     fontSize: 15,
-    alignSelf: 'center',
+    alignSelf: 'flex-start',
     marginTop: 1,
   },
 });
