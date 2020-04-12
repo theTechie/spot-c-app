@@ -5,21 +5,21 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 
-import Separator from '../components/Separator';
-import QuestionnaireImage from '../assets/images/Questionnaire.svg'
-import IntersectionImage from '../assets/images/IntersectionCalculator.svg'
+import Separator from '../../components/Separator';
+import TravelImage from '../../assets/images/Travel.svg'
+import IntersectionImage from '../../assets/images/IntersectionCalculator.svg'
 
 
-export default function CheckupScreen() {
+export default function CrosscheckScreen() {
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
       <CheckupType
-        title="AI based symptoms check for COVID-19"
-        Image={QuestionnaireImage}
+        title="Travel based cross-check for COVID-19"
+        Image={TravelImage}
         buttonTitle="Start questionnaire"
-        onPress={() => navigation.navigate('QuestionnaireScreen')}
+        onPress={() => navigation.navigate('TravelQuestionnaire')}
       />
       <Separator />
       <CheckupType
@@ -36,7 +36,7 @@ function CheckupType({ title, Image, buttonTitle, onPress }) {
   return (
     <View style={styles.checkupTypeContainer}>
       <Text style={styles.checkupTypeTitle}>{title}</Text>
-      <Image style={styles.checkupTypeImage} width="150" height="150" />
+      <Image style={styles.checkupTypeImage} width="200" height="200" />
       <CustomButton label={buttonTitle} backgroundColor="#e4dfdf" onPress={onPress} />
     </View>
   )
