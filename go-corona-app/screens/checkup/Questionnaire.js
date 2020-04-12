@@ -3,14 +3,36 @@ import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
+import  { StepList } from '../stepper/StepList';
+import { Step }  from '../stepper/Step';
+
+const PageOne = () => (
+ <View><Text>We have a first page.</Text></View>
+  
+)
+
+const PageTwo = () => (
+  <View><Text>We have a second page.</Text></View>
+   
+ )
+
+ const PageThree = () => (
+  <View><Text>We have a third page.</Text></View>
+   
+ )
 
 export default function CheckupQuestionnaire() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <View>
-          <Text style={styles.text}>Questionnaire starts here...</Text>
-        </View>
-    </ScrollView>
+    <View>
+       <StepList>
+       <Step component={PageOne} />
+       <Step component={PageTwo} />
+       <Step component={PageThree} />
+       </StepList>
+      </View>
+  </ScrollView>
+    
   );
 }
 
