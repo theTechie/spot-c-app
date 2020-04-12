@@ -2,15 +2,16 @@ import * as WebBrowser from 'expo-web-browser';
 import React, { Component } from 'react';
 import { Image, Platform, Dimensions, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import MapView, { PROVIDER_GOOGLE, Heatmap } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
-
-import data from '../test_data/location_history.js'
+import Http from '../services/Http';
+import { csoptsApi } from '../constants/AppSettings';
+import Point from '../components/map/Point';
 
 // TODO: move to constants
-const latitudeDelta = 0.09;
-const longitudeDelta = 0.0121;
+const latitudeDelta = 0.2;
+const longitudeDelta = 0.1;
 
 export default class HomeScreen extends Component {
   state = {
@@ -18,7 +19,7 @@ export default class HomeScreen extends Component {
     region: null,
     points: [],
     error: null,
-    mapWidth: '99%'
+    mapWidth: '99%',
   }
   map = null;
   async componentDidMount() {
@@ -26,11 +27,12 @@ export default class HomeScreen extends Component {
     if (status !== 'granted') {
       // TODO: move to string constants
       this.setState({ error: 'Location permission is needed' })
+      return;
     }
     const location = await Location.getCurrentPositionAsync({});
     const { latitude, longitude } = location.coords;
-    // TODO: call rest api to get nearby hotspots providing current location details
-    var points = this.getHeatMapPoints(data)
+    const cspotsResponse = await Http.post(csoptsApi);
+    var points = this.getHeatMapPoints(cspotsResponse.data);
     this.setHeatMapPoints(latitude, longitude, points);
   }
 
@@ -57,23 +59,17 @@ export default class HomeScreen extends Component {
   }
 
   getHeatMapPoints(data) {
-    return data.locations.map((location) => {
-      let { latitudeE7, longitudeE7 } = location;
-      if (latitudeE7 > 900000000)
-        latitudeE7 = latitudeE7 - 4294967296;
-      if (longitudeE7 > 1800000000)
-        longitudeE7 = longitudeE7 - 4294967296;
-      let latitude = latitudeE7 / 10000000;
-      let longitude = longitudeE7 / 10000000;
-      return {
-        latitude,
-        longitude
-      };
-    });
+    return data;
+  }
+
+  onRegionChangeComplete = (region) => {
+    this.setState({
+      region
+    })
   }
 
   render() {
-    const { loading, points, mapWidth } = this.state;
+    const { loading, points, mapWidth, region } = this.state;
     return (
       <View style={styles.container}>
         {this.state.loading ?
@@ -83,25 +79,23 @@ export default class HomeScreen extends Component {
             provider={PROVIDER_GOOGLE}
             onMapReady={this.onMapReady}
             showsUserLocation={true}
+            onRegionChangeComplete={this.onRegionChangeComplete}
             showsMyLocationButton={true}
             style={[styles.map, { width: mapWidth }]}
           >
-            <Heatmap
-              style={styles.mapStyle}
-              points={points}
-            />
+            {points.map((i, key) => 
+               <Point point={i} region={region} key={key}></Point>
+            )}
           </MapView>
         }
       </View>
     );
   }
-
 }
 
 HomeScreen.navigationOptions = {
   header: null,
 };
-
 
 const styles = StyleSheet.create({
   container: {
