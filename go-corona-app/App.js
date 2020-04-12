@@ -9,6 +9,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import RootView from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
 import LoginScreen from './screens/LoginScreen';
+import QuestionnaireScreen from "./screens/checkup/QuestionnaireScreen";
+import IntersectionScreen from "./screens/checkup/IntersectionScreen";
 import { getItem } from './utils/Storage';
 import { byPassLogin } from './constants/DevSettings';
 
@@ -58,6 +60,8 @@ export default function App(props) {
           <AppStack.Navigator initialRouteName={byPassLogin ? "Root" : "Login"}>
             <AppStack.Screen name="Login" component={LoginScreen} />
             <AppStack.Screen name="Root" component={RootView} />
+            <AppStack.Screen name="QuestionnaireScreen" component={QuestionnaireScreen} />
+            <AppStack.Screen name="IntersectionScreen" component={IntersectionScreen} />
           </AppStack.Navigator>
         </NavigationContainer>
       </View>

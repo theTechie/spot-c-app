@@ -3,25 +3,28 @@ import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
 import { StyleSheet, Text, View, Image, Button } from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 import Separator from '../components/Separator';
 const questionnaireImage = require('../assets/images/robot-prod.png')
 
 export default function CheckupScreen() {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <CheckupType
         title="AI based symptoms check for COVID-19"
         image={questionnaireImage}
         buttonTitle="Start questionnaire"
-        onPress={() => console.log('start questionnaire..')}
+        onPress={() => navigation.navigate('QuestionnaireScreen')}
       />
       <Separator />
       <CheckupType
         title="Know if you have met a COVID +ve person"
         image={questionnaireImage}
         buttonTitle="Open intersection calculator"
-        onPress={() => console.log('start intersection calculator..')}
+        onPress={() => navigation.navigate('IntersectionScreen')}
       />
     </View>
   );
