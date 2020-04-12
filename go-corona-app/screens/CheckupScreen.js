@@ -1,12 +1,14 @@
 import { Ionicons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import { StyleSheet, Text, View, Image, Button } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 
 import Separator from '../components/Separator';
-const questionnaireImage = require('../assets/images/robot-prod.png')
+import QuestionnaireImage from '../assets/images/Questionnaire.svg'
+import IntersectionImage from '../assets/images/IntersectionCalculator.svg'
+
 
 export default function CheckupScreen() {
   const navigation = useNavigation();
@@ -15,14 +17,14 @@ export default function CheckupScreen() {
     <View style={styles.container}>
       <CheckupType
         title="AI based symptoms check for COVID-19"
-        image={questionnaireImage}
+        Image={QuestionnaireImage}
         buttonTitle="Start questionnaire"
         onPress={() => navigation.navigate('QuestionnaireScreen')}
       />
       <Separator />
       <CheckupType
         title="Know if you have met a COVID +ve person"
-        image={questionnaireImage}
+        Image={IntersectionImage}
         buttonTitle="Open intersection calculator"
         onPress={() => navigation.navigate('IntersectionScreen')}
       />
@@ -30,11 +32,11 @@ export default function CheckupScreen() {
   );
 }
 
-function CheckupType({ title, image, buttonTitle, onPress }) {
+function CheckupType({ title, Image, buttonTitle, onPress }) {
   return (
     <View style={styles.checkupTypeContainer}>
       <Text style={styles.checkupTypeTitle}>{title}</Text>
-      <Image style={styles.checkupTypeImage} source={image} />
+      <Image style={styles.checkupTypeImage} width="150" height="150" />
       <CustomButton label={buttonTitle} backgroundColor="#e4dfdf" onPress={onPress} />
     </View>
   )
@@ -42,7 +44,7 @@ function CheckupType({ title, image, buttonTitle, onPress }) {
 
 function CustomButton({ label, backgroundColor, onPress }) {
   return (
-    <RectButton style={[styles.option, {backgroundColor}]} onPress={onPress}>
+    <RectButton style={[styles.option, { backgroundColor }]} onPress={onPress}>
       <View style={styles.optionTextContainer}>
         <Text style={styles.optionText}>{label}</Text>
       </View>
@@ -64,8 +66,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   checkupTypeImage: {
-    width: 150,
-    height: 150,
     marginTop: 30,
     marginBottom: 15,
   },
