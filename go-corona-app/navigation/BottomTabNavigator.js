@@ -5,7 +5,8 @@ import { View, Text } from 'react-native';
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import QuarantineScreen from '../screens/QuarantineScreen';
-import CheckupScreen from '../screens/CheckupScreen';
+import CheckupScreen from '../screens/checkup/Introduction';
+import CrosscheckScreen from '../screens/crosscheck/CrosscheckScreen';
 import InfoScreen from '../screens/InfoScreen';
 
 const BottomTab = createBottomTabNavigator();
@@ -45,6 +46,14 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen
+        name="Crosscheck"
+        component={CrosscheckScreen}
+        options={{
+          title: 'Cross-check',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-add-circle-outline" />,
+        }}
+      />
+      <BottomTab.Screen
         name="Info"
         component={InfoScreen}
         options={{
@@ -66,6 +75,8 @@ function getHeaderTitle(route) {
       return 'Quarantine';
     case 'Checkup':
       return 'Checkup';
+    case 'Crosscheck':
+      return 'Crosscheck';
     case 'Info':
       return 'Info';
   }
