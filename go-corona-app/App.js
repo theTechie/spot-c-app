@@ -13,6 +13,7 @@ import QuestionnaireScreen from "./screens/checkup/QuestionnaireScreen";
 import IntersectionScreen from "./screens/checkup/IntersectionScreen";
 import { getItem } from './utils/Storage';
 import { byPassLogin } from './constants/DevSettings';
+import IntersectionTerms from './screens/checkup/IntersectionTerms';
 
 const AppStack = createStackNavigator();
 
@@ -62,6 +63,7 @@ export default function App(props) {
             <AppStack.Screen name="Root" component={RootView} />
             <AppStack.Screen name="QuestionnaireScreen" options={{ title: "Questionnaire" }} component={QuestionnaireScreen} />
             <AppStack.Screen name="IntersectionScreen" options={{ title: "Intersection Calculator" }} component={IntersectionScreen} />
+            <AppStack.Screen name="IntersectionTerms" options={{ title: "Terms" }} component={IntersectionTerms} />
           </AppStack.Navigator>
         </NavigationContainer>
       </View>
