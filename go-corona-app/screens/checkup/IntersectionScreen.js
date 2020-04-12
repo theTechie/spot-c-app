@@ -3,16 +3,23 @@ import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
-
-const questionnaireImage = require('../../assets/images/robot-prod.png')
+import IntroductionImage from '../../assets/images/IntersectionIntroduction.svg'
 
 
 export default function IntersectionScreen() {
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={questionnaireImage} />
+      <IntroductionImage style={styles.image} width="200" height="200" />
       <View style={styles.introduction}>
-      <Text style={styles.title}>Hello!</Text>
+        <Text style={styles.title}>Hello!</Text>
+        <Text style={styles.description}>
+          Intersection calculator helps us understand if you have 
+          crossed paths with a COVID positive person. It could have been a shopkeeper, 
+          a person who stood next to you on a local train/bus or even a cab driver. 
+          This increases the probablity of you getting infected. 
+          Let us know the locations you have been to the last 30 days using Google maps. 
+          Go through our tutorial on how to downlaod your location history from Google and upload it back here on our calculator.
+        </Text>
       </View>
     </View>
   );
@@ -40,18 +47,21 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start'
   },
   image: {
-    width: 150,
-    height: 150,
     marginTop: 30,
     marginBottom: 15,
     alignSelf: "center"
+  },
+  introduction: {
+    margin: 40,
   },
   title: {
     fontSize: 18,
     fontWeight: "bold",
     marginTop: 1,
   },
-  introduction: {
-    margin: 40,
+  description: {
+    fontSize: 16,
+    marginTop: 10,
+    lineHeight: 30
   }
 });
