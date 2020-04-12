@@ -60,8 +60,8 @@ export default function App(props) {
           <AppStack.Navigator initialRouteName={byPassLogin ? "Root" : "Login"}>
             <AppStack.Screen name="Login" component={LoginScreen} />
             <AppStack.Screen name="Root" component={RootView} />
-            <AppStack.Screen name="QuestionnaireScreen" component={QuestionnaireScreen} />
-            <AppStack.Screen name="IntersectionScreen" component={IntersectionScreen} />
+            <AppStack.Screen name="QuestionnaireScreen" options={{ title: "Questionnaire" }} component={QuestionnaireScreen} />
+            <AppStack.Screen name="IntersectionScreen" options={{ title: "Intersection Calculator" }} component={IntersectionScreen} />
           </AppStack.Navigator>
         </NavigationContainer>
       </View>
