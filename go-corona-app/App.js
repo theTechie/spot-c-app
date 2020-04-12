@@ -41,6 +41,7 @@ export default function App(props) {
         await Font.loadAsync({
           ...Ionicons.font,
           'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+          'icomoon': require('./assets/fonts/icomoon.ttf')
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service
@@ -65,7 +66,7 @@ export default function App(props) {
             <AppStack.Screen name="Login" component={LoginScreen} />
             <AppStack.Screen name="Root" component={RootView} />
             <AppStack.Screen name="CheckupQuestionnaire" options={{ title: "Checkup Questionnaire" }} component={CheckupQuestionnaire} />
-            <AppStack.Screen name="TravelQuestionnaire" options={{ title: "Travel Questionnaire"}} component={TravelQuestionnaire} />
+            <AppStack.Screen name="TravelQuestionnaire" options={{ title: "Travel Questionnaire" }} component={TravelQuestionnaire} />
             <AppStack.Screen name="IntersectionIntroduction" options={{ title: "Intersection Calculator" }} component={IntersectionIntroduction} />
             <AppStack.Screen name="IntersectionTerms" options={{ title: "Terms" }} component={IntersectionTerms} />
           </AppStack.Navigator>
