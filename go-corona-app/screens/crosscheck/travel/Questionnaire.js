@@ -4,11 +4,11 @@ import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
 
-export default function QuestionnaireScreen() {
+export default function TravelQuestionnaire() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
       <View>
-          <Text style={styles.text}>Questionnaire Screen</Text>
+          <Text style={styles.text}>Travel questions starts here...</Text>
         </View>
     </ScrollView>
   );
