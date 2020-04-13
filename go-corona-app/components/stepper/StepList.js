@@ -1,6 +1,6 @@
 import React from "react";
 
-class StepList extends React.Component {
+export default class StepList extends React.Component {
   constructor(props) {
     super(props);
 
@@ -35,5 +35,3 @@ class StepList extends React.Component {
     return children;
   }
 }
-
-export { StepList };
