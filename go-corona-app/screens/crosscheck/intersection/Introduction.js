@@ -9,20 +9,20 @@ import IntroductionImage from '../../../assets/images/IntersectionIntroduction.s
 export default function CrosscheckIntrodctionScreen() {
   return (
     <ScrollView>
-    <View style={styles.container}>
-      <IntroductionImage style={styles.image} width="200" height="200" />
-      <View style={styles.introduction}>
-        <Text style={styles.title}>Hello!</Text>
-        <Text style={styles.description}>
-          Intersection calculator helps us understand if you have 
-          crossed paths with a COVID positive person. It could have been a shopkeeper, 
-          a person who stood next to you on a local train/bus or even a cab driver. 
-          This increases the probablity of you getting infected. 
-          Let us know the locations you have been to the last 30 days using Google maps. 
-          Go through our tutorial on how to downlaod your location history from Google and upload it back here on our calculator.
+      <View style={styles.container}>
+        <IntroductionImage style={styles.image} width="200" height="200" />
+        <View style={styles.introduction}>
+          <Text style={styles.title}>Hello!</Text>
+          <Text style={styles.description}>
+            Intersection calculator helps us understand if you have
+            crossed paths with a COVID positive person. It could have been a shopkeeper,
+            a person who stood next to you on a local train/bus or even a cab driver.
+            This increases the probablity of you getting infected.
+            Let us know the locations you have been to the last 30 days using Google maps.
+            Go through our tutorial on how to downlaod your location history from Google and upload it back here on our calculator.
         </Text>
+        </View>
       </View>
-    </View>
     </ScrollView>
   );
 }

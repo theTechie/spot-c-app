@@ -9,7 +9,6 @@ import Separator from '../../components/Separator';
 import TravelImage from '../../assets/images/Travel.svg'
 import IntersectionImage from '../../assets/images/IntersectionCalculator.svg'
 
-
 export default function CrosscheckScreen() {
   const navigation = useNavigation();
 
@@ -26,7 +25,7 @@ export default function CrosscheckScreen() {
         title="Know if you have met a COVID +ve person"
         Image={IntersectionImage}
         buttonTitle="Open intersection calculator"
-        onPress={() => navigation.navigate('IntersectionIntroduction')}
+        onPress={() => navigation.navigate('IntersectionCalculator')}
       />
     </View>
   );

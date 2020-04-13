@@ -50,15 +50,15 @@ const styles = StyleSheet.create({
   container: {
   },
   content: {
-    height: '90%'
+    height: '80%',
   },
   navigation: {
-    height: '10%',
+    height: '20%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginLeft: 20,
-    marginRight: 20
+    marginRight: 20,
   },
   back: {
   },

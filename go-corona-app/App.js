@@ -13,10 +13,8 @@ import RootView from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
 import LoginScreen from './screens/LoginScreen';
 import CheckupQuestionnaire from "./screens/checkup/index";
-import IntersectionIntroduction from "./screens/crosscheck/intersection/Introduction";
-import IntersectionTerms from './screens/crosscheck/intersection/Terms';
-import CrosscheckScreen from './screens/crosscheck/CrosscheckScreen';
 import TravelQuestionnaire from "./screens/crosscheck/travel/Questionnaire";
+import IntersectionCalculator from './screens/crosscheck/intersection/index';
 
 const AppStack = createStackNavigator();
 
@@ -66,9 +64,8 @@ export default function App(props) {
             <AppStack.Screen name="Login" component={LoginScreen} />
             <AppStack.Screen name="Root" component={RootView} />
             <AppStack.Screen name="CheckupQuestionnaire" options={{ title: "Checkup Questionnaire" }} component={CheckupQuestionnaire} />
-            <AppStack.Screen name="TravelQuestionnaire" options={{ title: "Travel Questionnaire" }} component={TravelQuestionnaire} />
-            <AppStack.Screen name="IntersectionIntroduction" options={{ title: "Intersection Calculator" }} component={IntersectionIntroduction} />
-            <AppStack.Screen name="IntersectionTerms" options={{ title: "Terms" }} component={IntersectionTerms} />
+            <AppStack.Screen name="TravelQuestionnaire" options={{ title: "Travel Questionnaire"}} component={TravelQuestionnaire} />
+            <AppStack.Screen name="IntersectionCalculator" options={{ title: "Intersection Calculator"}} component={IntersectionCalculator} />
           </AppStack.Navigator>
         </NavigationContainer>
       </View>
