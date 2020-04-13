@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import Separator from '../../components/Separator';
 import TravelImage from '../../assets/images/Travel.svg'
 import IntersectionImage from '../../assets/images/IntersectionCalculator.svg'
+import CustomButton from '../../components/button';
 
 export default function CrosscheckScreen() {
   const navigation = useNavigation();
@@ -36,19 +37,9 @@ function CheckupType({ title, Image, buttonTitle, onPress }) {
     <View style={styles.checkupTypeContainer}>
       <Text style={styles.checkupTypeTitle}>{title}</Text>
       <Image style={styles.checkupTypeImage} width="200" height="100" />
-      <CustomButton label={buttonTitle} backgroundColor="#e4dfdf" onPress={onPress} />
+      <CustomButton label={buttonTitle} onPress={onPress} />
     </View>
   )
-}
-
-function CustomButton({ label, backgroundColor, onPress }) {
-  return (
-    <RectButton style={[styles.option, { backgroundColor }]} onPress={onPress}>
-      <View style={styles.optionTextContainer}>
-        <Text style={styles.optionText}>{label}</Text>
-      </View>
-    </RectButton>
-  );
 }
 
 const styles = StyleSheet.create({
@@ -68,19 +59,5 @@ const styles = StyleSheet.create({
   checkupTypeImage: {
     marginTop: 30,
     marginBottom: 15,
-  },
-  option: {
-    backgroundColor: '#fdfdfd',
-    paddingHorizontal: 15,
-    paddingVertical: 15,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: 0,
-    borderColor: '#ededed',
-    borderRadius: 5
-  },
-  optionText: {
-    fontSize: 15,
-    alignSelf: 'flex-start',
-    marginTop: 1,
-  },
+  }
 });
