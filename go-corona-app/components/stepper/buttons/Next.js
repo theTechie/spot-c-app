@@ -7,6 +7,7 @@ const Next = ({ goToNextStep }) => (
     raised
     primary
     text="Next"
+    upperCase={false}
     style={{ container: styles.buttonContainer }}
     onPress={() => goToNextStep()}
   />
@@ -18,5 +19,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: 100,
     backgroundColor: '#E03D51',
+    borderRadius: 5
   }
 })
