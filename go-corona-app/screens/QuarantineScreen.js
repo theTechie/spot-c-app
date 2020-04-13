@@ -8,8 +8,8 @@ export default function QuarantineScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
       <View>
-          <Text style={styles.text}>QuarantineScreen</Text>
-        </View>
+        <Text style={styles.text}>QuarantineScreen</Text>
+      </View>
     </ScrollView>
   );
 }

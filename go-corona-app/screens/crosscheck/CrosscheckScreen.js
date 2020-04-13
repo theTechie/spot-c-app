@@ -9,7 +9,6 @@ import Separator from '../../components/Separator';
 import TravelImage from '../../assets/images/Travel.svg'
 import IntersectionImage from '../../assets/images/IntersectionCalculator.svg'
 
-
 export default function CrosscheckScreen() {
   const navigation = useNavigation();
 
@@ -26,7 +25,7 @@ export default function CrosscheckScreen() {
         title="Know if you have met a COVID +ve person"
         Image={IntersectionImage}
         buttonTitle="Open intersection calculator"
-        onPress={() => navigation.navigate('IntersectionIntroduction')}
+        onPress={() => navigation.navigate('IntersectionCalculator')}
       />
     </View>
   );
@@ -36,7 +35,7 @@ function CheckupType({ title, Image, buttonTitle, onPress }) {
   return (
     <View style={styles.checkupTypeContainer}>
       <Text style={styles.checkupTypeTitle}>{title}</Text>
-      <Image style={styles.checkupTypeImage} width="200" height="200" />
+      <Image style={styles.checkupTypeImage} width="200" height="100" />
       <CustomButton label={buttonTitle} backgroundColor="#e4dfdf" onPress={onPress} />
     </View>
   )
@@ -59,7 +58,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   checkupTypeContainer: {
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'flex-start'
   },
   checkupTypeTitle: {
     fontSize: 18,
@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth,
     borderBottomWidth: 0,
     borderColor: '#ededed',
+    borderRadius: 5
   },
   optionText: {
     fontSize: 15,

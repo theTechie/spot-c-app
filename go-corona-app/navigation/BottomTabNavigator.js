@@ -5,7 +5,7 @@ import { View, Text } from 'react-native';
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import QuarantineScreen from '../screens/QuarantineScreen';
-import CheckupScreen from '../screens/checkup/Introduction';
+import CheckupScreen from '../screens/checkup/index';
 import CrosscheckScreen from '../screens/crosscheck/CrosscheckScreen';
 import InfoScreen from '../screens/InfoScreen';
 
