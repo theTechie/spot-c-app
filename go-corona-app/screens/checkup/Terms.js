@@ -1,13 +1,14 @@
 import { Ionicons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
-import TermsImage from '../../../assets/images/IntersectionTerms.svg'
+import TermsImage from '../../assets/images/IntersectionTerms.svg'
 
 
 export default function CheckupTerms() {
   return (
+    <ScrollView>
     <View style={styles.container}>
       <TermsImage style={styles.image} width="200" height="200" />
       <View style={styles.introduction}>
@@ -22,6 +23,7 @@ export default function CheckupTerms() {
         <Text> I read and accept Terms of Service and Privacy Policy</Text>
       </View>
     </View>
+    </ScrollView>
   );
 }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "react-native";
+import { Button } from 'react-native-material-ui'
 
 
 class Back extends React.Component {
@@ -9,11 +9,7 @@ class Back extends React.Component {
     if (isActive === false) return null;
 
     return (
-        
-        <Button
-        title="Previous"
-        onPress={()  => this.props.goToPreviousStep()}
-      />
+      <Button  raised primary onPress={() => this.props.goToPreviousStep()} text="Back"  style={{container: {width:100,backgroundColor:'#E03D51', marginBottom:'2%', marginRight:80}}}/>
     );
   }
 }
