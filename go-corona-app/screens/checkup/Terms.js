@@ -7,12 +7,13 @@ import TermsImage from '../../assets/images/IntersectionTerms.svg'
 import ProgressBarContainer from '../../components/ProgressBar';
 
 export default function CheckupTerms() {
-  const text= "Introduction"
+  const text = "Introduction"
   const pageNo = 2;
+  
   return (
     <ScrollView>
       <View>
-      <ProgressBarContainer textOnTop={text} currPage={pageNo}/>
+        <ProgressBarContainer textOnTop={text} currPage={pageNo} totalPages={4} />
       </View>
       <View style={styles.container}>
         <TermsImage style={styles.image} width="200" height="200" />
