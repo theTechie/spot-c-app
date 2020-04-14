@@ -11,6 +11,8 @@ import UploadIcon from '../../../assets/images/Upload.svg'
 import TickIcon from '../../../assets/images/Tick.svg'
 import Separator from '../../../components/Separator';
 
+import {unzipArchive} from '../../../utils/ProcessData'
+
 export default function UploadDataScreen() {
     const [uploadedFileMeta, setUploadedFileMeta] = useState(null)
 
@@ -20,6 +22,8 @@ export default function UploadDataScreen() {
             setUploadedFileMeta(result)
         }
         console.log(result)
+
+        await unzipArchive(result.uri)
     }
 
     const text = "Patient"
