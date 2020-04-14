@@ -25,10 +25,13 @@
     "expo-asset": "~8.1.3",
     "expo-constants": "~9.0.0",
     "expo-document-picker": "~8.1.0",
+    "expo-file-system": "~8.1.0",
     "expo-font": "~8.1.0",
     "expo-google-app-auth": "^8.1.0",
     "expo-location": "~8.1.0",
     "expo-web-browser": "~8.1.0",
+    "jszip": "^3.3.0",
+    "jszip-utils": "^0.1.0",
     "query-string": "^6.12.0",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
@@ -41,7 +44,8 @@
     "react-native-screens": "~2.2.0",
     "react-native-svg": "11.0.1",
     "react-native-svg-transformer": "^0.14.3",
-    "react-native-web": "~0.11.7"
+    "react-native-web": "~0.11.7",
+    "stream": "^0.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
