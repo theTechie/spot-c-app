@@ -4,11 +4,16 @@ import * as React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import TermsImage from '../../assets/images/IntersectionTerms.svg'
-
+import ProgressBarContainer from '../../components/ProgressBar';
 
 export default function CheckupTerms() {
+  const text= "Introduction"
+  const pageNo = 2;
   return (
     <ScrollView>
+      <View>
+      <ProgressBarContainer textOnTop={text} currPage={pageNo}/>
+      </View>
       <View style={styles.container}>
         <TermsImage style={styles.image} width="200" height="200" />
         <View style={styles.introduction}>
