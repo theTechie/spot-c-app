@@ -1,12 +1,16 @@
 import * as React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
+import ProgressBarContainer from '../../components/ProgressBar';
 
 import CheckupIntroductionImage from '../../assets/images/CheckupIntroduction.svg'
 
 export default function Introduction() {
+  const text= "Introduction"
+  const pageNo = 1;
   return (
     <ScrollView>
       <View>
+      <ProgressBarContainer textOnTop={text} currPage={pageNo}/>
         <CheckupIntroductionImage style={styles.image} width="200" height="200" />
         <View style={styles.introduction}>
           <Text style={styles.title}>Hello!</Text>
