@@ -8,7 +8,7 @@ import * as Location from 'expo-location';
 import Http from '../services/Http';
 import { csoptsApi } from '../constants/AppSettings';
 import Point from '../components/map/Point';
-
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 // TODO: move to constants
 const latitudeDelta = 0.2;
 const longitudeDelta = 0.1;
@@ -74,22 +74,43 @@ export default class HomeScreen extends Component {
       <View style={styles.container}>
         {this.state.loading ?
           <ActivityIndicator></ActivityIndicator> :
-          <MapView
-            ref={(ref) => { this.map = ref }}
-            provider={PROVIDER_GOOGLE}
-            onMapReady={this.onMapReady}
-            showsUserLocation={true}
-            onRegionChangeComplete={this.onRegionChangeComplete}
-            showsMyLocationButton={true}
-            style={[styles.map, { width: mapWidth }]}
-          >
-            {points.map((i, key) => 
-               <Point point={i} region={region} key={key}></Point>
-            )}
-          </MapView>
+          <>
+            <MapView
+              ref={(ref) => { this.map = ref }}
+              provider={PROVIDER_GOOGLE}
+              onMapReady={this.onMapReady}
+              showsUserLocation={true}
+              onRegionChangeComplete={this.onRegionChangeComplete}
+              style={[styles.map, { width: mapWidth }]}
+            >
+              {points.map((i, key) =>
+                <Point point={i} region={region} key={key}></Point>
+              )}
+            </MapView>
+            {this.renderShowLocationButton()}
+            
+          </>
         }
       </View>
     );
+  }
+
+  goToCurrentPoition = async () => {
+    const location = await Location.getCurrentPositionAsync({});
+    this.map.animateToRegion({ ...location.coords, latitudeDelta, longitudeDelta });
+  }
+
+  renderShowLocationButton = () => {
+    return (
+      <TouchableOpacity
+        style={styles.myLocationButton}
+        onPress={() => {
+          this.goToCurrentPoition()
+        }}
+      >
+        <MaterialCommunityIcons name='crosshairs-gps' size={24} />
+      </TouchableOpacity>
+    )
   }
 }
 
@@ -103,6 +124,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  myLocationButton: {
+    backgroundColor: '#fff',
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+    padding: 15,
+    elevation: 3,
+    alignItems: 'center',
+    alignSelf: 'flex-end',
+    justifyContent: 'center',
+    borderRadius: 50
   },
   map: {
     ...StyleSheet.absoluteFillObject,

@@ -3,26 +3,32 @@ import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
+
+import ProgressBarContainer from '../../../components/ProgressBar';
 import IntroductionImage from '../../../assets/images/IntersectionIntroduction.svg'
 
 
 export default function CrosscheckIntrodctionScreen() {
+  const text = "Patient"
+  const pageNo = 1;
+
   return (
     <ScrollView>
-    <View style={styles.container}>
-      <IntroductionImage style={styles.image} width="200" height="200" />
-      <View style={styles.introduction}>
-        <Text style={styles.title}>Hello!</Text>
-        <Text style={styles.description}>
-          Intersection calculator helps us understand if you have 
-          crossed paths with a COVID positive person. It could have been a shopkeeper, 
-          a person who stood next to you on a local train/bus or even a cab driver. 
-          This increases the probablity of you getting infected. 
-          Let us know the locations you have been to the last 30 days using Google maps. 
-          Go through our tutorial on how to downlaod your location history from Google and upload it back here on our calculator.
+      <View style={styles.container}>
+        <ProgressBarContainer textOnTop={text} currPage={pageNo} totalPages={3} />
+        <IntroductionImage style={styles.image} width="200" height="200" />
+        <View style={styles.introduction}>
+          <Text style={styles.title}>Hello!</Text>
+          <Text style={styles.description}>
+            Intersection calculator helps us understand if you have
+            crossed paths with a COVID positive person. It could have been a shopkeeper,
+            a person who stood next to you on a local train/bus or even a cab driver.
+            This increases the probablity of you getting infected.
+            Let us know the locations you have been to the last 30 days using Google maps.
+            Go through our tutorial on how to downlaod your location history from Google and upload it back here on our calculator.
         </Text>
+        </View>
       </View>
-    </View>
     </ScrollView>
   );
 }

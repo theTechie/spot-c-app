@@ -3,14 +3,19 @@ import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
+import  { StepList } from '../../stepper/StepList';
+import { Step }  from '../../stepper/Step';
+
+
 
 export default function CheckupQuestionnaire() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <View>
-          <Text style={styles.text}>Questionnaire starts here...</Text>
-        </View>
-    </ScrollView>
+    <View>
+      <Text>anu</Text>
+      </View>
+  </ScrollView>
+    
   );
 }
 
