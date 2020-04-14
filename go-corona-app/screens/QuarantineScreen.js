@@ -99,7 +99,6 @@ export default function QuarantineScreen() {
             scrollEnabled={true}
             minDate={Date()}
             dayComponent={({ marking, date, state }) => {
-              console.log(marking);
               return (
                 <View
                   style={{
