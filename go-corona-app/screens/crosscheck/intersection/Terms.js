@@ -5,14 +5,18 @@ import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { Checkbox } from 'react-native-material-ui'
 
+import ProgressBarContainer from '../../../components/ProgressBar';
 import TermsImage from '../../../assets/images/IntersectionTerms.svg'
 
 export default function CrosscheckTerms({ onAgree }) {
   const [agree, setAgree] = useState(false)
+  const text = "Patient"
+  const pageNo = 2;
 
   return (
     <ScrollView>
       <View style={styles.container}>
+        <ProgressBarContainer textOnTop={text} currPage={pageNo} totalPages={3} />
         <TermsImage style={styles.image} width="200" height="200" />
         <View style={styles.introduction}>
           <Text style={styles.title}>Terms of Service</Text>

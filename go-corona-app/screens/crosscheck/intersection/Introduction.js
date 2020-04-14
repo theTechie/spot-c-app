@@ -3,13 +3,19 @@ import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
+
+import ProgressBarContainer from '../../../components/ProgressBar';
 import IntroductionImage from '../../../assets/images/IntersectionIntroduction.svg'
 
 
 export default function CrosscheckIntrodctionScreen() {
+  const text = "Patient"
+  const pageNo = 1;
+
   return (
     <ScrollView>
       <View style={styles.container}>
+        <ProgressBarContainer textOnTop={text} currPage={pageNo} totalPages={3} />
         <IntroductionImage style={styles.image} width="200" height="200" />
         <View style={styles.introduction}>
           <Text style={styles.title}>Hello!</Text>
