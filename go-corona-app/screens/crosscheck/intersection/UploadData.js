@@ -11,19 +11,35 @@ import UploadIcon from '../../../assets/images/Upload.svg'
 import TickIcon from '../../../assets/images/Tick.svg'
 import Separator from '../../../components/Separator';
 
-import {unzipArchive} from '../../../utils/ProcessData'
+import { unzipArchive, getLocationHistoryFile, filterJsonData, binHistoryData } from '../../../utils/ProcessData'
 
 export default function UploadDataScreen() {
     const [uploadedFileMeta, setUploadedFileMeta] = useState(null)
+    const [uploadInProgress, setUploadInProgress] = useState(false)
 
     const handleUploadFilePress = async () => {
+        setUploadInProgress(true)
+
         const result = await DocumentPicker.getDocumentAsync({ type: 'application/zip' })
         if (result.type === "success") {
             setUploadedFileMeta(result)
+
+            const unzippedFiles = await unzipArchive(result.uri)
+            const json_file = await getLocationHistoryFile(unzippedFiles)
+
+            if (json_file) {
+                const filteredTimestamps = await filterJsonData(json_file)
+                const binnedData = await binHistoryData(filteredTimestamps)
+                console.log(binnedData)
+                //TODO: API Integration
+
+            } else {
+                console.log('Could not find Location History file')
+            }
+
         }
         console.log(result)
-
-        await unzipArchive(result.uri)
+        setUploadInProgress(false)
     }
 
     const text = "Patient"
@@ -47,7 +63,8 @@ export default function UploadDataScreen() {
                         <View style={styles.helpLinks}>
                             <CustomButton
                                 Icon={uploadedFileMeta ? TickIcon : UploadIcon}
-                                label={uploadedFileMeta ? uploadedFileMeta.name : "Upload here"}
+                                label={uploadedFileMeta ? "Done" : "Upload here"}
+                                loading={uploadInProgress}
                                 disabled={uploadedFileMeta ? true : false}
                                 onPress={handleUploadFilePress}
                             />
