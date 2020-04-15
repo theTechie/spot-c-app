@@ -11,7 +11,7 @@ import UploadIcon from '../../../assets/images/Upload.svg'
 import TickIcon from '../../../assets/images/Tick.svg'
 import Separator from '../../../components/Separator';
 
-import {unzipArchive} from '../../../utils/ProcessData'
+import { unzipArchive, getLocationFile, getFilteredLocationHistory } from '../../../utils/ProcessData'
 
 export default function UploadDataScreen() {
     const [uploadedFileMeta, setUploadedFileMeta] = useState(null)
@@ -23,7 +23,17 @@ export default function UploadDataScreen() {
         }
         console.log(result)
 
-        await unzipArchive(result.uri)
+        const unzippedFiles = await unzipArchive(result.uri)
+        const json_file = await getFilteredLocationHistory(unzippedFiles)
+
+        if (json_file) {
+            console.log('Found Location History')
+            console.log(json_file)
+
+        } else {
+            console.log('Could not find Location History file')
+        }
+
     }
 
     const text = "Patient"
