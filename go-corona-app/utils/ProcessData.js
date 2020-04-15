@@ -36,8 +36,8 @@ export async function getLocationHistoryFile(zip) {
 
 export async function filterJsonData(data) {
     // all data after '31st January 2020'
-    const timeStampForJan312020 = 1580428800000
-    const timestamps = JsonPath.query(data, `$.locations[?(@.timestampMs>${timeStampForJan312020})]`)
+    const timeStampForJan312020 = "1580428800000"
+    const timestamps = JsonPath.query(data, `$.locations[?(@.timestampMs>=${timeStampForJan312020})]`)
 
     return timestamps
 }
@@ -51,7 +51,7 @@ const roundToNearest10Min = (tsMs) => {
 
 const getBinEntry = (roundedDate) => {
     const day = `${roundedDate.getDate()}`.padStart(2, '0')
-    const month = `${roundedDate.getMonth()}`.padStart(2, '0')
+    const month = `${roundedDate.getMonth() + 1}`.padStart(2, '0')
     const year = `${roundedDate.getFullYear()}`
     const hours = `${roundedDate.getHours()}`.padStart(2, '0')
     const minutes = `${roundedDate.getMinutes()}`.padStart(2, '0')
@@ -67,7 +67,8 @@ const formatData = data => {
         UserLocationId,
         Location: {
             Latitude: data.latitudeE7,
-            Longitude: data.longitudeE7
+            Longitude: data.longitudeE7,
+            ts: data.timestampMs
         }
     }
 }
