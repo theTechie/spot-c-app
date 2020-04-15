@@ -8,7 +8,7 @@ import { Ionicons } from "@expo/vector-icons";
  * Was working on this to select a custom range with some ranges disabled 
  * but skipped this due to a lot of issues 
  */
-export default function DatePicker({ sDate, eDate, visible,closeCallback }) {
+export default function DatePicker({ sDate, eDate, visible, closeCallback }) {
   const [startDate, setStartDate] = React.useState(sDate || new Date());
   const show = () => {
     setVisible(true);
@@ -19,8 +19,6 @@ export default function DatePicker({ sDate, eDate, visible,closeCallback }) {
   let ed = new Date();
   ed.setDate(ed.getDate() + 3);
   const [endDate, setEndDate] = React.useState(eDate || ed);
-  console.log("startDate ", startDate);
-  console.log("endDate ", endDate);
 
   const getMarkedDateObject = (startDate, endDate) => {
     let deltaDays =
@@ -36,7 +34,6 @@ export default function DatePicker({ sDate, eDate, visible,closeCallback }) {
         color: "green",
       };
     }
-    console.log(markedDates);
     return markedDates;
   };
 
@@ -50,15 +47,13 @@ export default function DatePicker({ sDate, eDate, visible,closeCallback }) {
   };
 
   return (
-    <Modal visible={visible} transparent={true} onRequestClose={() => {}}>
+    <Modal visible={visible} transparent={true} onRequestClose={() => { }}>
       <View style={styles.modalContainerStyle}>
         <Text>Please select start and end date</Text>
         <Calendar
           markedDates={getMarkedDateObject(startDate, endDate)}
           markingType={"period"}
-
         />
-
         <Ionicons name={"md-close"} size={30} onPress={closeCallback} />
       </View>
     </Modal>
