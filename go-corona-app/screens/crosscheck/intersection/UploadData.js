@@ -11,7 +11,7 @@ import UploadIcon from '../../../assets/images/Upload.svg'
 import TickIcon from '../../../assets/images/Tick.svg'
 import Separator from '../../../components/Separator';
 
-import { unzipArchive, getLocationFile, getFilteredLocationHistory } from '../../../utils/ProcessData'
+import { unzipArchive, getLocationHistoryFile, filterJsonData, binHistoryData } from '../../../utils/ProcessData'
 
 export default function UploadDataScreen() {
     const [uploadedFileMeta, setUploadedFileMeta] = useState(null)
@@ -20,20 +20,22 @@ export default function UploadDataScreen() {
         const result = await DocumentPicker.getDocumentAsync({ type: 'application/zip' })
         if (result.type === "success") {
             setUploadedFileMeta(result)
+
+            const unzippedFiles = await unzipArchive(result.uri)
+            const json_file = await getLocationHistoryFile(unzippedFiles)
+
+            if (json_file) {
+                const filteredTimestamps = await filterJsonData(json_file)
+                const binnedData = await binHistoryData(filteredTimestamps)
+                console.log(binnedData)
+                //TODO: API Integration
+
+            } else {
+                console.log('Could not find Location History file')
+            }
+
         }
         console.log(result)
-
-        const unzippedFiles = await unzipArchive(result.uri)
-        const json_file = await getFilteredLocationHistory(unzippedFiles)
-
-        if (json_file) {
-            console.log('Found Location History')
-            console.log(json_file)
-
-        } else {
-            console.log('Could not find Location History file')
-        }
-
     }
 
     const text = "Patient"
