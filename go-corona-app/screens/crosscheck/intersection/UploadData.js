@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
+import * as WebBrowser from 'expo-web-browser';
 
 import ProgressBarContainer from '../../../components/ProgressBar';
 import CustomButton from '../../../components/button/index'
@@ -53,8 +54,16 @@ export default function UploadDataScreen() {
                     <View style={styles.sectionContainer}>
                         <Text style={styles.title}>Run the tutorial and download data</Text>
                         <View style={styles.helpLinks}>
-                            <CustomButton Icon={QuestionIcon} label="Take me through the tutorial" />
-                            <CustomButton Icon={LinkIcon} label="I am all set, take me to Google for downloads" />
+                            <CustomButton
+                                Icon={QuestionIcon}
+                                label="Take me through the tutorial"
+                                onPress={() => WebBrowser.openBrowserAsync('https://support.google.com/accounts/answer/3024190?hl=en')}
+                            />
+                            <CustomButton
+                                Icon={LinkIcon}
+                                label="I am all set, take me to Google for downloads"
+                                onPress={() => WebBrowser.openBrowserAsync('https://takeout.google.com/')}
+                            />
                         </View>
                     </View>
                     <Separator />
