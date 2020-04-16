@@ -13,7 +13,6 @@ export default function CheckupWho() {
     return (
         <ScrollView>
             <View style={styles.viewContainer}>
-                <ProgressBarContainer textOnTop={text} currPage={pageNo} totalPages={4} />
                 <View style={styles.container}>
                     <View style={styles.sectionContainer}>
                         <Text style={styles.title}>Tell us who this checkup is for?</Text>

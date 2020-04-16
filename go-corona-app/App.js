@@ -12,7 +12,7 @@ import { byPassLogin } from './constants/DevSettings';
 import RootView from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
 import LoginScreen from './screens/LoginScreen';
-import CheckupQuestionnaire from "./screens/checkup/index";
+import CheckupQuestionnaire from "./screens/checkup/CheckupScreen";
 import TravelQuestionnaire from "./screens/crosscheck/travel/Questionnaire";
 import IntersectionCalculator from './screens/crosscheck/intersection/index';
 
