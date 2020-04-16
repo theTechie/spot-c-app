@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   },
   scale: {
     justifyContent: 'space-between',
-    paddingVertical: 20
+    paddingVertical: 10
   },
   scaletext: {
     fontSize: 10,
