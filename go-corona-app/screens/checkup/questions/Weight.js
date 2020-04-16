@@ -30,10 +30,10 @@ const WeightQuestion = (props) => {
           value={weight}
           onValueChange={setValue}
           step={1}
-          maximumTrackTintColor={'#49D581'}
-          minimumTrackTintColor={'#CBCBCB'}
-          maximumValue={300}
+          minimumTrackTintColor={'#49D581'}
+          maximumTrackTintColor={'#CBCBCB'}
           minimumValue={3}
+          maximumValue={300}
           thumbTintColor={'white'}
           thumbStyle={styles.thumb}
           thumbTouchSize={{ width: 60, height: 60 }}

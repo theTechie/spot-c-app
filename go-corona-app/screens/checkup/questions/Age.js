@@ -29,10 +29,10 @@ const AgeQuestion = (props) => {
           value={age}
           onValueChange={setValue}
           step={1}
-          maximumTrackTintColor={'#49D581'}
-          minimumTrackTintColor={'#CBCBCB'}
-          maximumValue={100}
+          minimumTrackTintColor={'#49D581'}
+          maximumTrackTintColor={'#CBCBCB'}
           minimumValue={1}
+          maximumValue={100}
           thumbTintColor={'white'}
           thumbStyle={styles.thumb}
           thumbTouchSize={{ width: 60, height: 60 }}
