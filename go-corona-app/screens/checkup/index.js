@@ -7,6 +7,9 @@ import Introduction from './Introduction';
 import Terms from './Terms';
 import Question1 from './questions/1-Question'
 import Question2 from './questions/2-Question'
+import HeightQuestion from './questions/Height';
+import AgeQuestion from './questions/Age';
+import WeightQuestion from './questions/Weight';
 
 export default function CheckupScreen() {
   return (
@@ -16,6 +19,9 @@ export default function CheckupScreen() {
         <Step component={Terms} />
         <Step component={Question1} />
         <Step component={Question2} />
+        <Step component={AgeQuestion} />
+        <Step component={HeightQuestion} />
+        <Step component={WeightQuestion} />
       </StepList>
     </View>
   );

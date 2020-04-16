@@ -7,8 +7,12 @@ const IconMoon = createIconSetFromIcoMoon(icoMoonConfig, 'spotcorona', expoAsset
 import Colors from '../../constants/Colors'
 
 const Icon = ({ focused, ...rest }) => {
+    let color = rest.color;
+    if (!color) {
+        color = focused ? Colors.tabIconSelected : Colors.tabIconDefault
+    }
     return (
-        <IconMoon {...rest} color={focused ? Colors.tabIconSelected : Colors.tabIconDefault} />
+        <IconMoon {...rest} color={color} />
     );
 };
 

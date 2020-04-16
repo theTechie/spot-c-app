@@ -4,38 +4,23 @@ import { Marker } from 'react-native-maps';
 import { FontAwesome as FAIcon } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
 import Icon from '../icon/Icon';
-import RedPoint from '../../assets/images/RedPoint.svg'
-import BluePoint from '../../assets/images/BluePoint.svg'
-import GreenPoint from '../../assets/images/GreenPoint.svg'
-
-
 
 const Point = (props) => {
-    const zoomLevel = getZoomLevel(props.region);
-    const pprops = proceesProps(props, zoomLevel);
-    const PSVG = getPointSVG(props.point.degree);
-
-    return zoomLevel > 15 ? null : <Marker coordinate={pprops.point}>
-        <PSVG width="30" height="30"></PSVG>
+    return <Marker coordinate={props.point}>
+        <Icon color={getColor(props.point.degree)} name='home' size={25}></Icon>
     </Marker>
 }
 
-
-const getZoomLevel = (region) => {
-    let zoom = Math.round(Math.log(360 / region.longitudeDelta) / Math.LN2);
-    return zoom;
-}
-
-const getPointSVG = (degree) => {
+const getColor = (degree) => {
     switch (degree) {
         case 1:
-            return RedPoint
+            return 'red';
         case 2:
-            return BluePoint;
+            return 'gray';
         case 0:
-            return GreenPoint;
+            return 'green';
         default:
-            return GreenPoint;
+            return 'green';
     }
 }
 
@@ -43,16 +28,6 @@ const getIcon = (zoom) => {
     let size = 48;
     let name = 'spot-concern';
     return { name, size }
-}
-
-const proceesProps = (props, zoomLevel) => {
-    const { region, point } = props;
-    const icon = getIcon(zoomLevel);
-    return {
-        point, icon: {
-            ...icon
-        }
-    }
 }
 
 export default Point;
