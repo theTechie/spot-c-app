@@ -25,6 +25,10 @@
     "ios": {
       "supportsTablet": true
     },
+    "android": {
+      "package": "com.gocorona.spotcorona",
+      "versionCode": 1
+    },
     "packagerOpts": {
       "config": "metro.config.js",
       "sourceExts": [
