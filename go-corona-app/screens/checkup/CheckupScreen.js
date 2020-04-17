@@ -20,6 +20,7 @@ import ProgressBarContainer from '../../components/ProgressBar';
 import CheckupWho from './questions/CheckupWho'
 import CheckupGender from './questions/CheckupGender'
 import TravelScreenTwo from './questions/travel/ScreenTwo';
+import TravelScreenThree from './questions/travel/ScreenThree';
 
 const formInitValues = {
   policyRead: false,
@@ -33,7 +34,7 @@ const formInitValues = {
 const screens = [
   {
     title : "Travel",
-    component : TravelScreenTwo
+    component : TravelScreenThree
   },
   {
     title: 'Introduction',

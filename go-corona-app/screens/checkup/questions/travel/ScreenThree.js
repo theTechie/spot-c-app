@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
 import { ScrollView, RectButton } from "react-native-gesture-handler";
-import TravelScreenThreeFeature from "../../../../assets/images/TravelScreenOneFeature.svg";
+import TravelScreenThreeFeature from "../../../../assets/images/TravelScreenThreeFeature.svg";
 import { RadioButton, Divider } from "react-native-material-ui";
 import { Input, CheckBox } from "react-native-elements";
+import Autocomplete from "react-native-autocomplete-input";
 
 export default function TravelScreenThree() {
   return (
@@ -17,31 +18,39 @@ export default function TravelScreenThree() {
           height="100"
           style={{ alignSelf: "center", marginTop: 10 }}
         />
-        <Text style={styles.subQuestionTextStyle}>
+        <Text style={styles.subQuestionStyle}>
         Which city are you from and where are you staying now?
         </Text>
+        <View style={{paddingTop:20}}>
         <Divider/>
-        <Input value="Hometown" />
+        </View>
+        
+        <View style={{paddingLeft:20,paddingRight:20}}>
+        <Autocomplete placeholder="Hometown" />
+        </View>
+        
         <Divider/>
-        <Input value="Current location" />
+        <View style={{paddingLeft:20,paddingRight:20,paddingTop:10}}>
+        <Autocomplete placeholder="Current location" />
+        </View>
         <Divider/>
 
-        <Text style={styles.subQuestionStyle}>
+        <Text style={{paddingLeft:20,paddingRight:20,paddingTop:20}}>
         What modes of transport have you used for commute in the last 30 days?
         </Text>
         <Divider/>
         <CheckBox
-            label="Local train or Bus"
+            title="Local train or Bus"
         />
         <Divider/>
         <Divider/>
         <CheckBox
-            label="Auto Rickshaw or Cab"
+            title="Auto Rickshaw or Cab"
         />
         <Divider/>
         <Divider/>
         <CheckBox
-            label="Personal Vehicle"
+            title="Personal Vehicle"
         />
         <Divider/>
         
