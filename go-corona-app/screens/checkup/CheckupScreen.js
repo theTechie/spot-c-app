@@ -34,10 +34,6 @@ const formInitValues = {
 }
 const screens = [
   {
-    title: 'Patient',
-    component: HowLongSinceSymptoms
-  },
-  {
     title: 'Introduction',
     component: Introduction
   },
