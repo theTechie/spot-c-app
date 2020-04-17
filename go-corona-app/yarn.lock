@@ -6198,6 +6198,18 @@ react-is@^16.12.0, react-is@^16.13.0, react-is@^16.7.0, react-is@^16.8.0, react-
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-native-autocomplete-input@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-autocomplete-input/-/react-native-autocomplete-input-4.1.0.tgz#979ece28d891b245ecb967b6d31f1f924445b8ab"
+  integrity sha512-Yn4GulZ9F6tde74UUGZHdVFeYWVuL7+EbUZy6kt+QHrzMc5B4OuRop1FT4RyWLpvbySW/vvqYgj9LAmlzkuEqA==
+
+react-native-autosuggest@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-autosuggest/-/react-native-autosuggest-1.0.1.tgz#273390caecf117547d078f4c09d410476471d1ce"
+  integrity sha512-ShYXnWL7J+GQcg/+5crnYYVnXeq95hKL/aqFKrwhDwJEybPCK7W6r0tRb9gd3DLsJG7Dh2b3UO5DKwnUCYXzgw==
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-calendars@^1.265.0:
   version "1.265.0"
   resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.265.0.tgz#4144408254afaebc97213708e3c7d911dc73a335"
