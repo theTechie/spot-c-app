@@ -21,6 +21,7 @@ import CheckupWho from './questions/CheckupWho'
 import CheckupGender from './questions/CheckupGender'
 import TravelScreenTwo from './questions/travel/ScreenTwo';
 import TravelScreenThree from './questions/travel/ScreenThree';
+import HowLongSinceSymptoms from './questions/HowLongSinceSymptoms';
 
 const formInitValues = {
   policyRead: false,
@@ -32,6 +33,10 @@ const formInitValues = {
 
 }
 const screens = [
+  {
+    title: 'Patient',
+    component: HowLongSinceSymptoms
+  },
   {
     title: 'Introduction',
     component: Introduction
