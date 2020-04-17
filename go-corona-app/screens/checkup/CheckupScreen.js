@@ -33,10 +33,6 @@ const formInitValues = {
 }
 const screens = [
   {
-    title : "Travel",
-    component : TravelScreenThree
-  },
-  {
     title: 'Introduction',
     component: Introduction
   },
