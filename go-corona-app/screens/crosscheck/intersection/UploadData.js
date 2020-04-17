@@ -35,7 +35,7 @@ export default function UploadDataScreen() {
         }
 
         console.log(inputFileResult)
-        
+
         if (inputFileResult.type === "success") {
             setUploadedFileMeta(inputFileResult)
 
@@ -91,7 +91,7 @@ export default function UploadDataScreen() {
                     </View>
                     <Separator />
                     <View style={styles.sectionContainer}>
-                        <Text style={styles.title}>Upload the Google Takeout Zip file</Text>
+                        <Text style={styles.title}>Upload the Google Takeout location data</Text>
                         <View style={styles.helpLinks}>
                             <CustomButton
                                 Icon={uploadedFileMeta ? TickIcon : UploadIcon}
@@ -101,6 +101,7 @@ export default function UploadDataScreen() {
                                 onPress={handleUploadFilePress}
                             />
                         </View>
+                        <Text style={styles.uploadTypeMessage}>{Platform.OS === "ios" ? "Please select the takeout-xx.zip" : "Please select Location History.json"}</Text>
                     </View>
                 </View>
             </View>
@@ -134,5 +135,7 @@ const styles = StyleSheet.create({
     uploadedFileMessage: {
         flexWrap: "wrap",
         textAlign: "center"
+    },
+    uploadTypeMessage: {
     }
 });
