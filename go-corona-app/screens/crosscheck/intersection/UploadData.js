@@ -1,8 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, Platform } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 import * as WebBrowser from 'expo-web-browser';
+import * as FileSystem from 'expo-file-system';
 
 import ProgressBarContainer from '../../../components/ProgressBar';
 import CustomButton from '../../../components/button/index'
@@ -18,15 +19,38 @@ export default function UploadDataScreen() {
     const [uploadedFileMeta, setUploadedFileMeta] = useState(null)
     const [uploadInProgress, setUploadInProgress] = useState(false)
 
+    const pickZipFile = async () => await DocumentPicker.getDocumentAsync({ type: 'application/zip' })
+
+    const pickJsonFile = async () => await DocumentPicker.getDocumentAsync({ type: '*/*' })
+
     const handleUploadFilePress = async () => {
         setUploadInProgress(true)
 
-        const result = await DocumentPicker.getDocumentAsync({ type: 'application/zip' })
-        if (result.type === "success") {
-            setUploadedFileMeta(result)
+        let inputFileResult = null
 
-            const unzippedFiles = await unzipArchive(result.uri)
-            const json_file = await getLocationHistoryFile(unzippedFiles)
+        if (Platform.OS === "ios") {
+            inputFileResult = await pickZipFile()
+        } else {
+            inputFileResult = await pickJsonFile()
+        }
+
+        console.log(inputFileResult)
+        
+        if (inputFileResult.type === "success") {
+            setUploadedFileMeta(inputFileResult)
+
+            let json_file = null
+
+            if (Platform.OS === "ios") {
+                const unzippedFiles = await unzipArchive(inputFileResult.uri)
+                json_file = await getLocationHistoryFile(unzippedFiles)
+            } else {
+                const fileUri = `${FileSystem.documentDirectory}${inputFileResult.name}`
+                const copyAsync = await FileSystem.copyAsync({ from: inputFileResult.uri, to: fileUri })
+
+                const read = await FileSystem.readAsStringAsync(fileUri)
+                json_file = JSON.parse(read)
+            }
 
             if (json_file) {
                 const filteredTimestamps = await filterJsonData(json_file)
@@ -39,7 +63,6 @@ export default function UploadDataScreen() {
             }
 
         }
-        console.log(result)
         setUploadInProgress(false)
     }
 
