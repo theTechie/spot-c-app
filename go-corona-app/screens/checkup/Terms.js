@@ -7,16 +7,19 @@ import TermsImage from '../../assets/images/IntersectionTerms.svg'
 import ProgressBarContainer from '../../components/ProgressBar';
 import { CheckBox } from 'react-native-elements'
 
-export default function CheckupTerms({onAgree}) {
+export default function CheckupTerms({ setValues, questions }) {
   const [agree, setAgree] = useState(false)
   const text = "Introduction"
   const pageNo = 2;
-
+  const setValue = (value) => {
+    setAgree(value);
+    var values = { name: questions[0].name, value }
+    setValues([values])
+  }
   return (
     <ScrollView>
       <View style={styles.container}>
-        <ProgressBarContainer textOnTop={text} currPage={pageNo} totalPages={4} />
-        <TermsImage style={styles.image} width="200" height="200" />
+        <TermsImage style={styles.image} width="120" height="120" />
         <View style={styles.introduction}>
           <Text style={styles.title}>Terms of Service</Text>
           <Text style={styles.description}>
@@ -27,7 +30,7 @@ export default function CheckupTerms({onAgree}) {
           </Text>
         </View>
         <View style={styles.agreeContainer}>
-          <CheckBox containerStyle={{ borderWidth: 0 }} title="I read and accept the Terms of Service and Privacy Policy" value="agree" checked={agree} onPress={() => setAgree(!agree)} />
+          <CheckBox containerStyle={{ borderWidth: 0 }} title="I read and accept the Terms of Service and Privacy Policy" value="agree" checked={agree} onPress={() => setValue(!agree)} />
         </View>
       </View>
     </ScrollView>
@@ -65,7 +68,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   title: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     marginTop: 1,
   },
