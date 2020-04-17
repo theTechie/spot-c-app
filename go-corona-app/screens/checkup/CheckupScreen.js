@@ -19,6 +19,7 @@ import ViewPager from '@react-native-community/viewpager';
 import ProgressBarContainer from '../../components/ProgressBar';
 import CheckupWho from './questions/CheckupWho'
 import CheckupGender from './questions/CheckupGender'
+import TravelScreenTwo from './questions/travel/ScreenTwo';
 
 const formInitValues = {
   policyRead: false,
@@ -30,6 +31,10 @@ const formInitValues = {
 
 }
 const screens = [
+  {
+    title : "Travel",
+    component : TravelScreenTwo
+  },
   {
     title: 'Introduction',
     component: Introduction
