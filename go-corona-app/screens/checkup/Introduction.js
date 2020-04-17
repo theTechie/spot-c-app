@@ -11,8 +11,7 @@ export default function Introduction() {
   return (
     <ScrollView>
       <View>
-        <ProgressBarContainer textOnTop={text} currPage={pageNo} totalPages={4} />
-        <CheckupIntroductionImage style={styles.image} width="200" height="200" />
+        <CheckupIntroductionImage style={styles.image} width="160" height="160" />
         <View style={styles.introduction}>
           <Text style={styles.title}>Hello!</Text>
           <Text style={styles.description}>
@@ -40,7 +39,7 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   introduction: {
-    margin: 40,
+    margin: 30,
   },
   title: {
     fontSize: 18,
@@ -48,7 +47,7 @@ const styles = StyleSheet.create({
     marginTop: 1,
   },
   description: {
-    fontSize: 16,
+    fontSize: 13,
     marginTop: 10,
     lineHeight: 30
   }

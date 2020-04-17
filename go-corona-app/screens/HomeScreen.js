@@ -9,6 +9,7 @@ import Http from '../services/Http';
 import { csoptsApi } from '../constants/AppSettings';
 import Point from '../components/map/Point';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import GooglePlacesInput from '../components/map/Places';
 // TODO: move to constants
 const latitudeDelta = 0.2;
 const longitudeDelta = 0.1;
@@ -18,8 +19,7 @@ export default class HomeScreen extends Component {
     loading: true,
     region: null,
     points: [],
-    error: null,
-    mapWidth: '99%',
+    error: null
   }
   map = null;
   async componentDidMount() {
@@ -38,11 +38,6 @@ export default class HomeScreen extends Component {
 
   onMapReady = () => {
     this.map.animateToRegion(this.state.region);
-    setTimeout(() => {
-      this.setState({
-        mapWidth: '100%'
-      })
-    }, 100);
   }
 
   setHeatMapPoints(latitude, longitude, points) {
@@ -67,28 +62,44 @@ export default class HomeScreen extends Component {
       region
     })
   }
-
+  onLocationSelect = (location) => {
+    const region = {
+      latitude: location.lat,
+      longitude: location.lng,
+      latitudeDelta,
+      longitudeDelta
+    }
+    setTimeout(() => {
+      this.map.animateToRegion(region);
+    }, 0);
+  }
   render() {
-    const { loading, points, mapWidth, region } = this.state;
+    const { loading, points, region } = this.state;
     return (
       <View style={styles.container}>
         {this.state.loading ?
           <ActivityIndicator></ActivityIndicator> :
           <>
+            <View style={styles.searchInput}>
+              <GooglePlacesInput onLocationSelect={this.onLocationSelect}></GooglePlacesInput>
+            </View>
             <MapView
+              maxZoomLevel={14}
+              showsBuildings={true}
               ref={(ref) => { this.map = ref }}
               provider={PROVIDER_GOOGLE}
               onMapReady={this.onMapReady}
               showsUserLocation={true}
+              showsMyLocationButton={false}
               onRegionChangeComplete={this.onRegionChangeComplete}
-              style={[styles.map, { width: mapWidth }]}
+              style={[styles.map]}
             >
               {points.map((i, key) =>
                 <Point point={i} region={region} key={key}></Point>
               )}
             </MapView>
             {this.renderShowLocationButton()}
-            
+
           </>
         }
       </View>
@@ -124,6 +135,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  searchInput: {
+    zIndex: 1000,
+    maxWidth: 400,
+    backgroundColor: '#fff',
+    width: '92%',
+    position: 'absolute',
+    top: 20,
+    left: '4%',
+    elevation: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 14
   },
   myLocationButton: {
     backgroundColor: '#fff',

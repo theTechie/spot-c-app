@@ -3,7 +3,7 @@ import * as WebBrowser from 'expo-web-browser';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
-import { Checkbox } from 'react-native-material-ui'
+import { CheckBox } from 'react-native-elements'
 
 import ProgressBarContainer from '../../../components/ProgressBar';
 import TermsImage from '../../../assets/images/IntersectionTerms.svg'
@@ -27,7 +27,9 @@ export default function CrosscheckTerms({ onAgree }) {
           - <Text style={styles.boldText}>The results are probabilistic.</Text> Even if you have come in contact with a COVID +ve person, this is only a probabilistic model to know if you have been infected. {'\n'}
           - <Text style={styles.boldText}>Your data is safe.</Text> Information that you provide is anonymous and not shared with anyone.{'\n'}
           </Text>
-          <Checkbox label="I read and accept Terms of Service and Privacy Policy" value="agree" checked={agree} onCheck={val => setAgree(val)} />
+        </View>
+        <View style={styles.agreeContainer}>
+          <CheckBox containerStyle={{ borderWidth: 0 }} title="I read and accept the Terms of Service and Privay Policy" value="agree" checked={agree} onPress={() => setAgree(!agree)} />
         </View>
       </View>
     </ScrollView>
@@ -41,12 +43,13 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start'
   },
   image: {
-    marginTop: 30,
+    marginTop: 10,
     marginBottom: 15,
     alignSelf: "center"
   },
   introduction: {
-    margin: 35,
+    margin: 30,
+    marginBottom: 0,
   },
   title: {
     fontSize: 18,
@@ -60,5 +63,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 10,
     lineHeight: 25
+  },
+  agreeContainer: {
+    marginLeft: 10,
+    marginRight: 10
   }
 });

@@ -1,23 +1,26 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, Text, ActivityIndicator } from 'react-native'
 import { RectButton, ScrollView } from 'react-native-gesture-handler'
 
-function CustomButton({ label, width, Icon, disabled, onPress }) {
-    return (
-        <RectButton style={{ ...styles.option, width, backgroundColor: disabled ? '#c1c1c1' : '#e4dfdf' }} onPress={disabled ? null : onPress}>
+import Colors from '../../constants/Colors';
+
+function CustomButton({ label, width, Icon, loading, disabled, onPress }) {
+    return loading ? <ActivityIndicator size="small" color={Colors.tabIconSelected} /> : (
+        <RectButton
+            style={{ ...styles.option, width, backgroundColor: disabled ? '#c1c1c1' : '#e4dfdf' }}
+            onPress={disabled ? null : onPress}>
             <View style={styles.optionContainer}>
                 {Icon ? (
                     <View>
                         <Icon width={25} height={25} />
                     </View>
-                ) : null
-                }
-                <View style={styles.textContainer}>
+                ) : null}
+                {<View style={styles.textContainer}>
                     <Text style={styles.optionText}>{label}</Text>
-                </View>
+                </View>}
             </View>
         </RectButton>
-    );
+    )
 }
 
 export default CustomButton;
@@ -32,10 +35,11 @@ const styles = StyleSheet.create({
         borderColor: '#ededed',
         borderRadius: 5,
         margin: 10
+       
     },
     optionContainer: {
         flexDirection: 'row',
-        alignItems: "center"
+        alignItems: "center",
     },
     textContainer: {
         marginLeft: 10,

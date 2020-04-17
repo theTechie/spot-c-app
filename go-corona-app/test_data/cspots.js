@@ -18,7 +18,7 @@ export const cspotsResponse = {
     {
       "latitude": 17.52333646788462,
       "longitude": 78.38046183809638,
-      "degree": 1
+      "degree": 0
     },
     {
       "latitude": 17.50917051544606,
