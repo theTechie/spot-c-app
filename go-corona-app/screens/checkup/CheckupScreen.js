@@ -189,17 +189,11 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
   },
-  back: {
-  },
-  next: {
-  },
   progressAnd: {
     width: 100,
     color: '#49D581',
-    paddingTop: 50
   },
   progressIos: {
     width: 100,
-    alignSelf: 'flex-end'
   }
 });
