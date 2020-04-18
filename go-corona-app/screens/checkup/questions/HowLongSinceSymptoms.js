@@ -89,7 +89,7 @@ function ProgressSelector({ onItemSelected, selectedItem, marginTop }) {
       >
         {["Improved", "No Change", "Worsened", "Worsened mildly", "Worsened considerably"].map((d, i, vals) => {
           return (
-            <View style={{ flex: 1 }}>
+            <View key={`howLong-${i}`} style={{ flex: 1 }}>
               <TouchableOpacity
                 onPress={() => {
                   onItemSelected(d);
