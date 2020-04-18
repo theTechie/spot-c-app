@@ -13,9 +13,12 @@ import {
 import { CalendarList } from "react-native-calendars";
 import QuarantineDates from "./QuarantineDates"
 
-export default function QuarantineScreen({ selectedDays = [
+export default function QuarantineScreen({ defaultSelectedDays = [
   { start: "2020-04-12", end: "2020-04-19", key: "abcd1234", deletable: false },
 ] }) {
+
+  const [selectedDays, setSelectedDays] = React.useState(defaultSelectedDays);
+
   const CALENDAR = "CALENDAR";
   const DATE_SELECTOR = "DATE_SELECTOR";
 
@@ -71,7 +74,7 @@ export default function QuarantineScreen({ selectedDays = [
       <ScreenHeader
         label="MY CALENDAR"
         iconName="md-add"
-        onClick={() => navigation.navigate("QuarantineDates")}
+        onClick={() => navigation.navigate("QuarantineDates", { selectedDays })}
       />
       <Divider marginTop={12} />
       <View

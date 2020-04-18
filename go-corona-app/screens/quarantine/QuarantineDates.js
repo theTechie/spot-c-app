@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import * as React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View, Modal } from "react-native";
 import DateRangePicker from "../../components/DateRangePicker";
 import {
@@ -181,10 +181,8 @@ function DeleteButton({ key, onClick }) {
     );
 }
 
-export default function QurantineDates({ defaultSelectedDays = [
-    { start: "2020-04-12", end: "2020-04-19", key: "abcd1234", deletable: false },
-] }) {
-    const [selectedDays, setSelectedDays] = React.useState(defaultSelectedDays);
+export default function QurantineDates({ route }) {
+    const [selectedDays, setSelectedDays] = useState(route.params.selectedDays)
 
     return (
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
