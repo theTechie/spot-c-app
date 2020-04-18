@@ -14,20 +14,19 @@ import { makeid } from "../utils/helpers";
 
 export default function QuarantineScreen() {
   const [selectedDays, setSelectedDays] = React.useState([
-    { start: "2020-04-12", end: "2020-04-19" , key:"abcd1234"},
+    { start: "2020-04-12", end: "2020-04-19", key: "abcd1234", deletable: false },
   ]);
   const CALENDAR = "CALENDAR";
   const DATE_SELECTOR = "DATE_SELECTOR";
   const [currentScreen, setCurrentScreen] = React.useState(CALENDAR);
 
 
-  const getQuarantineMarkedDays = (startDate,endDate,markedDates) => {
+  const getQuarantineMarkedDays = (startDate, endDate, markedDates) => {
     let deltaDays =
       (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24);
     let start = new Date(startDate);
     for (var i = 0; i <= deltaDays; i++) {
       start.setDate(startDate.getDate() + i);
-      console.log(start.getDate());
       markedDates[formatDate(start)] = {
         marked: true
       };
@@ -38,7 +37,7 @@ export default function QuarantineScreen() {
 
   const formatDate = (date, type) => {
     let dt = zeroPadNumber(date.getDate())
-    let month = zeroPadNumber(date.getMonth()+1)
+    let month = zeroPadNumber(date.getMonth() + 1)
 
     if (type == "IN")
       return (
@@ -48,18 +47,16 @@ export default function QuarantineScreen() {
       return date.getFullYear() + "-" + month + "-" + dt;
   };
 
-  const zeroPadNumber = (number)=>{
-    return number < 10 ? "0"+number : ""+number;
+  const zeroPadNumber = (number) => {
+    return number < 10 ? "0" + number : "" + number;
   }
 
-  const getMarkedDaysObject=(selectedDays)=>{
+  const getMarkedDaysObject = (selectedDays) => {
     let markedDates = {};
-    selectedDays.forEach(({start,end})=>{
+    selectedDays.forEach(({ start, end }) => {
       let startDate = new Date(Date.parse(start));
       let endDate = new Date(Date.parse(end));
-      console.log('startDate ',startDate);
-      console.log('endDate ',endDate);
-      markedDates = getQuarantineMarkedDays(startDate, endDate,markedDates);
+      markedDates = getQuarantineMarkedDays(startDate, endDate, markedDates);
     });
     return markedDates;
   }
@@ -128,36 +125,38 @@ export default function QuarantineScreen() {
             markedDates={markedDays}
           />
         ) : (
-          <AddQuarantineDates
-            selected={selectedDays}
-            onRemoveClicked={(index) => {
-              console.log("Remove selectedDays at index ",index);
-              selectedDays.splice(index, 1);
-              let newSelection = [];
-              selectedDays.forEach((s)=>{newSelection.push(s)})
-              setSelectedDays(newSelection);
-            }}
-            onDateRangeSelected={(sd, ed) => {
-              selectedDays.push({
-                'start' : sd,
-                'end' : ed,
-                'key' : makeid(4)
-              })
-              setSelectedDays(selectedDays);
-            }}
-          />
-        )}
+            <AddQuarantineDates
+              selected={selectedDays}
+              onRemoveClicked={(index) => {
+                selectedDays.splice(index, 1);
+                let newSelection = [];
+                selectedDays.forEach((s) => { newSelection.push(s) })
+                setSelectedDays(newSelection);
+              }}
+              onDateRangeSelected={(sd, ed) => {
+                selectedDays.push({
+                  'start': sd,
+                  'end': ed,
+                  'key': makeid(4),
+                  deletable: true
+                })
+                setSelectedDays(selectedDays);
+              }}
+            />
+          )}
       </View>
     </View>
   );
 }
+
+const capitalizeWord = word => word.charAt(0).toUpperCase() + word.slice(1)
 
 function ChooseStartAndEndDate({ type, date, month, onClick, key }) {
   return (
     <TouchableOpacity onPress={onClick} key={key}>
       <View style={{ marginTop: 12 }}>
         <Text style={styles.chooseYourDateTextStyle}>
-          {"Choose your " + type + " date"}
+          {capitalizeWord(type) + " date"}
         </Text>
         <Divider marginTop={8} />
         <View
@@ -192,6 +191,8 @@ function DateChip({ number, marginLeft }) {
   );
 }
 
+const canAddMoreQuarantineDates = dates => dates.length < 2
+
 function AddQuarantineDates({
   selected,
   onRemoveClicked,
@@ -225,20 +226,21 @@ function AddQuarantineDates({
       </Text>
       <View style={{ height: "100%" }}>
         <ScrollView style={{ height: "80%" }}>
-          {selected.map(({ start, end }, index) => {
+          {selected.map(({ start, end, deletable }, index) => {
             return <AddedQuarantineDateRange
-                start={start}
-                end={end}
-                onDeleteClick={() => {
-                  onRemoveClicked(index);
-                }}
-              />
+              key={`q_${index}`}
+              start={start}
+              end={end}
+              deletable={deletable}
+              onDeleteClick={() => onRemoveClicked(index)}
+            />
           })}
-          <AddMoreButton
-            onClick={() => {
-              setShowDatePicker(true);
-            }}
-          />
+          {canAddMoreQuarantineDates(selected) ?
+            <AddMoreButton
+              onClick={() => {
+                setShowDatePicker(true);
+              }}
+            /> : null}
         </ScrollView>
         <View style={{ height: "10%" }}>
           <Divider />
@@ -277,7 +279,7 @@ function AddMoreButton({ onClick }) {
   );
 }
 
-function AddedQuarantineDateRange({ start, end, onDeleteClick }) {
+function AddedQuarantineDateRange({ start, end, deletable, onDeleteClick }) {
   return (
     <View>
       <ChooseStartAndEndDate
@@ -290,7 +292,7 @@ function AddedQuarantineDateRange({ start, end, onDeleteClick }) {
         month={end.split("-")[1]}
         date={end.split("-")[2]}
       />
-      <DeleteButton onClick={onDeleteClick} />
+      {deletable ? <DeleteButton onClick={onDeleteClick} /> : null}
     </View>
   );
 }
@@ -322,7 +324,7 @@ function DeleteButton({ key, onClick }) {
 
 function ScreenHeader({ label, iconName, onClick }) {
   return (
-    <TouchableOpacity onPress={onClick} styles={{ marginTop: 18 }}>
+    <TouchableOpacity onPress={onClick}>
       <View style={styles.headerContainer}>
         <Text style={styles.text}>{label}</Text>
         <Ionicons
@@ -367,19 +369,16 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: "row",
     justifyContent: "center",
+    alignItems: "center",
   },
   contentContainer: {
     paddingTop: 15,
   },
   text: {
     fontSize: 18,
-    height: "100%",
-    alignContent: "center",
     color: "#1C1C1C",
     fontWeight: "bold",
-    marginTop: 1,
   },
-
   buttonStyle: {
     backgroundColor: "#FFCEDF",
     borderColor: "#909090",
