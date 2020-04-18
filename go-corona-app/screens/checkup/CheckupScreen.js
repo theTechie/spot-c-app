@@ -13,11 +13,14 @@ import WeightQuestion from './questions/Weight';
 import Thankyou from './questions/Thankyou';
 import CheckupResult from './questions/CheckupResult';
 import ViewPager from '@react-native-community/viewpager';
-import CheckupWho from './questions/CheckupWho';
-import CheckupGender from './questions/CheckupGender';
+
+import CheckupWho from './questions/CheckupWho'
+import CheckupGender from './questions/CheckupGender'
+import TravelScreenTwo from './questions/travel/ScreenTwo';
+import TravelScreenThree from './questions/travel/ScreenThree';
+import HowLongSinceSymptoms from './questions/HowLongSinceSymptoms';
 import HealthHistory from './questions/HealthHistory';
 import SymptomBreathlessNess from './questions/SymptomBreathlessNess.js';
-
 
 const formInitValues = {
   policyRead: false,
