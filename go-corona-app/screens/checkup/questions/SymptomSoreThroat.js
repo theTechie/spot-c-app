@@ -1,43 +1,14 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Divider, RadioButton } from 'react-native-paper';
+import { CheckBox } from 'react-native-elements';
 import TermsImage from '../../../assets/images/IntersectionTerms.svg';
 
 
-export default function SymptomBreathlessNess() {
-    const [checkedItems, setCheckedItems] = useState({asthma:false,highBP:false,kidneyDisease:false,heartDisease:false,lungDisease:false,stroke:false,diabetes:false,no:false});
+export default function SymptomSoreThroat() {
     const [values, setValues] = useState('first')
-    const [valueNext, setValueNext] = useState('wlfob')
-
-    const symptoms = [
-        {
-          name: 'While lying flat on bed',
-          value: 'wlfob'
-          
-        },
-        {
-          name: 'At Night',
-          value: 'an'
-          
-        },
-        {
-          name: 'Breathlessness that comes and goes',
-          value: 'btcg'
-         
-        },
-        {
-            name: 'Breathlessness while exercising',
-            value: 'bwe'
-           
-          },
-        {
-            name: 'Sudden feeling of breathlessness',
-            value: 'sfb'
-           
-         },
-        
-      ];
-
+    const [valueNext, setValueNext] = useState('Yes')
+    const [yesNo,setYesNo] = useState('y')
     
   return (
     <ScrollView>
@@ -46,7 +17,7 @@ export default function SymptomBreathlessNess() {
             <Text style={styles.title}>Please tell us about your symptoms</Text>
             <TermsImage style={styles.image} width="120" height="120" />
             </View>
-          <Text style={styles.textSty}>Are you feeling breathless?</Text> 
+          <Text style={styles.textSty}>Do you have a sore throat?</Text> 
           <Divider  />
           <View  style={styles.agreeContainer}>
           <RadioButton.Group
@@ -69,27 +40,50 @@ export default function SymptomBreathlessNess() {
           </View>
         </RadioButton.Group>
         </View>
-        <Text style={styles.textSty}>If yes, select one of the following?</Text> 
+        <Text style={styles.textSty}>Do you have nasal congestion?</Text> 
         <View  style={styles.agreeContainer}>
         <RadioButton.Group
         onValueChange={valueNext => setValueNext(valueNext)}
         value={valueNext}
          >
-        { symptoms.map((item)=>(
-        <View style={styles.agreeContainer} key={item.value}>
-        <View style={styles.radAlign} key={item.value}>
-         <RadioButton.Android value={item.value} color="#E03D51" uncheckedColor="#D2D2D2" />
-         <Text style={styles.radTxt}>{item.name}</Text>
+         <View style={styles.agreeContainer}>
+         <View style={styles.radAlign}>
+          <RadioButton.Android value="Yes" color="#E03D51" uncheckedColor="#D2D2D2" />
+          <Text style={styles.radTxt}>Yes</Text>
+          </View>
+          <Divider  />
          </View>
-         <Divider  />
-        </View>
-            )
-            )}
+        <View  style={styles.agreeContainer}>
+          <View style={styles.radAlign}>
+          <RadioButton.Android value="No" color="#E03D51" uncheckedColor="#D2D2D2" />
+          <Text style={styles.radTxt}>No</Text>
+          </View>
+          <Divider />
+        </View>  
       </RadioButton.Group>
-        
       </View>
-         
-        
+      <Text style={styles.textSty}>Have you lost a sense of taste or smell?</Text> 
+      <View  style={styles.agreeContainer}>
+      <RadioButton.Group
+      onValueChange={yesNo => setYesNo(yesNo)}
+      value={yesNo}
+       >
+       <View style={styles.agreeContainer}>
+       <View style={styles.radAlign}>
+        <RadioButton.Android value="y" color="#E03D51" uncheckedColor="#D2D2D2" />
+        <Text style={styles.radTxt}>Yes</Text>
+        </View>
+        <Divider  />
+       </View>
+      <View  style={styles.agreeContainer}>
+        <View style={styles.radAlign}>
+        <RadioButton.Android value="n" color="#E03D51" uncheckedColor="#D2D2D2" />
+        <Text style={styles.radTxt}>No</Text>
+        </View>
+        <Divider />
+      </View> 
+    </RadioButton.Group>
+    </View>
     </View>
 </ScrollView>
   );
