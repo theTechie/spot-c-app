@@ -14,11 +14,11 @@ import {RadioButton} from "react-native-paper";
 import Axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
 
-export default function International(props) {
-  const [yesChecked, setYesChecked] = React.useState(false);
+export default function International({questions,setValues}) {
+  const [yesChecked, setYesChecked] = React.useState(questions.internationTravel);
   const [searchResults, setSearchResults] = React.useState([]);
   const [selectedCountry, setSelectedCountry] = React.useState("");
-  const [addedCountries, setAddedCountries] = React.useState([]);
+  const [addedCountries, setAddedCountries] = React.useState(questions.visitedCountries);
 
   const onSearchCountries = (text) => {
     Axios.get(
@@ -40,6 +40,7 @@ export default function International(props) {
     addedCountries.forEach((a) => countries.push(a));
     countries.push(data);
     setAddedCountries(countries);
+    setValues({visitedCountries : countries})
   };
 
   const onRemoveClicked = (index) => {
@@ -50,6 +51,7 @@ export default function International(props) {
       }
     });
     setAddedCountries(addedCounts);
+    setValues({visitedCountries : countries})
   }
   return (
     <ScrollView style={styles.containerStyle}>
@@ -72,10 +74,11 @@ export default function International(props) {
         <View style={styles.radAlign}>
           <RadioButton.Android
             onPress={() => {
-              setYesChecked(false);
+              setYesChecked("no");
+              setValues({internationTravel: "no"})
             }}
             value={"No"}
-            status={!yesChecked ? "checked" : "unchecked"}
+            status={yesChecked === "no" ? "checked" : "unchecked"}
             color="#E03D51"
             uncheckedColor="#D2D2D2"
           />
@@ -87,10 +90,11 @@ export default function International(props) {
         <View style={styles.radAlign}>
         <RadioButton.Android
             onPress={() => {
-              setYesChecked(true);
+              setYesChecked("yes");
+              setValues({internationTravel: "yes"})
             }}
             value={"No"}
-            status={yesChecked ? "checked" : "unchecked"}
+            status={yesChecked === "yes" ? "checked" : "unchecked"}
             color="#E03D51"
             uncheckedColor="#D2D2D2"
           />
@@ -99,7 +103,7 @@ export default function International(props) {
 
         <Divider />
 
-        {yesChecked ? (
+        {yesChecked==="yes" ? (
           <View style={{ paddingBottom: 200 }}>
             <Text style={styles.subQuestionStyle}>
               If yes, then select the countries you visited before coming to India
