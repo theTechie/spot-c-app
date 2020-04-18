@@ -21,6 +21,10 @@ import TravelScreenThree from './questions/travel/ScreenThree';
 import HowLongSinceSymptoms from './questions/HowLongSinceSymptoms';
 import HealthHistory from './questions/HealthHistory';
 import SymptomBreathlessNess from './questions/SymptomBreathlessNess.js';
+import SymptomSoreThroat from './questions/SymptomSoreThroat.js';
+import SymptomBodyPain from './questions/SymptomBodyPain.js';
+import SymptomCough from './questions/SymptomCough.js';
+
 
 const formInitValues = {
   policyRead: false,
@@ -28,6 +32,8 @@ const formInitValues = {
   gender: null,
   healthHistory: null,
   breathlessSymp: null,
+  soreThroatSymp: null,
+  bodyPainSymp: null,
   age: 30,
   height: 160,
   weight: 68
@@ -68,6 +74,24 @@ const screens = [
       { name: 'breathlessSymp', value: formInitValues.breathlessSymp },
     ],
     component: SymptomBreathlessNess
+  },
+  {
+    questions: [
+      { name: 'soreThroatSymp', value: formInitValues.soreThroatSymp },
+    ],
+    component: SymptomSoreThroat
+  },
+  {
+    questions: [
+      { name: 'bodyPainSymp', value: formInitValues.bodyPainSymp },
+    ],
+    component: SymptomBodyPain
+  },
+  {
+    questions: [
+      { name: 'coughSymp', value: formInitValues.coughSymp },
+    ],
+    component: SymptomCough
   },
   {
     questions: [
