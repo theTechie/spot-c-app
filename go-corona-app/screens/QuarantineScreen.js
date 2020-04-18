@@ -2,6 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import * as WebBrowser from "expo-web-browser";
 import * as React from "react";
 import { StyleSheet, Text, View, Modal } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 import DateRangePicker from "../components/DateRangePicker";
 import {
   RectButton,
@@ -11,6 +12,7 @@ import {
 } from "react-native-gesture-handler";
 import { CalendarList } from "react-native-calendars";
 import { makeid } from "../utils/helpers";
+import Back from "../components/stepper/buttons/Back.js"
 
 export default function QuarantineScreen() {
   const [selectedDays, setSelectedDays] = React.useState([
@@ -79,7 +81,7 @@ export default function QuarantineScreen() {
       <Divider marginTop={12} />
       <View
         style={{
-          marginTop: 32,
+          marginTop: 20,
           flexDirection: "row",
           justifyContent: "center",
           flexWrap: "wrap",
@@ -200,8 +202,10 @@ function AddQuarantineDates({
   onDateRangeSelected,
 }) {
   const [showDatePicker, setShowDatePicker] = React.useState(false);
+  const navigation = useNavigation()
+
   return (
-    <View style={styles.addQuarantineDatesContainer}>
+    <View>
       <Modal visible={showDatePicker} transparent={true}>
         <View style={styles.modalContainerStyle}>
           <DateRangePicker
@@ -224,8 +228,8 @@ function AddQuarantineDates({
       >
         {"When in doubt, Self-Quarantine"}
       </Text>
-      <View style={{ height: "100%" }}>
-        <ScrollView style={{ height: "80%" }}>
+      <View style={{justifyContent: "space-around", height: "100%"}}>
+        <ScrollView>
           {selected.map(({ start, end, deletable }, index) => {
             return <AddedQuarantineDateRange
               key={`q_${index}`}
@@ -241,14 +245,8 @@ function AddQuarantineDates({
                 setShowDatePicker(true);
               }}
             /> : null}
+            <Back goToPreviousStep={() => navigation.navigate("Quarantine")} />
         </ScrollView>
-        <View style={{ height: "10%" }}>
-          <Divider />
-          <View style={{ padding: "2%", justifyContent: "space-between" }}>
-            <Text style={{ color: "blue", fontSize: 16 }}>{"< Back"}</Text>
-          </View>
-          <Divider />
-        </View>
       </View>
     </View>
   );
@@ -365,6 +363,7 @@ const styles = StyleSheet.create({
     height: "100%",
     flexDirection: "column",
     justifyContent: "flex-start",
+    paddingTop: 10
   },
   headerContainer: {
     flexDirection: "row",
