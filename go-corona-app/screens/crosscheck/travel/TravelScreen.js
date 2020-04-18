@@ -1,108 +1,64 @@
 import React, { useRef, useState } from 'react';
 import { StyleSheet, Alert, ProgressBarAndroid, ProgressViewIOS, Text, View, Image, ScrollView } from 'react-native';
-
-import Back from "../../components/stepper/buttons/Back";
-import Next from "../../components/stepper/buttons/Next";
-import Submit from "../../components/stepper/buttons/Submit";
-import Separator from "../../components/Separator";
-import Introduction from './Introduction';
-import Terms from './Terms';
-import HeightQuestion from './questions/Height';
-import AgeQuestion from './questions/Age';
-import WeightQuestion from './questions/Weight';
-import Thankyou from './questions/Thankyou';
-import CheckupResult from './questions/CheckupResult';
 import ViewPager from '@react-native-community/viewpager';
 
-import CheckupWho from './questions/CheckupWho'
-import CheckupGender from './questions/CheckupGender'
-import HowLongSinceSymptoms from './questions/HowLongSinceSymptoms';
-import HealthHistory from './questions/HealthHistory';
-import SymptomBreathlessNess from './questions/SymptomBreathlessNess.js';
+import Back from "../../../components/stepper/buttons/Back";
+import Next from "../../../components/stepper/buttons/Next";
+import Submit from "../../../components/stepper/buttons/Submit";
+import Separator from "../../../components/Separator";
+
+import International from './questions/International';
+import Domestic from './questions/Domestic';
+import Lockdown from './questions/Lockdown'
 
 const formInitValues = {
-  policyRead: false,
-  checkupfor: null,
-  gender: null,
-  healthHistory: null,
-  breathlessSymp: null,
-  age: 30,
-  height: 160,
-  weight: 68
+  internationTravel: "no",
+  visitedCountries: [],
+  domesticTravel: false,
+  airportsVisited: [],
+  hometown: null,
+  currentLocation: null,
+  modesOfTransport: []
 }
 
 const screens = [
   {
-    title: 'Introduction',
-    component: Introduction
-  },
-  {
-    title: 'Introduction',
-    component: Terms,
+    title: 'Travel',
+    component: International,
     questions: [
-      { name: 'policyRead', value: formInitValues.policyRead },
+      { name: 'internationTravel', value: formInitValues.internationTravel },
+      { name: 'visitedCountries', value: formInitValues.visitedCountries },
+      { name: 'domesticTravel', value: formInitValues.domesticTravel },
+      { name: 'airportsVisisted', value: formInitValues.airportsVisited }
     ]
   },
   {
-    component: CheckupWho,
+    title: 'Travel',
+    component: Domestic,
     questions: [
-      { name: 'checkupfor', value: formInitValues.checkupfor },
+      { name: 'domesticTravel', value: formInitValues.domesticTravel },
+      { name: 'airportsVisisted', value: formInitValues.airportsVisited }
     ]
   },
   {
-    component: CheckupGender,
+    title: 'Lockdown',
+    component: Lockdown,
     questions: [
-      { name: 'gender', value: formInitValues.gender },
+      { name: 'hometown', value: formInitValues.hometown },
+      { name: 'currentLocation', value: formInitValues.currentLocation },
+      { name: 'modesOfTransport', value: formInitValues.modesOfTransport }
     ]
-  },
-  {
-    questions: [
-      { name: 'healthHistory', value: formInitValues.healthHistory },
-    ],
-    component: HealthHistory
-  },
-  {
-    questions: [
-      { name: 'breathlessSymp', value: formInitValues.breathlessSymp },
-    ],
-    component: SymptomBreathlessNess
-  },
-  {
-    questions: [
-      { name: 'age', value: formInitValues.age },
-    ],
-    component: AgeQuestion
-  },
-  {
-    questions: [
-      { name: 'height', value: formInitValues.height },
-    ],
-    component: HeightQuestion
-  },
-  {
-    questions: [
-      { name: 'weight', value: formInitValues.weight },
-    ],
-    component: WeightQuestion
-  },
-  {
-    component: Thankyou
-  },
-  {
-    title: 'Result',
-    component: CheckupResult
   }
 ]
 
 
-
-export default function CheckupScreen() {
+export default function TravelScreen() {
   const viewPager = useRef(null);
   let [currentIndex, setCurrentIndex] = useState(0);
   let [formValues, setFormValues] = useState(formInitValues);
 
   let total = screens.length;
-  let title = screens[currentIndex].title || 'Patient';
+  let title = screens[currentIndex].title || 'Travel';
   const goToPreviousStep = () => {
     var i = currentIndex - 1;
     if (i >= 0) {
@@ -128,8 +84,8 @@ export default function CheckupScreen() {
     }
   }
   let progress = (currentIndex + 1) / (total)
-  let displayNext = currentIndex < total - 2;
-  let displaySubmit = currentIndex === total - 2;
+  let displayNext = currentIndex < total - 1;
+  let displaySubmit = currentIndex === total - 1;
   let displayPrevious = currentIndex > 0;
   let isNextDisabled = false;
   if (currentIndex === 1 && formValues['policyRead'] === false) {
@@ -171,7 +127,7 @@ export default function CheckupScreen() {
           />
         </View> : null}
         {displaySubmit ? <View>
-          <Submit onSubmit={() => { goToNextStep(); Alert.alert(JSON.stringify([formValues.age, formValues.height, formValues.weight])) }} />
+          <Submit onSubmit={() => { goToNextStep(); Alert.alert(JSON.stringify([formValues.internationTravel, formValues.domesticTravel, formValues.hometown, formValues.currentLocation])) }} />
         </View> : null}
       </View>
     </View>
