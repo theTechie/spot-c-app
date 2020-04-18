@@ -5,9 +5,6 @@ import Back from "../../components/stepper/buttons/Back";
 import Next from "../../components/stepper/buttons/Next";
 import Submit from "../../components/stepper/buttons/Submit";
 import Separator from "../../components/Separator";
-
-import StepList from '../../components/stepper/StepList';
-import Step from '../../components/stepper/Step';
 import Introduction from './Introduction';
 import Terms from './Terms';
 import HeightQuestion from './questions/Height';
@@ -16,17 +13,19 @@ import WeightQuestion from './questions/Weight';
 import Thankyou from './questions/Thankyou';
 import CheckupResult from './questions/CheckupResult';
 import ViewPager from '@react-native-community/viewpager';
-import ProgressBarContainer from '../../components/ProgressBar';
+
 import CheckupWho from './questions/CheckupWho'
 import CheckupGender from './questions/CheckupGender'
-import TravelScreenTwo from './questions/travel/ScreenTwo';
-import TravelScreenThree from './questions/travel/ScreenThree';
 import HowLongSinceSymptoms from './questions/HowLongSinceSymptoms';
+import HealthHistory from './questions/HealthHistory';
+import SymptomBreathlessNess from './questions/SymptomBreathlessNess.js';
 
 const formInitValues = {
   policyRead: false,
   checkupfor: null,
   gender: null,
+  healthHistory: null,
+  breathlessSymp: null,
   age: 30,
   height: 160,
   weight: 68
@@ -55,6 +54,18 @@ const screens = [
     questions: [
       { name: 'gender', value: formInitValues.gender },
     ]
+  },
+  {
+    questions: [
+      { name: 'healthHistory', value: formInitValues.healthHistory },
+    ],
+    component: HealthHistory
+  },
+  {
+    questions: [
+      { name: 'breathlessSymp', value: formInitValues.breathlessSymp },
+    ],
+    component: SymptomBreathlessNess
   },
   {
     questions: [

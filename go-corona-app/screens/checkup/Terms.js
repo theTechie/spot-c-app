@@ -9,8 +9,6 @@ import { CheckBox } from 'react-native-elements'
 
 export default function CheckupTerms({ setValues, questions }) {
   const [agree, setAgree] = useState(false)
-  const text = "Introduction"
-  const pageNo = 2;
   const setValue = (value) => {
     setAgree(value);
     var values = { name: questions[0].name, value }

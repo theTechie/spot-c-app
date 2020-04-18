@@ -15,6 +15,7 @@ import LoginScreen from './screens/LoginScreen';
 import CheckupQuestionnaire from "./screens/checkup/CheckupScreen";
 import TravelQuestionnaire from "./screens/crosscheck/travel/Questionnaire";
 import IntersectionCalculator from './screens/crosscheck/intersection/index';
+import { Provider as PaperProvider } from 'react-native-paper';
 
 const AppStack = createStackNavigator();
 
