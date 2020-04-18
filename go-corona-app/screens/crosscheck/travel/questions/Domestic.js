@@ -8,7 +8,7 @@ import { Input } from "react-native-elements";
 import Autocomplete from "react-native-autocomplete-input";
 
 export default function Domestic() {
-  const [yesSelected, setYesSelected] = React.useState(false);
+  const [yesSelected, setYesSelected] = React.useState("no");
 
   return (
     <ScrollView style={styles.containerStyle}>
@@ -33,10 +33,10 @@ export default function Domestic() {
             <View style={styles.radAlign}>
               <RadioButton.Android
                 onPress={() => {
-                  setYesSelected(false);
+                  setYesSelected("no");
                 }}
                 value={"No"}
-                status={!yesSelected ? "checked" : "unchecked"}
+                status={yesSelected ==="no" ? "checked" : "unchecked"}
                 color="#E03D51"
                 uncheckedColor="#D2D2D2"
               />
@@ -47,17 +47,17 @@ export default function Domestic() {
           <View style={styles.radAlign}>
             <RadioButton.Android
               onPress={() => {
-                setYesSelected(true);
+                setYesSelected("yes");
               }}
               value="Yes"
               color="#E03D51"
               uncheckedColor="#D2D2D2"
-              status={yesSelected ? "checked" : "unchecked"}
+              status={yesSelected ==="yes" ? "checked" : "unchecked"}
             />
             <Text>Yes</Text>
           </View>
         </RadioButton.Group>
-        <View style={ { opacity : yesSelected ? 1:0 }}>
+        <View style={ { opacity : yesSelected ==="yes" ? 1:0 }}>
         <Divider />
         <View>
           <Text style={styles.subQuestionStyle}>
