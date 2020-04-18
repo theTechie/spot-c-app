@@ -37,12 +37,7 @@ export default function SymptomSoreThroat() {
             
           },
           {
-            name: 'Nausea',
-            key: 'nausea'
-           
-          },
-          {
-              name: 'Vomiting or vomit like feeling',
+              name: 'Nausea or Vomiting',
               key: 'vomit'
              
             },
