@@ -5,9 +5,6 @@ import ProgressBarContainer from '../../components/ProgressBar'
 import CheckupIntroductionImage from '../../assets/images/CheckupIntroduction.svg'
 
 export default function Introduction() {
-  const text = "Introduction"
-  const pageNo = 1;
-
   return (
     <ScrollView>
       <View>
