@@ -32,7 +32,7 @@ export default class HomeScreen extends Component {
     }
     const location = await Location.getCurrentPositionAsync({});
     const { latitude, longitude } = location.coords;
-    const cspotsResponse = await Http.post(csoptsApi);
+    const cspotsResponse = await Http.get(csoptsApi);
     var points = this.getHeatMapPoints(cspotsResponse.data);
     this.setHeatMapPoints(latitude, longitude, points);
   }
