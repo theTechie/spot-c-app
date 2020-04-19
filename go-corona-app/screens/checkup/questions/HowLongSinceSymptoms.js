@@ -163,9 +163,10 @@ function Selector({ title, onItemSelected, selectedItem, marginTop }) {
           marginTop: "2%",
         }}
       >
-        {[1, 2, 3, 4, 5, "more"].map((d) => {
+        {[1, 2, 3, 4, 5, "more"].map((d, i) => {
           return (
             <TouchableOpacity
+              key={`more-${i}`}
               onPress={() => {
                 onItemSelected(d);
               }}
