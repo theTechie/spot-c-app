@@ -5,12 +5,19 @@ export default function(containerRef) {
   return useLinking(containerRef, {
     prefixes: [Linking.makeUrl('/')],
     config: {
+      Login: {
+        path: 'login',
+        screens: {
+          Login: 'Login'
+        }
+      },
       Root: {
         path: 'root',
         screens: {
-          Home: 'home',
-          Links: 'links',
-          Settings: 'settings',
+          Home: 'Home',
+          Quarantine: 'Quarantine',
+          Checkup: 'Checkup',
+          Info: 'Info'
         },
       },
     },

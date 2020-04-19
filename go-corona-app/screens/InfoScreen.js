@@ -1,31 +1,58 @@
 import { Ionicons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
-import * as React from 'react';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
+import Constants from 'expo-constants';
+
+import { logoutOfGoogleAsync } from '../utils/Login';
+import { getItem, removeItem } from '../utils/Storage';
+import { byPassLogin } from '../constants/DevSettings';
 
 export default function LinksScreen() {
+  const navigation = useNavigation()
+
+  const handleLogoutPress = async () => {
+    const loggedInuser = await getItem("login")
+    await logoutOfGoogleAsync(loggedInuser.accessToken)
+    await removeItem("login")
+    console.log('user logged out successfully!')
+
+    navigation.replace('Login')
+  }
+
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <OptionButton
-        icon="md-school"
-        label="Read the Expo documentation"
-        onPress={() => WebBrowser.openBrowserAsync('https://docs.expo.io')}
-      />
+    <View style={styles.container}>
+      <ScrollView>
+        <OptionButton
+          icon="md-school"
+          label="Helpline"
+          onPress={() => WebBrowser.openBrowserAsync('https://docs.expo.io')}
+        />
 
-      <OptionButton
-        icon="md-compass"
-        label="Read the React Navigation documentation"
-        onPress={() => WebBrowser.openBrowserAsync('https://reactnavigation.org')}
-      />
+        <OptionButton
+          icon="ios-chatboxes"
+          label="FAQs"
+          onPress={() => WebBrowser.openBrowserAsync('https://forums.expo.io')}
+        />
 
-      <OptionButton
-        icon="ios-chatboxes"
-        label="Ask a question on the forums"
-        onPress={() => WebBrowser.openBrowserAsync('https://forums.expo.io')}
-        isLastOption
-      />
-    </ScrollView>
+        {
+          byPassLogin ?
+            null :
+            <OptionButton
+              icon="ios-log-out"
+              label="Logout"
+              onPress={handleLogoutPress}
+              isLastOption
+            />
+        }
+
+      </ScrollView>
+      <View style={styles.appVersion}>
+        <Text style={styles.appVersionText}>{`Version ${Constants.manifest.version}`}</Text>
+      </View>
+    </View>
   );
 }
 
@@ -71,4 +98,12 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginTop: 1,
   },
+  appVersion: {
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  appVersionText: {
+    fontSize: 15,
+  }
 });
