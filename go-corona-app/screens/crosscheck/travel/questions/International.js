@@ -6,18 +6,19 @@ import {
   TouchableOpacity,
 } from "react-native-gesture-handler";
 import InternationalTravelImage from "../../../../assets/images/InternationalTravel.svg";
-import { RadioButton, Divider } from "react-native-material-ui";
+import { Divider } from "react-native-material-ui";
 import { Input } from "react-native-elements";
 import Http from "../../../../services/Http";
 import Autocomplete from "react-native-autocomplete-input";
+import {RadioButton} from "react-native-paper";
 import Axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
 
-export default function International(props) {
-  const [yesChecked, setYesChecked] = React.useState(false);
+export default function International({questions,setValues}) {
+  const [yesChecked, setYesChecked] = React.useState(questions.internationTravel);
   const [searchResults, setSearchResults] = React.useState([]);
   const [selectedCountry, setSelectedCountry] = React.useState("");
-  const [addedCountries, setAddedCountries] = React.useState([]);
+  const [addedCountries, setAddedCountries] = React.useState(questions.visitedCountries);
 
   const onSearchCountries = (text) => {
     Axios.get(
@@ -39,6 +40,7 @@ export default function International(props) {
     addedCountries.forEach((a) => countries.push(a));
     countries.push(data);
     setAddedCountries(countries);
+    setValues({visitedCountries : countries})
   };
 
   const onRemoveClicked = (index) => {
@@ -49,6 +51,7 @@ export default function International(props) {
       }
     });
     setAddedCountries(addedCounts);
+    setValues({visitedCountries : countries})
   }
   return (
     <ScrollView style={styles.containerStyle}>
@@ -68,33 +71,39 @@ export default function International(props) {
           <Divider />
         </View>
 
-        <View>
-          <RadioButton
-            value="No"
-            label="No"
-            onSelect={() => {
-              setYesChecked(false);
+        <View style={styles.radAlign}>
+          <RadioButton.Android
+            onPress={() => {
+              setYesChecked("no");
+              setValues({internationTravel: "no"})
             }}
-            checked={!yesChecked}
+            value={"No"}
+            status={yesChecked === "no" ? "checked" : "unchecked"}
+            color="#E03D51"
+            uncheckedColor="#D2D2D2"
           />
+          <Text>No</Text>
         </View>
 
         <Divider />
 
-        <View>
-          <RadioButton
-            value="Yes"
-            label="Yes"
-            onSelect={() => {
-              setYesChecked(true);
+        <View style={styles.radAlign}>
+        <RadioButton.Android
+            onPress={() => {
+              setYesChecked("yes");
+              setValues({internationTravel: "yes"})
             }}
-            checked={yesChecked}
+            value={"No"}
+            status={yesChecked === "yes" ? "checked" : "unchecked"}
+            color="#E03D51"
+            uncheckedColor="#D2D2D2"
           />
+          <Text>Yes</Text>
         </View>
 
         <Divider />
 
-        {yesChecked ? (
+        {yesChecked==="yes" ? (
           <View style={{ paddingBottom: 200 }}>
             <Text style={styles.subQuestionStyle}>
               If yes, then select the countries you visited before coming to India
@@ -177,6 +186,10 @@ const styles = StyleSheet.create({
   headerQuestTextStyle: {
     fontWeight: "bold",
     padding: "5%",
+  },
+  radAlign: {
+    flexDirection: "row",
+    alignItems: "center"
   },
 
   subQuestionStyle: {

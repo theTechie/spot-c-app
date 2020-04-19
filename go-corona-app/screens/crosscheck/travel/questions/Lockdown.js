@@ -7,6 +7,9 @@ import { Input, CheckBox } from "react-native-elements";
 import Autocomplete from "react-native-autocomplete-input";
 
 export default function Lockdown() {
+  const [local,setLocalSelected] = React.useState(false);
+  const [auto,setAutoSelected] = React.useState(false);
+  const [pv,setPvSelected] = React.useState(false);
   return (
     <ScrollView style={styles.containerStyle}>
       <View style={{ flexDirection: "column" }}>
@@ -42,16 +45,28 @@ export default function Lockdown() {
         <CheckBox
           title="Local train or Bus"
           containerStyle={styles.noBorder}
+          onPress={()=>{ setLocalSelected(!local)}}
+          checked={local}
+          checkedColor="#E03D51"
+          uncheckedColor="#D2D2D2"
         />
         <Divider />
         <CheckBox
           title="Auto Rickshaw or Cab"
           containerStyle={styles.noBorder}
+          checkedColor="#E03D51"
+          uncheckedColor="#D2D2D2"
+          onPress={()=>{ setAutoSelected(!auto)}}
+          checked={auto}
         />
         <Divider />
         <CheckBox
           title="Personal Vehicle"
           containerStyle={styles.noBorder}
+          checkedColor="#E03D51"
+          uncheckedColor="#D2D2D2"
+          onPress={()=>{ setPvSelected(!pv)}}
+          checked={pv}
         />
         <Divider />
       </View>
@@ -78,6 +93,7 @@ const styles = StyleSheet.create({
 
   noBorder: {
     borderWidth: 0
+    
   },
 
 });

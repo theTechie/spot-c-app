@@ -28,8 +28,6 @@ const screens = [
     questions: [
       { name: 'internationTravel', value: formInitValues.internationTravel },
       { name: 'visitedCountries', value: formInitValues.visitedCountries },
-      { name: 'domesticTravel', value: formInitValues.domesticTravel },
-      { name: 'airportsVisisted', value: formInitValues.airportsVisited }
     ]
   },
   {
@@ -65,6 +63,12 @@ export default function TravelScreen() {
       viewPager.current.setPage(i);
       setCurrentIndex(i)
     }
+  }
+
+  const convertToObject = (questionsArray)=>{
+    var o = {} ;
+    questionsArray.forEach((q)=>o[q.name]=q.value);
+    return o;
   }
   const setValues = (values) => {
     if (values && values.length) {
@@ -108,7 +112,7 @@ export default function TravelScreen() {
           {screens.map((q, k) => {
             let QScreen = q.component;
             return <View key={k} style={{ flex: 1 }}>
-              <QScreen questions={q.questions} setValues={setValues} ></QScreen>
+              <QScreen questions={convertToObject(q.questions)} setValues={setValues} ></QScreen>
             </View>
           })}
         </ViewPager>
@@ -132,6 +136,8 @@ export default function TravelScreen() {
       </View>
     </View>
   );
+
+  
 }
 
 const styles = StyleSheet.create({
