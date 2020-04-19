@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         letterSpacing: 0.6,
         textAlign: "center",
-        fontFamily: "Roboto",
+        // fontFamily: "Roboto",
         lineHeight: 24
     },
     button1: {
