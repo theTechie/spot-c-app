@@ -23,7 +23,6 @@ import SymptomSoreThroat from './questions/SymptomSoreThroat.js';
 import SymptomBodyPain from './questions/SymptomBodyPain.js';
 import SymptomCough from './questions/SymptomCough.js';
 
-
 const formInitValues = {
   policyRead: false,
   checkupfor: null,
@@ -34,7 +33,11 @@ const formInitValues = {
   bodyPainSymp: null,
   age: 30,
   height: 160,
-  weight: 68
+  weight: 68,
+  howLongSymptomsFever: 0,
+  howLongSymptomsCough: 0,
+  howLongSymptomsHeadache: 0,
+  howLongSymtomsProgression: "noChange"
 }
 
 const screens = [
@@ -63,9 +66,34 @@ const screens = [
   },
   {
     questions: [
+      { name: 'age', value: formInitValues.age },
+    ],
+    component: AgeQuestion
+  },
+  {
+    questions: [
+      { name: 'height', value: formInitValues.height },
+    ],
+    component: HeightQuestion
+  },
+  {
+    questions: [
+      { name: 'weight', value: formInitValues.weight },
+    ],
+    component: WeightQuestion
+  },
+  {
+    questions: [
       { name: 'healthHistory', value: formInitValues.healthHistory },
     ],
     component: HealthHistory
+  },
+  // Fever Screen
+  {
+    questions: [
+      { name: 'coughSymp', value: formInitValues.coughSymp },
+    ],
+    component: SymptomCough
   },
   {
     questions: [
@@ -85,29 +113,15 @@ const screens = [
     ],
     component: SymptomBodyPain
   },
+  // TODO: how long will be shown based on answers to previous questions (fever, cough and headache)
   {
     questions: [
-      { name: 'coughSymp', value: formInitValues.coughSymp },
+      { name: 'howLongSymptomsFever', value: formInitValues.howLongSymptomsFever },
+      { name: 'hwoLongSymptomsCough', value: formInitValues.howLongSymptomsCough },
+      { name: 'howLongSymptomsHeadache', value: formInitValues.howLongSymptomsHeadache },
+      { name: 'howLongSymptomsProgression', value: formInitValues.howLongSymptomsProgression },
     ],
-    component: SymptomCough
-  },
-  {
-    questions: [
-      { name: 'age', value: formInitValues.age },
-    ],
-    component: AgeQuestion
-  },
-  {
-    questions: [
-      { name: 'height', value: formInitValues.height },
-    ],
-    component: HeightQuestion
-  },
-  {
-    questions: [
-      { name: 'weight', value: formInitValues.weight },
-    ],
-    component: WeightQuestion
+    component: HowLongSinceSymptoms
   },
   {
     component: Thankyou
