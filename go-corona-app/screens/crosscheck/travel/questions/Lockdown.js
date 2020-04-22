@@ -5,13 +5,15 @@ import LockdownImage from "../../../../assets/images/Lockdown.svg";
 import { RadioButton, Divider } from "react-native-material-ui";
 import { Input, CheckBox } from "react-native-elements";
 import Autocomplete from "react-native-autocomplete-input";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 
 export default function Lockdown() {
   const [local,setLocalSelected] = React.useState(false);
   const [auto,setAutoSelected] = React.useState(false);
   const [pv,setPvSelected] = React.useState(false);
+  
   return (
-    <ScrollView style={styles.containerStyle}>
+    <KeyboardAwareScrollView style={styles.containerStyle}>
       <View style={{ flexDirection: "column" }}>
         <Text style={styles.headerQuestTextStyle}>
           Stranded due to the lockdown?
@@ -70,7 +72,7 @@ export default function Lockdown() {
         />
         <Divider />
       </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 }
 

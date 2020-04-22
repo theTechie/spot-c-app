@@ -5,14 +5,16 @@ import {
   RectButton,
   TouchableOpacity,
 } from "react-native-gesture-handler";
-import InternationalTravelImage from "../../../../assets/images/InternationalTravel.svg";
 import { Divider } from "react-native-material-ui";
 import { Input } from "react-native-elements";
-import Http from "../../../../services/Http";
 import Autocomplete from "react-native-autocomplete-input";
 import {RadioButton} from "react-native-paper";
 import Axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+
+import Http from "../../../../services/Http";
+import InternationalTravelImage from "../../../../assets/images/InternationalTravel.svg";
 
 export default function International({questions,setValues}) {
   const [yesChecked, setYesChecked] = React.useState(questions.internationTravel);
@@ -54,7 +56,7 @@ export default function International({questions,setValues}) {
     setValues({visitedCountries : countries})
   }
   return (
-    <ScrollView style={styles.containerStyle}>
+    <KeyboardAwareScrollView style={styles.containerStyle}>
       <View style={{ flexDirection: "column" }}>
         <Text style={styles.headerQuestTextStyle}>
           Have you travelled anywhere abroad in the last 20 days?
@@ -169,7 +171,7 @@ export default function International({questions,setValues}) {
           </View>)
           : null}
       </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 }
 
