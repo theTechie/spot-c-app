@@ -1,17 +1,19 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
 import { ScrollView, RectButton } from "react-native-gesture-handler";
-import DomesticTravelImage from "../../../../assets/images/DomesticTravel.svg";
 import { Divider } from "react-native-material-ui";
 import { RadioButton } from "react-native-paper";
 import { Input } from "react-native-elements";
 import Autocomplete from "react-native-autocomplete-input";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+
+import DomesticTravelImage from "../../../../assets/images/DomesticTravel.svg";
 
 export default function Domestic() {
   const [yesSelected, setYesSelected] = React.useState("no");
 
   return (
-    <ScrollView style={styles.containerStyle}>
+    <KeyboardAwareScrollView style={styles.containerStyle}>
       <View style={{ flexDirection: "column" }}>
         <Text style={styles.headerQuestTextStyle}>
           What about domestic travel ?
@@ -74,7 +76,7 @@ export default function Domestic() {
         </View>
         
       </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 }
 
