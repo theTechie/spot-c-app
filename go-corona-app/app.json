@@ -27,7 +27,7 @@
       "supportsTablet": true,
       "config": {
         "googleSignIn": {
-          "reservedClientId": "1073819097570-ohdo7gcv2i89ji8bmfcn11qlveh256mk.apps.googleusercontent.com"
+          "reservedClientId": "com.googleusercontent.apps.1073819097570-ohdo7gcv2i89ji8bmfcn11qlveh256mk"
         },
         "googleMapsApiKey": "AIzaSyAKHb_38OvPxccxowbkn63ejT1RrSwblHk"
       }
