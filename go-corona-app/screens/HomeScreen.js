@@ -22,7 +22,19 @@ export default class HomeScreen extends Component {
     error: null,
     popupVisibility: true
   }
+
   map = null;
+
+  fetchHeatmapFromApi = async () => {
+    const exposed = await Http.get(`${csoptsApi}/exposed`);
+    const exposedPoints = exposed.data.map(ed => ({...ed, status: 2}))
+
+    const positive = await Http.get(`${csoptsApi}/positive`);
+    const positivePoints = positive.data.map(pd => ({...pd, status: 1}))
+
+    return exposedPoints.concat(positivePoints)
+  }
+
   async componentDidMount() {
     let { status } = await Location.requestPermissionsAsync();
     if (status !== 'granted') {
@@ -32,9 +44,16 @@ export default class HomeScreen extends Component {
     }
     const location = await Location.getCurrentPositionAsync({});
     const { latitude, longitude } = location.coords;
-    const cspotsResponse = await Http.get(csoptsApi);
-    var points = this.getHeatMapPoints(cspotsResponse.data);
-    this.setHeatMapPoints(latitude, longitude, points);
+
+    try {
+      const heatMapData = await this.fetchHeatmapFromApi()
+      const points = this.getHeatMapPoints(heatMapData);
+
+      this.setHeatMapPoints(latitude, longitude, points);
+    } catch (error) {
+      console.log("Fetching heatmap failed:", error)
+      this.setState({ loading: false })
+    }
   }
 
   onMapReady = () => {
