@@ -3,6 +3,8 @@ import * as Location from 'expo-location';
 import React, { Component, useState, useEffect, useRef } from 'react';
 import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import { useNavigation } from '@react-navigation/native';
+
 import Button from '../components/button/Button';
 import GooglePlacesInput from '../components/map/Places';
 import Point from '../components/map/Point';
@@ -20,6 +22,7 @@ export default function HomeScreen() {
   const [points, setPoints] = useState([])
   const [error, setError] = useState(false)
   const [popupVisibility, setPopupVisibility] = useState(true)
+  const navigation = useNavigation()
   const map = useRef(null)
 
   useEffect(() => {
@@ -30,21 +33,33 @@ export default function HomeScreen() {
         setError('Location permission is needed')
         return;
       }
-      const location = await Location.getCurrentPositionAsync({});
-      const { latitude, longitude } = location.coords;
-
-      try {
-        const heatMapData = await fetchHeatmapFromApi()
-        const points = getHeatMapPoints(heatMapData);
-
-        setHeatMapPoints(latitude, longitude, points);
-      } catch (error) {
-        console.log("Fetching heatmap failed:", error)
-        setLoading(false)
-      }
     }
     init()
   }, [])
+
+  // fetch heatmap data everytime we navigate to Map View
+  useEffect(() => {
+    const focusSubscription = navigation.addListener('focus', async () => {
+      await updateMapData()
+    });
+
+    return () => focusSubscription.remove()
+  }, [navigation.isFocused])
+
+  updateMapData = async () => {
+    try {
+      const location = await Location.getCurrentPositionAsync({});
+      const { latitude, longitude } = location.coords;
+
+      const heatMapData = await fetchHeatmapFromApi()
+      const points = getHeatMapPoints(heatMapData);
+
+      setHeatMapPoints(latitude, longitude, points);
+    } catch (error) {
+      console.log("Fetching heatmap failed:", error)
+      setLoading(false)
+    }
+  }
 
   fetchHeatmapFromApi = async () => {
     const exposed = await Http.get(`${csoptsApi}/exposed`);
