@@ -1,8 +1,10 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Location from 'expo-location';
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect, useRef } from 'react';
 import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import { useNavigation } from '@react-navigation/native';
+
 import Button from '../components/button/Button';
 import GooglePlacesInput from '../components/map/Places';
 import Point from '../components/map/Point';
@@ -14,55 +16,80 @@ import Http from '../services/Http';
 const latitudeDelta = 0.2;
 const longitudeDelta = 0.1;
 
-export default class HomeScreen extends Component {
-  state = {
-    loading: true,
-    region: null,
-    points: [],
-    error: null,
-    popupVisibility: true
-  }
-  map = null;
-  async componentDidMount() {
-    let { status } = await Location.requestPermissionsAsync();
-    if (status !== 'granted') {
-      // TODO: move to string constants
-      this.setState({ error: 'Location permission is needed' })
-      return;
+export default function HomeScreen() {
+  const [loading, setLoading] = useState(true)
+  const [region, setRegion] = useState(null)
+  const [points, setPoints] = useState([])
+  const [error, setError] = useState(false)
+  const [popupVisibility, setPopupVisibility] = useState(true)
+  const navigation = useNavigation()
+  const map = useRef(null)
+
+  useEffect(() => {
+    const init = async () => {
+      let { status } = await Location.requestPermissionsAsync();
+      if (status !== 'granted') {
+        // TODO: move to string constants
+        setError('Location permission is needed')
+        return;
+      }
     }
-    const location = await Location.getCurrentPositionAsync({});
-    const { latitude, longitude } = location.coords;
-    const cspotsResponse = await Http.get(csoptsApi);
-    var points = this.getHeatMapPoints(cspotsResponse.data);
-    this.setHeatMapPoints(latitude, longitude, points);
+    init()
+  }, [])
+
+  // fetch heatmap data everytime we navigate to Map View
+  useEffect(() => {
+    const focusSubscription = navigation.addListener('focus', async () => {
+      await updateMapData()
+    });
+
+    return () => focusSubscription.remove()
+  }, [navigation.isFocused])
+
+  updateMapData = async () => {
+    try {
+      const location = await Location.getCurrentPositionAsync({});
+      const { latitude, longitude } = location.coords;
+
+      const heatMapData = await fetchHeatmapFromApi()
+      const points = getHeatMapPoints(heatMapData);
+
+      setHeatMapPoints(latitude, longitude, points);
+    } catch (error) {
+      console.log("Fetching heatmap failed:", error)
+      setLoading(false)
+    }
+  }
+
+  fetchHeatmapFromApi = async () => {
+    const exposed = await Http.get(`${csoptsApi}/exposed`);
+    const exposedPoints = exposed.data.map(ed => ({ ...ed, status: 2 }))
+
+    const positive = await Http.get(`${csoptsApi}/positive`);
+    const positivePoints = positive.data.map(pd => ({ ...pd, status: 1 }))
+
+    return exposedPoints.concat(positivePoints)
   }
 
   onMapReady = () => {
-    this.map.animateToRegion(this.state.region);
+    map.current.animateToRegion(region);
   }
 
-  setHeatMapPoints(latitude, longitude, points) {
-    this.setState({
-      region: {
-        latitude,
-        longitude,
-        latitudeDelta,
-        longitudeDelta
-      },
-      loading: false,
-      points
-    });
-  }
-
-  getHeatMapPoints(data) {
-    return data;
-  }
-
-  onRegionChangeComplete = (region) => {
-    this.setState({
-      region
+  setHeatMapPoints = (latitude, longitude, points) => {
+    setRegion({
+      latitude,
+      longitude,
+      latitudeDelta,
+      longitudeDelta
     })
+    setLoading(false)
+    setPoints(points)
   }
+
+  getHeatMapPoints = (data) => {
+    return data
+  }
+
   onLocationSelect = (location) => {
     const region = {
       latitude: location.lat,
@@ -70,56 +97,18 @@ export default class HomeScreen extends Component {
       latitudeDelta,
       longitudeDelta
     }
+
     setTimeout(() => {
-      this.map.animateToRegion(region);
+      map.current.animateToRegion(region);
     }, 0);
   }
 
-  togglePopup() {
-    const { popupVisibility } = this.state
-    this.setState({ popupVisibility: !popupVisibility })
-  }
+  togglePopup = () => setPopupVisibility(!popupVisibility)
 
-  render() {
-    const { loading, points, region } = this.state;
-    return (
-      <View style={styles.container}>
-        {this.state.loading ?
-          <ActivityIndicator></ActivityIndicator> :
-          <>
-            <View style={styles.searchInput}>
-              <GooglePlacesInput onLocationSelect={this.onLocationSelect}></GooglePlacesInput>
-            </View>
-            <MapView
-              maxZoomLevel={14}
-              showsBuildings={true}
-              ref={(ref) => { this.map = ref }}
-              provider={PROVIDER_GOOGLE}
-              onMapReady={this.onMapReady}
-              showsUserLocation={true}
-              showsMyLocationButton={false}
-              onRegionChangeComplete={this.onRegionChangeComplete}
-              style={[styles.map]}
-            >
-              {points.map((i, key) =>
-                <Point point={i} region={region} key={key}></Point>
-              )}
-            </MapView>
-            {this.renderShowLocationButton()}
-            <Popup isVisible={this.state.popupVisibility}>
-              <Text style={PopupStyles.question}>{"Are you currently suffering from any kind of illness ?"}</Text>
-              <Button onPress={() => this.togglePopup()} label={"I'm not sure"} style={PopupStyles.button1} labelStyle={PopupStyles.buttonlabel1} />
-              <Button onPress={() => this.togglePopup()} label={"Mark myself safe"} style={PopupStyles.button2} labelStyle={PopupStyles.buttonlabel2} />
-            </Popup>
-          </>
-        }
-      </View>
-    );
-  }
 
   goToCurrentPoition = async () => {
     const location = await Location.getCurrentPositionAsync({});
-    this.map.animateToRegion({ ...location.coords, latitudeDelta, longitudeDelta });
+    map.current.animateToRegion({ ...location.coords, latitudeDelta, longitudeDelta });
   }
 
   renderShowLocationButton = () => {
@@ -134,7 +123,41 @@ export default class HomeScreen extends Component {
       </TouchableOpacity>
     )
   }
-}
+
+  return (
+    <View style={styles.container}>
+      {loading ?
+        <ActivityIndicator></ActivityIndicator> :
+        <>
+          <View style={styles.searchInput}>
+            <GooglePlacesInput onLocationSelect={onLocationSelect}></GooglePlacesInput>
+          </View>
+          <MapView
+            maxZoomLevel={14}
+            showsBuildings={true}
+            ref={map}
+            provider={PROVIDER_GOOGLE}
+            onMapReady={onMapReady}
+            showsUserLocation={true}
+            showsMyLocationButton={false}
+            onRegionChangeComplete={region => setRegion(region)}
+            style={[styles.map]}
+          >
+            {points.map((i, key) =>
+              <Point point={i} region={region} key={key}></Point>
+            )}
+          </MapView>
+          {renderShowLocationButton()}
+          <Popup isVisible={popupVisibility}>
+            <Text style={PopupStyles.question}>{"Are you currently suffering from any kind of illness ?"}</Text>
+            <Button onPress={() => this.togglePopup()} label={"I'm not sure"} style={PopupStyles.button1} labelStyle={PopupStyles.buttonlabel1} />
+            <Button onPress={() => this.togglePopup()} label={"Mark myself safe"} style={PopupStyles.button2} labelStyle={PopupStyles.buttonlabel2} />
+          </Popup>
+        </>
+      }
+    </View>
+  );
+};
 
 HomeScreen.navigationOptions = {
   header: null,
