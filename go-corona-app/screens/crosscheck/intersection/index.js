@@ -2,6 +2,7 @@
 import React, { useRef, useState } from 'react';
 import { StyleSheet, Alert, ProgressBarAndroid, ProgressViewIOS, Text, View, Image, ScrollView, ActivityIndicator } from 'react-native';
 import ViewPager from '@react-native-community/viewpager';
+import { useNavigation } from '@react-navigation/native';
 
 import Back from "../../../components/stepper/buttons/Back";
 import Next from "../../../components/stepper/buttons/Next";
@@ -25,13 +26,15 @@ const screens = [
   },
   {
     id: 'Terms',
-    title: 'Introduction',
+    title: 'Terms',
     component: Terms,
     questions: [
       { name: 'policyRead', value: formInitValues.policyRead },
     ]
   },
   {
+    id: 'UploadData',
+    title: 'Upload Data',
     component: UploadData,
     questions: [
       { name: 'isDataUploaded', value: formInitValues.isDataUploaded },
@@ -40,24 +43,21 @@ const screens = [
   {
     component: Thankyou
   },
-  // {
-  //   title: 'Result',
-  //   component: CheckupResult
-  // }
 ]
 
 
 
 export default function IntersectionScreen() {
   const viewPager = useRef(null);
-  let [currentIndex, setCurrentIndex] = useState(0);
-  let [isLoading, setLoading] = useState(false);
-  let [result, setResult] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isLoading, setLoading] = useState(false);
+  const [result, setResult] = useState(null);
+  const navigation = useNavigation()
 
-  let [formValues, setFormValues] = useState(formInitValues);
+  const [formValues, setFormValues] = useState(formInitValues);
 
-  let total = screens.length;
-  let title = screens[currentIndex].title || 'Intersection';
+  const total = screens.length;
+  const title = screens[currentIndex].title || 'Intersection';
 
   //#region page selection
   const goToPreviousStep = () => {
@@ -83,19 +83,7 @@ export default function IntersectionScreen() {
 
   // TODO: submit all values
   const submitForm = async () => {
-    setLoading(true);
-    let data = 0;
-    try {
-      let data = await Http.post(checkup, formValues)
-      console.log('data', data);
-      setResult(data);
-    } catch (res) {
-      // TODO: show erro info
-      console.log('error in submitting', res)
-      setResult(10);
-    }
-    setLoading(false);
-    goToNextStep();
+    navigation.goBack()
   }
   //#endregion page selection
 
@@ -118,7 +106,9 @@ export default function IntersectionScreen() {
   let displayPrevious = currentIndex > 0;
   let isNextDisabled = false;
   let currentComponent = screens[currentIndex];
-  if (currentComponent.id === 'Terms' && formValues['policyRead'] === false) {
+
+  if (currentComponent.id === 'Terms' && formValues['policyRead'] === false ||
+    currentComponent.id === 'UploadData' && formValues['isDataUploaded'] === false) {
     isNextDisabled = true
   }
 
@@ -163,7 +153,7 @@ export default function IntersectionScreen() {
             />
           </View> : null}
           {displaySubmit ? <View>
-            <Submit onSubmit={() => { submitForm() }} />
+            <Submit label="Done" onSubmit={() => { submitForm() }} />
           </View> : null}
         </View>
       </View>

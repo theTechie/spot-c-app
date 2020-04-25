@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { CheckBox } from 'react-native-elements'
@@ -9,12 +9,11 @@ import TermsImage from '../../../assets/images/IntersectionTerms.svg'
 
 export default function IntersectionTerms({ questions, setValues }) {
   const [agree, setAgree] = useState(false)
-  const setValue = (value) => {
-    setAgree(value);
-    var values = { name: questions[0].name, value }
-    setValues([values])
-  }
 
+  useEffect(() => {
+    var values = { name: questions[0].name, value: agree }
+    setValues([values])
+  }, [agree])
 
   return (
     <ScrollView>
@@ -31,7 +30,7 @@ export default function IntersectionTerms({ questions, setValues }) {
           </Text>
         </View>
         <View style={styles.agreeContainer}>
-          <CheckBox containerStyle={{ borderWidth: 0 }} title="I read and accept the Terms of Service and Privay Policy" value="agree" checked={agree} onPress={() => setValue(!agree)} />
+          <CheckBox containerStyle={{ borderWidth: 0 }} title="I read and accept the Terms of Service and Privay Policy" value="agree" checked={agree} onPress={() => setAgree(!agree)} />
         </View>
       </View>
     </ScrollView>
@@ -50,7 +49,7 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   introduction: {
-    margin: 30,
+    margin: "5%",
     marginBottom: 0,
   },
   title: {

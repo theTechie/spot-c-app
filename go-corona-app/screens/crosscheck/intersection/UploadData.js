@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, Platform } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 import * as WebBrowser from 'expo-web-browser';
@@ -16,16 +16,15 @@ import { intersectionApi } from '../../../constants/AppSettings';
 
 import { unzipArchive, getLocationHistoryFile, filterJsonData, binHistoryData } from '../../../utils/ProcessData'
 
-export default function UploadDataScreen() {
+export default function UploadDataScreen({ questions, setValues }) {
     const [uploadedFileMeta, setUploadedFileMeta] = useState(null)
     const [uploadInProgress, setUploadInProgress] = useState(false)
     const [isDataUploaded, setIsDataUploaded] = useState(false)
 
-    const setValue = (value) => {
-        setAgree(value);
-        var values = { name: questions[0].name, value }
+    useEffect(() => {
+        var values = { name: questions[0].name, value: isDataUploaded }
         setValues([values])
-    }
+    }, [isDataUploaded])
 
     const pickZipFile = async () => await DocumentPicker.getDocumentAsync({ type: 'application/zip' })
 

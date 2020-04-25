@@ -20,8 +20,8 @@ export default function CrosscheckIntrodctionScreen() {
             a person who stood next to you on a local train/bus or even a cab driver.
             This increases the probablity of you getting infected.
             Let us know the locations you have been to the last 30 days using Google maps.
-            Go through our tutorial on how to downlaod your location history from Google and upload it back here on our calculator.
-        </Text>
+            Go through our tutorial on how to downlaod your location history from Google and upload it back here on our calculator. {"\n"}
+          </Text>
         </View>
       </View>
     </ScrollView>
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   introduction: {
-    margin: 40,
+    margin: "5%",
   },
   title: {
     fontSize: 18,
