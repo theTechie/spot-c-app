@@ -60,30 +60,62 @@ const getBinEntry = (roundedDate) => {
 }
 
 // TODO: need to be generated using uuid; and stored securely on the device
-const UserLocationId = 'aanc-ijsu-9198-aisd'
+const UserLocationId = 'test-gagan-1'
+
+// {  
+//    "id" : "p1",
+//    "location_history" : [ 
+//        { "timeslot": "00.00.01.15.2020", "lat" : "12.3456","long" : "13.456", "status" : "unknown"},
+//        { "timeslot": "00.10.01.15.2020", "lat" : "13.3456","long" : "14.456", "status" : "unknown"}
+//    ]
+// }
 
 const formatData = data => {
     return {
-        UserLocationId,
-        Location: {
-            Latitude: data.latitudeE7,
-            Longitude: data.longitudeE7,
-            ts: data.timestampMs
-        }
+        timeslot: getBinEntry(roundToNearest10Min(data.timestampMs)),
+        lat: data.latitudeE7,
+        long: data.longitudeE7,
+        status: "unknown"
     }
 }
 
 export async function binHistoryData(data) {
-    const binnedData = data.reduce((acc, d) => {
-        const binEntry = getBinEntry(roundToNearest10Min(d.timestampMs))
-        return {
-            ...acc,
-            [binEntry]: acc[binEntry] ? acc[binEntry].concat(formatData(d)) : [formatData(d)]
-        }
-    }, {})
+    // const binnedData = data.reduce((acc, d) => {
+    //     const binEntry = getBinEntry(roundToNearest10Min(d.timestampMs))
+    //     return {
+    //         ...acc,
+    //         [binEntry]: acc[binEntry] ? acc[binEntry].concat(formatData(d)) : [formatData(d)]
+    //     }
+    // }, {})
+    const formattedData = data.map(formatData)
 
-    return binnedData
+    return { id: UserLocationId, location_history: formattedData }
 }
+
+// NOTE: old way of binning which is not followed in the current version of the API; might need it in future
+
+// const formatData = data => {
+//     return {
+//         UserLocationId,
+//         Location: {
+//             Latitude: data.latitudeE7,
+//             Longitude: data.longitudeE7,
+//             ts: data.timestampMs
+//         }
+//     }
+// }
+
+// export async function binHistoryData(data) {
+//     const binnedData = data.reduce((acc, d) => {
+//         const binEntry = getBinEntry(roundToNearest10Min(d.timestampMs))
+//         return {
+//             ...acc,
+//             [binEntry]: acc[binEntry] ? acc[binEntry].concat(formatData(d)) : [formatData(d)]
+//         }
+//     }, {})
+
+//     return binnedData
+// }
 
 export async function unzipArchive(fileUri) {
     const fileInBinary = await getFileInBinary(fileUri)

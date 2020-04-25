@@ -5,18 +5,20 @@ import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { CheckBox } from 'react-native-elements'
 
-import ProgressBarContainer from '../../../components/ProgressBar';
 import TermsImage from '../../../assets/images/IntersectionTerms.svg'
 
-export default function CrosscheckTerms({ onAgree }) {
+export default function IntersectionTerms({ questions, setValues }) {
   const [agree, setAgree] = useState(false)
-  const text = "Patient"
-  const pageNo = 2;
+  const setValue = (value) => {
+    setAgree(value);
+    var values = { name: questions[0].name, value }
+    setValues([values])
+  }
+
 
   return (
     <ScrollView>
       <View style={styles.container}>
-        <ProgressBarContainer textOnTop={text} currPage={pageNo} totalPages={3} />
         <TermsImage style={styles.image} width="200" height="200" />
         <View style={styles.introduction}>
           <Text style={styles.title}>Terms of Service</Text>
@@ -29,7 +31,7 @@ export default function CrosscheckTerms({ onAgree }) {
           </Text>
         </View>
         <View style={styles.agreeContainer}>
-          <CheckBox containerStyle={{ borderWidth: 0 }} title="I read and accept the Terms of Service and Privay Policy" value="agree" checked={agree} onPress={() => setAgree(!agree)} />
+          <CheckBox containerStyle={{ borderWidth: 0 }} title="I read and accept the Terms of Service and Privay Policy" value="agree" checked={agree} onPress={() => setValue(!agree)} />
         </View>
       </View>
     </ScrollView>

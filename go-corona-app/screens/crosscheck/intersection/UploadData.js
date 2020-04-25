@@ -5,19 +5,26 @@ import * as DocumentPicker from 'expo-document-picker';
 import * as WebBrowser from 'expo-web-browser';
 import * as FileSystem from 'expo-file-system';
 
-import ProgressBarContainer from '../../../components/ProgressBar';
 import CustomButton from '../../../components/button/index'
 import QuestionIcon from '../../../assets/images/Question.svg'
 import LinkIcon from '../../../assets/images/Link.svg'
 import UploadIcon from '../../../assets/images/Upload.svg'
 import TickIcon from '../../../assets/images/Tick.svg'
 import Separator from '../../../components/Separator';
+import Http from '../../../services/Http'
+import { intersectionApi } from '../../../constants/AppSettings';
 
 import { unzipArchive, getLocationHistoryFile, filterJsonData, binHistoryData } from '../../../utils/ProcessData'
 
 export default function UploadDataScreen() {
     const [uploadedFileMeta, setUploadedFileMeta] = useState(null)
     const [uploadInProgress, setUploadInProgress] = useState(false)
+
+    const setValue = (value) => {
+        setAgree(value);
+        var values = { name: questions[0].name, value }
+        setValues([values])
+    }
 
     const pickZipFile = async () => await DocumentPicker.getDocumentAsync({ type: 'application/zip' })
 
@@ -55,8 +62,17 @@ export default function UploadDataScreen() {
             if (json_file) {
                 const filteredTimestamps = await filterJsonData(json_file)
                 const binnedData = await binHistoryData(filteredTimestamps)
-                console.log(binnedData)
-                //TODO: API Integration
+
+                try {
+                    const dataUploaded = await Http.post(`${intersectionApi}`, JSON.stringify(binnedData), {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    console.log("data uploaded for: ", dataUploaded.data)
+                } catch (error) {
+                    console.log("uploading intersection data failed: ", error)
+                }
 
             } else {
                 console.log('Could not find Location History file')
@@ -66,13 +82,9 @@ export default function UploadDataScreen() {
         setUploadInProgress(false)
     }
 
-    const text = "Patient"
-    const pageNo = 3;
-
     return (
         <ScrollView>
             <View style={styles.viewContainer}>
-                <ProgressBarContainer textOnTop={text} currPage={pageNo} totalPages={3} />
                 <View style={styles.container}>
                     <View style={styles.sectionContainer}>
                         <Text style={styles.title}>Run the tutorial and download data</Text>
