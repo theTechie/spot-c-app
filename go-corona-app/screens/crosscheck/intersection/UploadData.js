@@ -70,6 +70,10 @@ export default function UploadDataScreen({ questions, setValues }) {
                         }
                     });
                     console.log("data uploaded for: ", dataUploaded.data)
+
+                    // fire and forget to start intersection calculation
+                    Http.get(`${intersectionApi}`).then(resp => console.log('intersection calculation - ', resp.data))
+
                     setIsDataUploaded(true)
                 } catch (error) {
                     console.log("uploading intersection data failed: ", error)
