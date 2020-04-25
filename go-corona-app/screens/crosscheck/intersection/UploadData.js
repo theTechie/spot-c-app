@@ -19,6 +19,7 @@ import { unzipArchive, getLocationHistoryFile, filterJsonData, binHistoryData } 
 export default function UploadDataScreen() {
     const [uploadedFileMeta, setUploadedFileMeta] = useState(null)
     const [uploadInProgress, setUploadInProgress] = useState(false)
+    const [isDataUploaded, setIsDataUploaded] = useState(false)
 
     const setValue = (value) => {
         setAgree(value);
@@ -70,6 +71,7 @@ export default function UploadDataScreen() {
                         }
                     });
                     console.log("data uploaded for: ", dataUploaded.data)
+                    setIsDataUploaded(true)
                 } catch (error) {
                     console.log("uploading intersection data failed: ", error)
                 }
@@ -80,6 +82,20 @@ export default function UploadDataScreen() {
 
         }
         setUploadInProgress(false)
+    }
+
+    const getUploadMessage = () => {
+        let message = ''
+
+        if (uploadInProgress) {
+            message = "Processing..."
+        } else if (isDataUploaded) {
+            message = "Data uploaded successfully!"
+        } else {
+            message = Platform.OS === "ios" ? "Please select the takeout-xx.zip" : "Please select Location History.json"
+        }
+
+        return <Text style={styles.uploadTypeMessage}>{message}</Text>
     }
 
     return (
@@ -113,7 +129,7 @@ export default function UploadDataScreen() {
                                 onPress={handleUploadFilePress}
                             />
                         </View>
-                        <Text style={styles.uploadTypeMessage}>{Platform.OS === "ios" ? "Please select the takeout-xx.zip" : "Please select Location History.json"}</Text>
+                        {getUploadMessage()}
                     </View>
                 </View>
             </View>
