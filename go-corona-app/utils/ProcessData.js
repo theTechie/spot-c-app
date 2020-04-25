@@ -49,19 +49,6 @@ const roundToNearest10Min = (tsMs) => {
     return roundedDate
 }
 
-const getBinEntry = (roundedDate) => {
-    const day = `${roundedDate.getDate()}`.padStart(2, '0')
-    const month = `${roundedDate.getMonth() + 1}`.padStart(2, '0')
-    const year = `${roundedDate.getFullYear()}`
-    const hours = `${roundedDate.getHours()}`.padStart(2, '0')
-    const minutes = `${roundedDate.getMinutes()}`.padStart(2, '0')
-
-    return `${day}:${month}:${year}:${hours}:${minutes}:00`
-}
-
-// TODO: need to be generated using uuid; and stored securely on the device
-const UserLocationId = 'test-gagan-1'
-
 // {  
 //    "id" : "p1",
 //    "location_history" : [ 
@@ -69,6 +56,19 @@ const UserLocationId = 'test-gagan-1'
 //        { "timeslot": "00.10.01.15.2020", "lat" : "13.3456","long" : "14.456", "status" : "unknown"}
 //    ]
 // }
+
+const getBinEntry = (roundedDate) => {
+    const day = `${roundedDate.getDate()}`.padStart(2, '0')
+    const month = `${roundedDate.getMonth() + 1}`.padStart(2, '0')
+    const year = `${roundedDate.getFullYear()}`
+    const hours = `${roundedDate.getHours()}`.padStart(2, '0')
+    const minutes = `${roundedDate.getMinutes()}`.padStart(2, '0')
+
+    return `${hours}.${minutes}.${month}.${day}.${year}`
+}
+
+// TODO: need to be generated using uuid; and stored securely on the device
+const UserLocationId = 'test-gagan-1'
 
 const formatData = data => {
     return {
