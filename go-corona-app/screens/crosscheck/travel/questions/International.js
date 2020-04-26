@@ -138,32 +138,32 @@ export default function International({ questions, setValues }) {
                 );
               }}
             />
-            <RectButton
-              style={{
-                width: 112,
-                height: 36,
-                backgroundColor: "#A9E7CB",
-                borderColor: "#909090",
-                borderWidth: 1,
-                borderRadius: 8,
-                marginTop: 32,
-                marginLeft: "5%",
-                justifyContent: "center",
-              }}
-              onPress={() => {
-                onAddCountryClicked(selectedCountry);
-              }}
-            >
-              <Text
+            {addedCountries.length <= 0 ?
+              <RectButton
                 style={{
-                  textAlign: "center",
-                  fontWeight: "bold",
-                  color: "#989898",
+                  width: 112,
+                  height: 36,
+                  backgroundColor: "#A9E7CB",
+                  borderColor: "#909090",
+                  borderWidth: 1,
+                  borderRadius: 8,
+                  marginTop: 32,
+                  marginLeft: "5%",
+                  justifyContent: "center",
+                }}
+                onPress={() => {
+                  onAddCountryClicked(selectedCountry);
                 }}
               >
-                ADD
-            </Text>
-            </RectButton>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontWeight: "bold",
+                    color: "#989898",
+                  }}>
+                  ADD
+              </Text>
+              </RectButton> : null}
 
             {addedCountries.map((country, index) => {
               return <View key={`country_${index}`} style={{ flexDirection: "row", paddingLeft: 20, paddingTop: 16, paddingRight: 20, justifyContent: "space-between" }}>
