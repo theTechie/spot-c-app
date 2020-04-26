@@ -1,51 +1,22 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Divider, RadioButton } from 'react-native-paper';
-import BreathlessnessImage from '../../../assets/images/Breathlessness.svg';
+import Congestion from '../../../assets/images/Congestion.svg';
 
 
-export default function SymptomBreathlessNess() {
+export default function SymptomFever() {
     const [values, setValues] = useState('first')
-    const [valueNext, setValueNext] = useState('wlfob')
-
-    const symptoms = [
-        {
-          name: 'While lying flat on bed',
-          value: 'wlfob'
-          
-        },
-        {
-          name: 'At Night',
-          value: 'an'
-          
-        },
-        {
-          name: 'Breathlessness that comes and goes',
-          value: 'btcg'
-         
-        },
-        {
-            name: 'Breathlessness while exercising',
-            value: 'bwe'
-           
-          },
-        {
-            name: 'Sudden feeling of breathlessness',
-            value: 'sfb'
-           
-         },
-        
-      ];
-
+    const [valueNext, setValueNext] = useState('ftcg')
+    const [yesNo,setYesNo] = useState('y')
     
   return (
     <ScrollView>
     <View style={styles.viewContainer}>
             <View style={styles.sectionContainer}>
             <Text style={styles.title}>Please tell us about your symptoms</Text>
-            <BreathlessnessImage  style={styles.image} width="200" height="120" />
+            <Congestion style={styles.image} width="200" height="120" />
             </View>
-          <Text style={styles.textSty}>Are you feeling breathless?</Text> 
+          <Text style={styles.textSty}>Do you have fever?</Text> 
           <Divider  />
           <View  style={styles.agreeContainer}>
           <RadioButton.Group
@@ -68,27 +39,51 @@ export default function SymptomBreathlessNess() {
           </View>
         </RadioButton.Group>
         </View>
-        <Text style={styles.textSty}>If yes, select one of the following?</Text> 
+        <Text style={styles.textSty}>Can you describe your fever?</Text> 
         <View  style={styles.agreeContainer}>
         <RadioButton.Group
         onValueChange={valueNext => setValueNext(valueNext)}
         value={valueNext}
          >
-        { symptoms.map((item)=>(
-        <View style={styles.agreeContainer} key={item.value}>
-        <View style={styles.radAlign} key={item.value}>
-         <RadioButton.Android value={item.value} color="#E03D51" uncheckedColor="#D2D2D2" />
-         <Text style={styles.radTxt}>{item.name}</Text>
+         <View style={styles.agreeContainer}>
+         <View style={styles.radAlign}>
+          <RadioButton.Android value="ftcg" color="#E03D51" uncheckedColor="#D2D2D2" />
+          <Text style={styles.radTxt}>Fever that comes and goes</Text>
+          </View>
+          <Divider  />
          </View>
-         <Divider  />
-        </View>
-            )
-            )}
+        <View  style={styles.agreeContainer}>
+          <View style={styles.radAlign}>
+          <RadioButton.Android value="ftis" color="#E03D51" uncheckedColor="#D2D2D2" />
+          <Text style={styles.radTxt}>Fever that is consistent</Text>
+          </View>
+          <Divider />
+        </View>  
       </RadioButton.Group>
-        
       </View>
-         
-        
+      <Text style={styles.textSty}>Have you measured your temperature?</Text> 
+      <View  style={styles.agreeContainer}>
+      <RadioButton.Group
+      onValueChange={yesNo => setYesNo(yesNo)}
+      value={yesNo}
+       >
+       <View style={styles.agreeContainer}>
+       <View style={styles.radAlign}>
+        <RadioButton.Android value="y" color="#E03D51" uncheckedColor="#D2D2D2" />
+        <Text style={styles.radTxt}>Yes</Text>
+        </View>
+        <Divider  />
+       </View>
+      <View  style={styles.agreeContainer}>
+        <View style={styles.radAlign}>
+        <RadioButton.Android value="n" color="#E03D51" uncheckedColor="#D2D2D2" />
+        <Text style={styles.radTxt}>No</Text>
+        </View>
+        <Divider />
+      </View> 
+    </RadioButton.Group>
+    </View>
+    <Text style={styles.textSty}>What's the temperature of your fever?</Text> 
     </View>
 </ScrollView>
   );
