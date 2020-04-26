@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Divider, RadioButton } from 'react-native-paper';
 import { CheckBox } from 'react-native-elements';
-import TermsImage from '../../../assets/images/IntersectionTerms.svg';
+import BodyPain from '../../../assets/images/BodyPain.svg';
 
 
 
@@ -65,7 +65,7 @@ export default function SymptomSoreThroat() {
     <View style={styles.viewContainer}>
             <View style={styles.sectionContainer}>
             <Text style={styles.title}>Do you have any other symptoms?</Text>
-            <TermsImage style={styles.image} width="120" height="120" />
+            <BodyPain style={styles.image} width="200" height="120" />
             </View>
           <Text style={styles.textSty}>Do you have any kind of body pain?</Text> 
           <Divider  />
@@ -173,5 +173,9 @@ const styles = StyleSheet.create({
   },
   radTxt:{
     marginTop:8
+  },
+  image:{
+    alignSelf: 'center',
+    marginTop: 10
   }
 });

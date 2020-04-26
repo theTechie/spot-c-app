@@ -22,6 +22,7 @@ import SymptomBreathlessNess from './questions/SymptomBreathlessNess.js';
 import SymptomSoreThroat from './questions/SymptomSoreThroat.js';
 import SymptomBodyPain from './questions/SymptomBodyPain.js';
 import SymptomCough from './questions/SymptomCough.js';
+import SymptomFever from './questions/SymptomFever.js';
 import Http from '../../services/Http';
 import { checkup } from '../../constants/AppSettings';
 
@@ -33,6 +34,7 @@ const formInitValues = {
   breathlessSymp: null,
   soreThroatSymp: null,
   bodyPainSymp: null,
+  feverSymp: null,
   age: 30,
   height: 160,
   weight: 68,
@@ -93,6 +95,12 @@ const screens = [
     component: HealthHistory
   },
   // Fever Screen
+  {
+    questions: [
+      { name: 'feverSymp', value: formInitValues.feverSymp },
+    ],
+    component: SymptomFever
+  },
   {
     questions: [
       { name: 'coughSymp', value: formInitValues.coughSymp },

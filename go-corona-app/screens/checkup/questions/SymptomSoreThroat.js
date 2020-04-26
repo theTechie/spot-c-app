@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Divider, RadioButton } from 'react-native-paper';
-import { CheckBox } from 'react-native-elements';
-import TermsImage from '../../../assets/images/IntersectionTerms.svg';
+import Congestion from '../../../assets/images/Congestion.svg';
 
 
 export default function SymptomSoreThroat() {
@@ -15,7 +14,7 @@ export default function SymptomSoreThroat() {
     <View style={styles.viewContainer}>
             <View style={styles.sectionContainer}>
             <Text style={styles.title}>Please tell us about your symptoms</Text>
-            <TermsImage style={styles.image} width="120" height="120" />
+            <Congestion style={styles.image} width="200" height="120" />
             </View>
           <Text style={styles.textSty}>Do you have a sore throat?</Text> 
           <Divider  />
@@ -139,5 +138,9 @@ const styles = StyleSheet.create({
   },
   radTxt:{
     marginTop:8
+  },
+  image:{
+    alignSelf: 'center',
+    marginTop: 10
   }
 });
