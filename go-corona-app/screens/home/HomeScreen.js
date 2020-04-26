@@ -5,12 +5,13 @@ import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'rea
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { useNavigation } from '@react-navigation/native';
 
-import Button from '../components/button/Button';
-import GooglePlacesInput from '../components/map/Places';
-import Point from '../components/map/Point';
-import Popup, { PopupStyles } from '../components/popup/Popup';
-import { csoptsApi } from '../constants/AppSettings';
-import Http from '../services/Http';
+import Button from '../../components/button/Button';
+import GooglePlacesInput from '../../components/map/Places';
+import Point from '../../components/map/Point';
+import Popup, { PopupStyles } from '../../components/popup/Popup';
+import { csoptsApi } from '../../constants/AppSettings';
+import Http from '../../services/Http';
+import ExposureBtn from './exposure';
 
 // TODO: move to constants
 const latitudeDelta = 0.2;
@@ -124,6 +125,19 @@ export default function HomeScreen() {
     )
   }
 
+  renderExposureBtn = () => {
+    return (
+      <TouchableOpacity
+        style={styles.exposureBtn}
+        onPress={() => {
+          goToCurrentPoition()
+        }}
+      >
+        <MaterialCommunityIcons name='crosshairs-gps' size={24} />
+      </TouchableOpacity>
+    )
+  }
+
   return (
     <View style={styles.container}>
       {loading ?
@@ -148,6 +162,7 @@ export default function HomeScreen() {
             )}
           </MapView>
           {renderShowLocationButton()}
+          <ExposureBtn />
           <Popup isVisible={popupVisibility}>
             <Text style={PopupStyles.question}>{"Are you currently suffering from any kind of illness ?"}</Text>
             <Button onPress={() => togglePopup()} label={"I'm not sure"} style={PopupStyles.button1} labelStyle={PopupStyles.buttonlabel1} />
@@ -174,7 +189,7 @@ const styles = StyleSheet.create({
     zIndex: 1000,
     maxWidth: 400,
     backgroundColor: '#fff',
-    width: '92%',
+    width: '75%',
     position: 'absolute',
     top: 20,
     left: '4%',
@@ -198,5 +213,6 @@ const styles = StyleSheet.create({
   map: {
     ...StyleSheet.absoluteFillObject,
   },
+
 });
 
