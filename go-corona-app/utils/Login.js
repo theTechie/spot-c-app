@@ -1,7 +1,31 @@
 import queryString from 'query-string';
 import * as Google from 'expo-google-app-auth';
-
+import uuid from 'react-native-uuid'
 import ClientSecrets from './client_secret.json';
+import { setItem, getItem } from './Storage';
+
+export async function generateUUID() {
+  return uuid.v4()
+}
+
+export async function generateAllUUIDs() {
+  let UUIDs = await getItem("UUIDs")
+
+  if (!UUIDs) {
+    const userUUID = await generateUUID()
+    const medicalUUID = await generateUUID()
+    const locationUUID = await generateUUID()
+
+    UUIDs = {userUUID, medicalUUID, locationUUID}
+    console.log('generated new UUIDs:', UUIDs)
+    setItem("UUIDs", UUIDs)
+
+    return UUIDs
+  }
+
+  console.log('retrieving existing UUIDs:', UUIDs)
+  return UUIDs
+}
 
 export async function signInWithGoogleAsync() {
   try {
@@ -11,6 +35,9 @@ export async function signInWithGoogleAsync() {
     });
 
     if (result.type === 'success') {
+      // generate 3 unique UUIDs
+      await generateAllUUIDs()
+
       return result;
     }
     return { cancelled: true };
