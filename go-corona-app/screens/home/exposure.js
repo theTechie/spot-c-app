@@ -10,6 +10,10 @@ import { getUUIDs } from '../../utils/helpers';
 const ExposureBtn = () => {
     const [exposure, setExposure] = useState(null);
 
+    useEffect(() => {
+        fetchCurrentExposure();
+    }, [])
+
     const fetchCurrentExposure = async () => {
         const uids = await getUUIDs()
         try {
@@ -36,8 +40,6 @@ const ExposureBtn = () => {
                 return 'grey';
         }
     }
-
-    fetchCurrentExposure();
 
     return (
         exposure ?
