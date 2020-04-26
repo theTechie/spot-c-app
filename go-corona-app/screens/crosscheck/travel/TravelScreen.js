@@ -18,17 +18,17 @@ import { travelApi } from '../../../constants/AppSettings'
 import { getUUIDs } from '../../../utils/helpers';
 
 const formInitValues = {
-  internationTravel: "no",
-  visitedCountries: [],
-  domesticTravel: "no",
-  domesticFromCity: null,
-  domesticToCity: null,
-  hometown: null,
-  currentLocation: null,
-  domesticFlight: false,
-  domesticTrain: false,
-  domesticAuto: false,
-  domesticCab: false
+  international_mode: false,
+  visitedCountries: [], // only one country supported now
+  domesticTravel: false, // ommited in API
+  domestic_airport_from: null,
+  domestic_airport_to: null,
+  hometown: null, // ommited in API
+  current_state: null,
+  domestic_flight: false,
+  domestic_train: false,
+  domestic_auto: false,
+  domestic_cab: false
 }
 
 const screens = [
@@ -37,7 +37,7 @@ const screens = [
     title: 'International',
     component: International,
     questions: [
-      { name: 'internationTravel', value: formInitValues.internationTravel },
+      { name: 'international_mode', value: formInitValues.international_mode },
       { name: 'visitedCountries', value: formInitValues.visitedCountries },
     ]
   },
@@ -47,8 +47,8 @@ const screens = [
     component: Domestic,
     questions: [
       { name: 'domesticTravel', value: formInitValues.domesticTravel },
-      { name: 'domesticFromCity', value: formInitValues.domesticFromCity },
-      { name: 'domesticToCity', value: formInitValues.domesticToCity }
+      { name: 'domestic_airport_from', value: formInitValues.domestic_airport_from },
+      { name: 'domestic_airport_to', value: formInitValues.domestic_airport_to }
     ]
   },
   {
@@ -57,11 +57,11 @@ const screens = [
     component: Lockdown,
     questions: [
       { name: 'hometown', value: formInitValues.hometown },
-      { name: 'currentLocation', value: formInitValues.currentLocation },
-      { name: 'domesticFlight', value: formInitValues.domesticFlight },
-      { name: 'domesticTrain', value: formInitValues.domesticTrain },
-      { name: 'domesticAuto', value: formInitValues.domesticAuto },
-      { name: 'domesticCab', value: formInitValues.domesticCab }
+      { name: 'current_state', value: formInitValues.current_state },
+      { name: 'domestic_flight', value: formInitValues.domestic_flight },
+      { name: 'domestic_train', value: formInitValues.domestic_train },
+      { name: 'domestic_auto', value: formInitValues.domestic_auto },
+      { name: 'domestic_cab', value: formInitValues.domestic_cab }
     ]
   },
   {
@@ -91,9 +91,12 @@ export default function TravelScreen() {
   const submitForm = async () => {
     let data = 0;
     try {
-      console.log(formValues)
+
+      // temporarily
+      const modifiedFormValues = { ...formValues, country_travelled: formValues.visitedCountries.length ? formValues.visitedCountries[0] : "" }
+      console.log(modifiedFormValues)
       const UUIDs = await getUUIDs()
-      let response = await Http.put(`${travelApi}/${UUIDs.medicalUUID}`, formValues)
+      let response = await Http.put(`${travelApi}/${UUIDs.medicalUUID}`, modifiedFormValues)
       console.log('response data', response.data);
     } catch (res) {
       console.log('error in submitting', res)
@@ -126,15 +129,15 @@ export default function TravelScreen() {
   let isNextDisabled = false;
   let currentComponent = screens[currentIndex];
 
-  if (currentComponent.id === "International" && formValues['internationTravel'] === "yes" && formValues['visitedCountries'].length === 0) {
+  if (currentComponent.id === "International" && formValues['international_mode'] === "yes" && formValues['visitedCountries'].length === 0) {
     isNextDisabled = true
   }
 
-  if (currentComponent.id === "Domestic" && formValues['domesticTravel'] === "yes" && (!formValues['domesticFromCity'] || !formValues['domesticToCity'])) {
+  if (currentComponent.id === "Domestic" && formValues['domesticTravel'] === "yes" && (!formValues['domestic_airport_from'] || !formValues['domestic_airport_to'])) {
     isNextDisabled = true
   }
 
-  if (currentComponent.id === "Lockdown" && (!formValues['hometown'] || !formValues['currentLocation'])) {
+  if (currentComponent.id === "Lockdown" && (!formValues['hometown'] || !formValues['current_state'])) {
     isNextDisabled = true
   }
 

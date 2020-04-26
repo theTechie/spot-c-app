@@ -10,7 +10,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import DomesticTravelImage from "../../../../assets/images/DomesticTravel.svg";
 
 export default function Domestic({ questions, setValues }) {
-  const [yesSelected, setYesSelected] = React.useState("no")
+  const [yesSelected, setYesSelected] = React.useState(false)
   const [fromCity, setFromCity] = React.useState("")
   const [toCity, setToCity] = React.useState("")
 
@@ -52,10 +52,10 @@ export default function Domestic({ questions, setValues }) {
             <View style={styles.radAlign}>
               <RadioButton.Android
                 onPress={() => {
-                  setYesSelected("no");
+                  setYesSelected(false);
                 }}
                 value={"No"}
-                status={yesSelected === "no" ? "checked" : "unchecked"}
+                status={yesSelected === false ? "checked" : "unchecked"}
                 color="#E03D51"
                 uncheckedColor="#D2D2D2"
               />
@@ -66,17 +66,17 @@ export default function Domestic({ questions, setValues }) {
           <View style={styles.radAlign}>
             <RadioButton.Android
               onPress={() => {
-                setYesSelected("yes");
+                setYesSelected(true);
               }}
               value="Yes"
               color="#E03D51"
               uncheckedColor="#D2D2D2"
-              status={yesSelected === "yes" ? "checked" : "unchecked"}
+              status={yesSelected === true ? "checked" : "unchecked"}
             />
             <Text>Yes</Text>
           </View>
         </RadioButton.Group>
-        <View style={{ opacity: yesSelected === "yes" ? 1 : 0 }}>
+        <View style={{ opacity: yesSelected === true ? 1 : 0 }}>
           <Divider />
           <View>
             <Text style={styles.subQuestionStyle}>

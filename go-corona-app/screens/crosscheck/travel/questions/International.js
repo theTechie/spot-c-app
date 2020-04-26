@@ -17,7 +17,7 @@ import Http from "../../../../services/Http";
 import InternationalTravelImage from "../../../../assets/images/InternationalTravel.svg";
 
 export default function International({ questions, setValues }) {
-  const [yesChecked, setYesChecked] = React.useState("no");
+  const [yesChecked, setYesChecked] = React.useState(false);
   const [searchResults, setSearchResults] = React.useState([]);
   const [selectedCountry, setSelectedCountry] = React.useState("");
   const [addedCountries, setAddedCountries] = React.useState([]);
@@ -84,11 +84,10 @@ export default function International({ questions, setValues }) {
         <View style={styles.radAlign}>
           <RadioButton.Android
             onPress={() => {
-              setYesChecked("no");
-              setValues({ internationTravel: "no" })
+              setYesChecked(false);
             }}
-            value={"no"}
-            status={yesChecked === "no" ? "checked" : "unchecked"}
+            value={false}
+            status={yesChecked === false ? "checked" : "unchecked"}
             color="#E03D51"
             uncheckedColor="#D2D2D2"
           />
@@ -100,11 +99,10 @@ export default function International({ questions, setValues }) {
         <View style={styles.radAlign}>
           <RadioButton.Android
             onPress={() => {
-              setYesChecked("yes");
-              setValues({ internationTravel: "yes" })
+              setYesChecked(true);
             }}
             value={"No"}
-            status={yesChecked === "yes" ? "checked" : "unchecked"}
+            status={yesChecked === true ? "checked" : "unchecked"}
             color="#E03D51"
             uncheckedColor="#D2D2D2"
           />
@@ -113,7 +111,7 @@ export default function International({ questions, setValues }) {
 
         <Divider />
 
-        {yesChecked === "yes" ? (
+        {yesChecked === true ? (
           <View style={{ paddingBottom: 200 }}>
             <Text style={styles.subQuestionStyle}>
               If yes, then select the countries you visited before coming to India
