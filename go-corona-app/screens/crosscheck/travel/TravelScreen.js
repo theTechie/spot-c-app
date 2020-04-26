@@ -15,6 +15,7 @@ import Thankyou from './questions/Thankyou'
 
 import Http from '../../../services/Http'
 import { travelApi } from '../../../constants/AppSettings'
+import { getUUIDs } from '../../../utils/helpers';
 
 const formInitValues = {
   internationTravel: "no",
@@ -86,14 +87,13 @@ export default function TravelScreen() {
     }
   }
 
-  const Travel_UUID = 'test-gagan-1'
-
   // TODO: submit all values
   const submitForm = async () => {
     let data = 0;
     try {
       console.log(formValues)
-      let response = await Http.put(`${travelApi}/${Travel_UUID}`, formValues)
+      const UUIDs = await getUUIDs()
+      let response = await Http.put(`${travelApi}/${UUIDs.medicalUUID}`, formValues)
       console.log('response data', response.data);
     } catch (res) {
       console.log('error in submitting', res)

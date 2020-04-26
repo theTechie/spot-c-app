@@ -9,16 +9,16 @@ export async function generateUUID() {
 }
 
 export async function generateAllUUIDs() {
-  let UUIDs = await getItem("UUIDs")
+  const UUIDs = await getItem("UUIDs")
 
   if (!UUIDs) {
     const userUUID = await generateUUID()
     const medicalUUID = await generateUUID()
     const locationUUID = await generateUUID()
 
-    UUIDs = {userUUID, medicalUUID, locationUUID}
+    const UUIDs = { userUUID, medicalUUID, locationUUID }
     console.log('generated new UUIDs:', UUIDs)
-    setItem("UUIDs", UUIDs)
+    await setItem("UUIDs", UUIDs)
 
     return UUIDs
   }
@@ -47,8 +47,8 @@ export async function signInWithGoogleAsync() {
 }
 
 export async function logoutOfGoogleAsync(accessToken) {
-    const result = await Google.logOutAsync({ accessToken, ...ClientSecrets });
-    return result;
+  const result = await Google.logOutAsync({ accessToken, ...ClientSecrets });
+  return result;
 }
 
 export async function getNewAccessTokenAsync(refreshToken) {
