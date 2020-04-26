@@ -43,7 +43,7 @@ export default function HomeScreen() {
       await updateMapData()
     });
 
-    return () => focusSubscription.remove()
+    return () => focusSubscription && focusSubscription.remove && focusSubscription.remove()
   }, [navigation.isFocused])
 
   updateMapData = async () => {
