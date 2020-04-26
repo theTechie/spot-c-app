@@ -201,6 +201,7 @@ export default function CheckupScreen() {
     let data = 0;
     try {
       let response = await Http.post(checkupApi, formValues)
+      console.log('meduid', response.data.med_uuid)
       if (response.data.med_uuid) {
         let resultResponse = await Http.get(resultsApi + '/' + response.data.med_uuid);
         setResult(resultResponse.data);
