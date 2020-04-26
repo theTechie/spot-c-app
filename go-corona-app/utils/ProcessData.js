@@ -2,6 +2,7 @@ import * as FileSystem from 'expo-file-system';
 import JSZip from "jszip"
 import JSZipUtils from "jszip-utils"
 import JsonPath from "jsonpath"
+import { getUUIDs } from './helpers';
 
 // Unzip - https://github.com/smoll/crna-zipfile/blob/master/App.js
 
@@ -68,8 +69,6 @@ const getBinEntry = (roundedDate) => {
 }
 
 // TODO: need to be generated using uuid; and stored securely on the device
-const UserLocationId = 'test-gagan-1'
-
 const formatData = data => {
     return {
         timeslot: getBinEntry(roundToNearest10Min(data.timestampMs)),
@@ -88,8 +87,9 @@ export async function binHistoryData(data) {
     //     }
     // }, {})
     const formattedData = data.map(formatData)
+    const UUIDs = await getUUIDs()
 
-    return { id: UserLocationId, location_history: formattedData }
+    return { id: UUIDs.locationUUID, location_history: formattedData }
 }
 
 // NOTE: old way of binning which is not followed in the current version of the API; might need it in future

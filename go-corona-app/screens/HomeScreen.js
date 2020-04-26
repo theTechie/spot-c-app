@@ -43,7 +43,7 @@ export default function HomeScreen() {
       await updateMapData()
     });
 
-    return () => focusSubscription.remove()
+    return () => focusSubscription && focusSubscription.remove && focusSubscription.remove()
   }, [navigation.isFocused])
 
   updateMapData = async () => {
@@ -116,7 +116,7 @@ export default function HomeScreen() {
       <TouchableOpacity
         style={styles.myLocationButton}
         onPress={() => {
-          this.goToCurrentPoition()
+          goToCurrentPoition()
         }}
       >
         <MaterialCommunityIcons name='crosshairs-gps' size={24} />
@@ -150,8 +150,8 @@ export default function HomeScreen() {
           {renderShowLocationButton()}
           <Popup isVisible={popupVisibility}>
             <Text style={PopupStyles.question}>{"Are you currently suffering from any kind of illness ?"}</Text>
-            <Button onPress={() => this.togglePopup()} label={"I'm not sure"} style={PopupStyles.button1} labelStyle={PopupStyles.buttonlabel1} />
-            <Button onPress={() => this.togglePopup()} label={"Mark myself safe"} style={PopupStyles.button2} labelStyle={PopupStyles.buttonlabel2} />
+            <Button onPress={() => togglePopup()} label={"I'm not sure"} style={PopupStyles.button1} labelStyle={PopupStyles.buttonlabel1} />
+            <Button onPress={() => togglePopup()} label={"Mark myself safe"} style={PopupStyles.button2} labelStyle={PopupStyles.buttonlabel2} />
           </Popup>
         </>
       }

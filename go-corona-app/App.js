@@ -61,8 +61,9 @@ export default function App(props) {
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
         <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
           <AppStack.Navigator initialRouteName={byPassLogin ? "Root" : byPassGoogleLogin ? "Login" : "GLogin"}>
-            <AppStack.Screen options={{ headerShown: false }} name="GLogin" component={LoginScreen} />
-            <AppStack.Screen options={{ headerShown: false }} name="Login" component={Loginscreen} />
+            {
+              byPassGoogleLogin ? <AppStack.Screen options={{ headerShown: false }} name="Login" component={Loginscreen} />
+                : <AppStack.Screen options={{ headerShown: false }} name="GLogin" component={LoginScreen} />}
             <AppStack.Screen options={{ headerShown: false }} name="SignUp" component={Signupscreen} />
             <AppStack.Screen options={{ headerShown: false }} name="Otp" component={Otpscreen} />
             <AppStack.Screen name="Root" component={RootView} />

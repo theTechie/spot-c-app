@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
 import { ScrollView, RectButton } from "react-native-gesture-handler";
 import { Divider } from "react-native-material-ui";
@@ -9,8 +9,25 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 
 import DomesticTravelImage from "../../../../assets/images/DomesticTravel.svg";
 
-export default function Domestic() {
-  const [yesSelected, setYesSelected] = React.useState("no");
+export default function Domestic({ questions, setValues }) {
+  const [yesSelected, setYesSelected] = React.useState("no")
+  const [fromCity, setFromCity] = React.useState("")
+  const [toCity, setToCity] = React.useState("")
+
+  useEffect(() => {
+    const name = questions[0].name;
+    setValues([{ name, value: yesSelected }])
+  }, [yesSelected])
+
+  useEffect(() => {
+    const name = questions[1].name;
+    setValues([{ name, value: fromCity }])
+  }, [fromCity])
+
+  useEffect(() => {
+    const name = questions[2].name;
+    setValues([{ name, value: toCity }])
+  }, [toCity])
 
   return (
     <KeyboardAwareScrollView style={styles.containerStyle}>
@@ -38,7 +55,7 @@ export default function Domestic() {
                   setYesSelected("no");
                 }}
                 value={"No"}
-                status={yesSelected ==="no" ? "checked" : "unchecked"}
+                status={yesSelected === "no" ? "checked" : "unchecked"}
                 color="#E03D51"
                 uncheckedColor="#D2D2D2"
               />
@@ -54,27 +71,27 @@ export default function Domestic() {
               value="Yes"
               color="#E03D51"
               uncheckedColor="#D2D2D2"
-              status={yesSelected ==="yes" ? "checked" : "unchecked"}
+              status={yesSelected === "yes" ? "checked" : "unchecked"}
             />
             <Text>Yes</Text>
           </View>
         </RadioButton.Group>
-        <View style={ { opacity : yesSelected ==="yes" ? 1:0 }}>
-        <Divider />
-        <View>
-          <Text style={styles.subQuestionStyle}>
-            If yes, then select the airports you were at
+        <View style={{ opacity: yesSelected === "yes" ? 1 : 0 }}>
+          <Divider />
+          <View>
+            <Text style={styles.subQuestionStyle}>
+              If yes, then select the airports you were at
           </Text>
+          </View>
+
+          <View style={{ marginTop: 10 }}>
+            <Input placeholder="From" onChangeText={setFromCity} />
+          </View>
+          <View style={{ marginTop: 10, marginBottom: 20 }}>
+            <Input placeholder="To" onChangeText={setToCity} />
+          </View>
         </View>
 
-        <View style={{ marginTop: 10 }}>
-          <Autocomplete placeholder="From" />
-        </View>
-        <View style={{ marginTop: 10, marginBottom: 20 }}>
-          <Autocomplete placeholder="To" label="To" />
-        </View>
-        </View>
-        
       </View>
     </KeyboardAwareScrollView>
   );
