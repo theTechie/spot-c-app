@@ -24,24 +24,37 @@ import SymptomBodyPain from './questions/SymptomBodyPain.js';
 import SymptomCough from './questions/SymptomCough.js';
 import SymptomFever from './questions/SymptomFever.js';
 import Http from '../../services/Http';
-import { checkup } from '../../constants/AppSettings';
+import { checkupApi, resultsApi } from '../../constants/AppSettings';
+import { getUUIDs } from '../../utils/helpers';
+
 
 const formInitValues = {
   policyRead: false,
-  checkupfor: null,
-  gender: null,
-  healthHistory: null,
-  breathlessSymp: null,
-  soreThroatSymp: null,
-  bodyPainSymp: null,
-  feverSymp: null,
-  age: 30,
-  height: 160,
-  weight: 68,
-  howLongSymptomsFever: 0,
-  howLongSymptomsCough: 0,
-  howLongSymptomsHeadache: 0,
-  howLongSymtomsProgression: "noChange"
+  "age": 30,
+  "height": 160,
+  "weight": 80,
+  "diabetes": false,
+  "kidney": false,
+  "heart": false,
+  "lungs": false,
+  "stroke": false,
+  "hypertension": false,
+  "hiv": false,
+  "transplant": false,
+  "fever": 0,
+  "cough": 0,
+  "breathlessness": false,
+  "fatigue": false,
+  "joint_pain": false,
+  "loss_of_taste_and_smell": false,
+  "sore_throat": false,
+  "nasal_congestion": false,
+  "headache": false,
+  "chills": false,
+  "nausea_or_vomiting": false,
+  "diarrhea": false,
+  "conjunctival_congestion": false,
+  "symptoms_improvement": 0
 }
 
 const screens = [
@@ -182,11 +195,16 @@ export default function CheckupScreen() {
   // TODO: submit all values
   const submitForm = async () => {
     setLoading(true);
+    const UUIDs = await getUUIDs()
+    const medicalUUID = UUIDs.medicalUUID;
+    formValues['med_uuid'] = medicalUUID;
     let data = 0;
     try {
-      let data = await Http.post(checkup, formValues)
-      console.log('data', data);
-      setResult(data);
+      let response = await Http.post(checkupApi, formValues)
+      if (response.data.med_uuid) {
+        let resultResponse = await Http.get(resultsApi + '/' + response.data.med_uuid);
+        setResult(resultResponse.data);
+      }
     } catch (res) {
       // TODO: show erro info
       console.log('error in submitting', res)
