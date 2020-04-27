@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 
 export default function CheckupGender(props) {
-  const [gender, setGender] = useState('Male')
+  const [gender, setGender] = useState('male')
   const setValue = (val) => {
     setGender(val);
     props.setValues && props.setValues({ 'gender': val });
@@ -21,14 +21,14 @@ export default function CheckupGender(props) {
               >
                 <View style={styles.agreeContainer}>
                   <View style={styles.radAlign}>
-                    <RadioButton.Android value="Male" color="#E03D51" uncheckedColor="#D2D2D2" />
+                    <RadioButton.Android value="male" color="#E03D51" uncheckedColor="#D2D2D2" />
                     <Text style={styles.radTxt}>Male</Text>
                   </View>
 
                 </View>
                 <View style={styles.agreeContainer}>
                   <View style={styles.radAlign}>
-                    <RadioButton.Android value="FeMale" color="#E03D51" uncheckedColor="#D2D2D2" />
+                    <RadioButton.Android value="female" color="#E03D51" uncheckedColor="#D2D2D2" />
                     <Text style={styles.radTxt}>Female</Text>
                   </View>
 
