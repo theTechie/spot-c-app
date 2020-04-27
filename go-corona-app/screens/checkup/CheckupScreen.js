@@ -30,32 +30,32 @@ import Terms from './Terms';
 
 const formInitValues = {
   policyRead: false,
-  "age": 30,
-  "height": 160,
-  "weight": 80,
-  "diabetes": false,
-  "kidney": false,
-  "heart": false,
-  "lungs": false,
-  "stroke": false,
-  "hypertension": false,
-  "hiv": false,
-  "transplant": false,
-  "fever": 0,
-  "cough": 0,
-  "breathlessness": false,
-  "fatigue": false,
-  "joint_pain": false,
-  "loss_of_taste_and_smell": false,
-  "sore_throat": false,
-  "nasal_congestion": false,
-  "headache": false,
-  "chills": false,
-  "nausea_or_vomiting": false,
-  "diarrhea": false,
-  "gender": 'Male',
-  "conjunctival_congestion": false,
-  "symptoms_improvement": 0
+  age: 30,
+  height: 160,
+  weight: 80,
+  diabetes: false,
+  kidney: false,
+  heart: false,
+  lungs: false,
+  stroke: false,
+  hypertension: false,
+  hiv: false,
+  transplant: false,
+  fever: 0,
+  cough: 0,
+  breathlessness: false,
+  fatigue: false,
+  joint_pain: false,
+  loss_of_taste_and_smell: false,
+  sore_throat: false,
+  nasal_congestion: false,
+  headache: false,
+  chills: false,
+  nausea_or_vomiting: false,
+  diarrhea: false,
+  gender: 'male',
+  conjunctival_congestion: false,
+  symptoms_improvement: 0
 }
 
 const screens = [
@@ -158,8 +158,6 @@ const screens = [
   }
 ]
 
-
-
 export default function CheckupScreen() {
   const viewPager = useRef(null);
   let [currentIndex, setCurrentIndex] = useState(0);
@@ -200,6 +198,7 @@ export default function CheckupScreen() {
     const medicalUUID = UUIDs.medicalUUID;
     formValues['med_uuid'] = medicalUUID;
     let data = 0;
+
     try {
       console.log('submitting', formValues);
       let response = await Http.post(checkupApi, formValues)
@@ -213,6 +212,7 @@ export default function CheckupScreen() {
       console.log('error in submitting', res)
       setResult(10);
     }
+
     setLoading(false);
     goToNextStep();
   }

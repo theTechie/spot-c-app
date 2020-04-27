@@ -5,7 +5,7 @@ import { Divider, RadioButton } from 'react-native-paper';
 
 const questions = [
   { name: 'asthma', value: false, label: 'Asthma' },
-  { name: 'highBP', value: false, label: 'High BP' },
+  { name: 'hypertension', value: false, label: 'High BP' },
   { name: 'kidney', value: false, label: 'Kidney disease' },
   { name: 'heart', value: false, label: 'Heart disease' },
   { name: 'lungs', value: false, label: 'Lung disease' },
@@ -25,7 +25,14 @@ export default function HealthHistory(props) {
   const [transplant, setTransplant] = useState('false')
 
   const handleChange = (item) => {
-    const updatedItems = { ...checkedItems, [item.name]: !checkedItems[item.name] };
+    console.log(item)
+    let updatedItems = {}
+    if (item.name === "none") {
+      updatedItems = { ...initialValues, 'none': !checkedItems[item.name] }
+    } else {
+      updatedItems = { ...checkedItems, [item.name]: !checkedItems[item.name] };
+    }
+
     setCheckedItems(updatedItems);
     props.setValues(updatedItems);
   }
@@ -36,7 +43,7 @@ export default function HealthHistory(props) {
   }
 
   const setTransplantValue = (value) => {
-    props.setValues({ 'transplant': value === 'true' });
+    props.setValues({ 'transplant': value === 'true', 'hiv': value === 'true' });
     setTransplant(value);
   }
 
@@ -46,8 +53,7 @@ export default function HealthHistory(props) {
         <View style={styles.sectionContainer}>
           <Text style={styles.title}>Please check all the statements below that apply to you</Text>
         </View>
-        <Text style={styles.subTitle}>Select one in each row</Text>
-        <Text style={styles.textSty}>Do you have had a health history?</Text>
+        <Text style={{...styles.textSty, marginTop: 0}}>Do you have had a health history?</Text>
         <Divider />
         <View style={styles.agreeContainer}>
           {questions.map((item) => (
@@ -65,17 +71,17 @@ export default function HealthHistory(props) {
             onValueChange={value => setSmokesValue(value)}
             value={smokes}
           >
-            <View style={styles.agreeContainer}>
+             <View style={styles.agreeContainer}>
               <View style={styles.radAlign}>
-                <RadioButton.Android value={'true'} color="#E03D51" uncheckedColor="#D2D2D2" />
-                <Text style={styles.radTxt}>Yes</Text>
+                <RadioButton.Android value={'false'} color="#E03D51" uncheckedColor="#D2D2D2" />
+                <Text style={styles.radTxt}>No</Text>
               </View>
               <Divider />
             </View>
             <View style={styles.agreeContainer}>
               <View style={styles.radAlign}>
-                <RadioButton.Android value={'false'} color="#E03D51" uncheckedColor="#D2D2D2" />
-                <Text style={styles.radTxt}>No</Text>
+                <RadioButton.Android value={'true'} color="#E03D51" uncheckedColor="#D2D2D2" />
+                <Text style={styles.radTxt}>Yes</Text>
               </View>
               <Divider />
             </View>
@@ -87,17 +93,17 @@ export default function HealthHistory(props) {
             onValueChange={valueNext => setTransplantValue(valueNext)}
             value={transplant}
           >
-            <View style={styles.agreeContainer}>
+          <View style={styles.agreeContainer}>
               <View style={styles.radAlign}>
-                <RadioButton.Android value={'true'} color="#E03D51" uncheckedColor="#D2D2D2" />
-                <Text style={styles.radTxt}>Yes</Text>
+                <RadioButton.Android value={'false'} color="#E03D51" uncheckedColor="#D2D2D2" />
+                <Text style={styles.radTxt}>No</Text>
               </View>
               <Divider />
             </View>
             <View style={styles.agreeContainer}>
               <View style={styles.radAlign}>
-                <RadioButton.Android value={'false'} color="#E03D51" uncheckedColor="#D2D2D2" />
-                <Text style={styles.radTxt}>No</Text>
+                <RadioButton.Android value={'true'} color="#E03D51" uncheckedColor="#D2D2D2" />
+                <Text style={styles.radTxt}>Yes</Text>
               </View>
               <Divider />
             </View>
