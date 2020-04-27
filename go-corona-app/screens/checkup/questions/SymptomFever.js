@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Divider, RadioButton } from 'react-native-paper';
 import Congestion from '../../../assets/images/Congestion.svg';
@@ -6,12 +6,15 @@ import Congestion from '../../../assets/images/Congestion.svg';
 
 export default function SymptomFever(props) {
   const [fever, setFever] = useState('false')
-  const [valueNext, setValueNext] = useState('ftcg')
-  const [yesNo, setYesNo] = useState('y')
+  const [feverType, setFeverType] = useState(0)
+
   const setFeverValue = (v) => {
-    props.setValues({ fever: v === 'true' });
     setFever(v);
   }
+
+  useEffect(() => {
+    props.setValues({ fever: +feverType })
+  }, [feverType])
 
   return (
     <ScrollView>
@@ -29,65 +32,59 @@ export default function SymptomFever(props) {
           >
             <View style={styles.agreeContainer}>
               <View style={styles.radAlign}>
-                <RadioButton.Android value="true" color="#E03D51" uncheckedColor="#D2D2D2" />
-                <Text style={styles.radTxt}>Yes</Text>
-              </View>
-              <Divider />
-            </View>
-            <View style={styles.agreeContainer}>
-              <View style={styles.radAlign}>
                 <RadioButton.Android value="false" color="#E03D51" uncheckedColor="#D2D2D2" />
                 <Text style={styles.radTxt}>No</Text>
               </View>
               <Divider />
             </View>
-          </RadioButton.Group>
-        </View>
-        <Text style={styles.textSty}>Can you describe your fever?</Text>
-        <View style={styles.agreeContainer}>
-          <RadioButton.Group
-            onValueChange={valueNext => setValueNext(valueNext)}
-            value={valueNext}
-          >
             <View style={styles.agreeContainer}>
               <View style={styles.radAlign}>
-                <RadioButton.Android value="ftcg" color="#E03D51" uncheckedColor="#D2D2D2" />
-                <Text style={styles.radTxt}>Fever that comes and goes</Text>
-              </View>
-              <Divider />
-            </View>
-            <View style={styles.agreeContainer}>
-              <View style={styles.radAlign}>
-                <RadioButton.Android value="ftis" color="#E03D51" uncheckedColor="#D2D2D2" />
-                <Text style={styles.radTxt}>Fever that is consistent</Text>
-              </View>
-              <Divider />
-            </View>
-          </RadioButton.Group>
-        </View>
-        <Text style={styles.textSty}>Have you measured your temperature?</Text>
-        <View style={styles.agreeContainer}>
-          <RadioButton.Group
-            onValueChange={yesNo => setYesNo(yesNo)}
-            value={yesNo}
-          >
-            <View style={styles.agreeContainer}>
-              <View style={styles.radAlign}>
-                <RadioButton.Android value="y" color="#E03D51" uncheckedColor="#D2D2D2" />
+                <RadioButton.Android value="true" color="#E03D51" uncheckedColor="#D2D2D2" />
                 <Text style={styles.radTxt}>Yes</Text>
               </View>
               <Divider />
             </View>
-            <View style={styles.agreeContainer}>
-              <View style={styles.radAlign}>
-                <RadioButton.Android value="n" color="#E03D51" uncheckedColor="#D2D2D2" />
-                <Text style={styles.radTxt}>No</Text>
-              </View>
-              <Divider />
-            </View>
           </RadioButton.Group>
         </View>
-        <Text style={styles.textSty}>What's the temperature of your fever?</Text>
+        {fever === 'true' ?
+          <Fragment>
+            <Text style={styles.textSty}>Can you describe your fever?</Text>
+            <View style={styles.agreeContainer}>
+              <RadioButton.Group
+                onValueChange={feverType => setFeverType(feverType)}
+                value={feverType}
+              >
+                <View style={styles.agreeContainer}>
+                  <View style={styles.radAlign}>
+                    <RadioButton.Android value="1" color="#E03D51" uncheckedColor="#D2D2D2" />
+                    <Text style={styles.radTxt}>Temperature between 98.6 to 100.4 °C</Text>
+                  </View>
+                  <Divider />
+                </View>
+                <View style={styles.agreeContainer}>
+                  <View style={styles.radAlign}>
+                    <RadioButton.Android value="2" color="#E03D51" uncheckedColor="#D2D2D2" />
+                    <Text style={styles.radTxt}>Temperature between 100.4 to 104 °C</Text>
+                  </View>
+                  <Divider />
+                </View>
+                <View style={styles.agreeContainer}>
+                  <View style={styles.radAlign}>
+                    <RadioButton.Android value="3" color="#E03D51" uncheckedColor="#D2D2D2" />
+                    <Text style={styles.radTxt}>Fever that comes and goes</Text>
+                  </View>
+                  <Divider />
+                </View>
+                <View style={styles.agreeContainer}>
+                  <View style={styles.radAlign}>
+                    <RadioButton.Android value="4" color="#E03D51" uncheckedColor="#D2D2D2" />
+                    <Text style={styles.radTxt}>Not checked the temperature</Text>
+                  </View>
+                  <Divider />
+                </View>
+              </RadioButton.Group>
+            </View>
+          </Fragment> : null}
       </View>
     </ScrollView>
   );
