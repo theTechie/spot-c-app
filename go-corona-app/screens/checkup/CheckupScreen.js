@@ -1,6 +1,6 @@
 import ViewPager from '@react-native-community/viewpager';
 import React, { useRef, useState } from 'react';
-import { ActivityIndicator, ProgressBarAndroid, ProgressViewIOS, StyleSheet, Text, View } from 'react-native';
+import { ProgressBarAndroid, ProgressViewIOS, StyleSheet, Text, View } from 'react-native';
 import Separator from "../../components/Separator";
 import Back from "../../components/stepper/buttons/Back";
 import Next from "../../components/stepper/buttons/Next";
@@ -24,6 +24,7 @@ import SymptomSoreThroat from './questions/SymptomSoreThroat.js';
 import Thankyou from './questions/Thankyou';
 import WeightQuestion from './questions/Weight';
 import Terms from './Terms';
+import Loading from './questions/Loading'
 
 const formInitValues = {
   policyRead: false,
@@ -178,6 +179,8 @@ export default function CheckupScreen() {
   }
   const goToNextStep = () => {
     let i = currentIndex + 1;
+    console.log(i, total)
+    
     if (i <= total - 1) {
       setCurrentIndex(i)
       viewPager.current.setPage(i);
@@ -202,6 +205,7 @@ export default function CheckupScreen() {
       console.log('submitting', formValues);
       let response = await Http.post(checkupApi, formValues)
       console.log('meduid', response.data.med_uuid)
+      
       if (response.data.med_uuid) {
         let resultResponse = await Http.get(resultsApi + '/' + response.data.med_uuid);
         setResult(resultResponse.data);
@@ -212,8 +216,8 @@ export default function CheckupScreen() {
       setResult(10);
     }
 
-    setLoading(false);
     goToNextStep();
+    setLoading(false);
   }
   //#endregion page selection
 
@@ -236,15 +240,15 @@ export default function CheckupScreen() {
   let displayNext = currentIndex < total - 2;
   let displaySubmit = currentIndex === total - 2;
   let displayPrevious = currentIndex > 0;
+  let displayDone = currentIndex === total - 1;
   let isNextDisabled = false;
   let currentComponent = screens[currentIndex];
+
   if (currentComponent.id === 'Terms' && formValues['policyRead'] === false) {
     isNextDisabled = true
   }
 
   return (
-    isLoading ? <ActivityIndicator>
-    </ActivityIndicator> :
       <View style={styles.container}>
         <View style={styles.progressContainer}>
           <Text>{title}</Text>
@@ -262,7 +266,7 @@ export default function CheckupScreen() {
             style={{ flex: 1 }} animationsAreEnabled={true}
             initialPage={0} ref={viewPager} scrollEnabled={false}>
             {screens.map((q, k) => {
-              let QScreen = q.component;
+              let QScreen = isLoading ? Loading : q.component;
               return <View key={k} style={{ flex: 1 }}>
                 <QScreen result={result} questions={q.questions} setValues={setValues} ></QScreen>
               </View>
@@ -272,7 +276,7 @@ export default function CheckupScreen() {
         <Separator />
         <View style={styles.navigation}>
           <View style={styles.back}>
-            {displayPrevious ? <Back
+            {displayPrevious && !displayDone ? <Back
               isActive={true}
               goToPreviousStep={() => goToPreviousStep()}
             /> : null}
@@ -284,6 +288,9 @@ export default function CheckupScreen() {
           </View> : null}
           {displaySubmit ? <View>
             <Submit onSubmit={() => { submitForm() }} />
+          </View> : null}
+           {displayDone ? <View>
+            <Submit label="Done" onSubmit={() => { }} />
           </View> : null}
         </View>
       </View>
