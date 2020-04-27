@@ -1,31 +1,31 @@
+import ViewPager from '@react-native-community/viewpager';
 import React, { useRef, useState } from 'react';
-import { StyleSheet, Alert, ProgressBarAndroid, ProgressViewIOS, Text, View, Image, ScrollView, ActivityIndicator } from 'react-native';
-
+import { ActivityIndicator, ProgressBarAndroid, ProgressViewIOS, StyleSheet, Text, View } from 'react-native';
+import Separator from "../../components/Separator";
 import Back from "../../components/stepper/buttons/Back";
 import Next from "../../components/stepper/buttons/Next";
 import Submit from "../../components/stepper/buttons/Submit";
-import Separator from "../../components/Separator";
+import { checkupApi, resultsApi } from '../../constants/AppSettings';
+import Http from '../../services/Http';
+import { getUUIDs } from '../../utils/helpers';
 import Introduction from './Introduction';
-import Terms from './Terms';
-import HeightQuestion from './questions/Height';
 import AgeQuestion from './questions/Age';
-import WeightQuestion from './questions/Weight';
-import Thankyou from './questions/Thankyou';
+import CheckupGender from './questions/CheckupGender';
 import CheckupResult from './questions/CheckupResult';
-import ViewPager from '@react-native-community/viewpager';
-
-import CheckupWho from './questions/CheckupWho'
-import CheckupGender from './questions/CheckupGender'
-import HowLongSinceSymptoms from './questions/HowLongSinceSymptoms';
+import CheckupWho from './questions/CheckupWho';
 import HealthHistory from './questions/HealthHistory';
-import SymptomBreathlessNess from './questions/SymptomBreathlessNess.js';
-import SymptomSoreThroat from './questions/SymptomSoreThroat.js';
+import HeightQuestion from './questions/Height';
+import HowLongSinceSymptoms from './questions/HowLongSinceSymptoms';
 import SymptomBodyPain from './questions/SymptomBodyPain.js';
+import SymptomBreathlessNess from './questions/SymptomBreathlessNess.js';
 import SymptomCough from './questions/SymptomCough.js';
 import SymptomFever from './questions/SymptomFever.js';
-import Http from '../../services/Http';
-import { checkupApi, resultsApi } from '../../constants/AppSettings';
-import { getUUIDs } from '../../utils/helpers';
+import SymptomSoreThroat from './questions/SymptomSoreThroat.js';
+import Thankyou from './questions/Thankyou';
+import WeightQuestion from './questions/Weight';
+import Terms from './Terms';
+
+
 
 
 const formInitValues = {
@@ -53,6 +53,7 @@ const formInitValues = {
   "chills": false,
   "nausea_or_vomiting": false,
   "diarrhea": false,
+  "gender": 'Male',
   "conjunctival_congestion": false,
   "symptoms_improvement": 0
 }
@@ -200,6 +201,7 @@ export default function CheckupScreen() {
     formValues['med_uuid'] = medicalUUID;
     let data = 0;
     try {
+      console.log('submitting', formValues);
       let response = await Http.post(checkupApi, formValues)
       console.log('meduid', response.data.med_uuid)
       if (response.data.med_uuid) {
@@ -225,6 +227,9 @@ export default function CheckupScreen() {
           setFormValues(Object.assign({}, formValues));
         }
       })
+    } else if (values && typeof values === 'object') {
+      setFormValues(Object.assign({}, formValues, values))
+      console.log('formValues', values)
     }
   }
   //#endregion
