@@ -25,9 +25,6 @@ import Thankyou from './questions/Thankyou';
 import WeightQuestion from './questions/Weight';
 import Terms from './Terms';
 
-
-
-
 const formInitValues = {
   policyRead: false,
   gender: 'male',
@@ -144,10 +141,10 @@ const screens = [
   // TODO: how long will be shown based on answers to previous questions (fever, cough and headache)
   {
     questions: [
-      { name: 'howLongSymptomsFever', value: formInitValues.howLongSymptomsFever },
-      { name: 'hwoLongSymptomsCough', value: formInitValues.howLongSymptomsCough },
-      { name: 'howLongSymptomsHeadache', value: formInitValues.howLongSymptomsHeadache },
-      { name: 'howLongSymptomsProgression', value: formInitValues.howLongSymptomsProgression },
+      // { name: 'howLongSymptomsFever', value: formInitValues.howLongSymptomsFever },
+      // { name: 'hwoLongSymptomsCough', value: formInitValues.howLongSymptomsCough },
+      // { name: 'howLongSymptomsHeadache', value: formInitValues.howLongSymptomsHeadache },
+      // { name: 'howLongSymptomsProgression', value: formInitValues.howLongSymptomsProgression },
     ],
     component: HowLongSinceSymptoms
   },
@@ -231,7 +228,6 @@ export default function CheckupScreen() {
       })
     } else if (values && typeof values === 'object') {
       setFormValues(Object.assign({}, formValues, values))
-      console.log('formValues', values)
     }
   }
   //#endregion
