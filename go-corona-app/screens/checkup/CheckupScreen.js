@@ -162,7 +162,7 @@ export default function CheckupScreen() {
   const viewPager = useRef(null);
   let [currentIndex, setCurrentIndex] = useState(0);
   let [isLoading, setLoading] = useState(false);
-  let [result, setResult] = useState(null);
+  let [result, setResult] = useState({});
 
   let [formValues, setFormValues] = useState(formInitValues);
 
@@ -198,7 +198,7 @@ export default function CheckupScreen() {
     setLoading(true);
     const UUIDs = await getUUIDs()
     const medicalUUID = UUIDs.medicalUUID;
-    formValues['med_uuid'] = medicalUUID;
+    formValues['med_uuid'] = "8"+ medicalUUID;
     let data = 0;
 
     try {
