@@ -6,7 +6,7 @@ import Congestion from '../../../assets/images/Congestion.svg';
 
 export default function SymptomFever({ setValues }) {
   const [fever, setFever] = useState('false')
-  const [feverType, setFeverType] = useState(0)
+  const [feverType, setFeverType] = useState("0")
 
   const setFeverValue = (v) => {
     setFever(v);

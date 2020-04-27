@@ -8,7 +8,7 @@ import TermsImage from '../../../assets/images/IntersectionTerms.svg';
 
 export default function SymptomCough({ setValues }) {
   const [cough, setCough] = useState('false');
-  const [coughType, setCoughType] = useState(0)
+  const [coughType, setCoughType] = useState("0")
 
   const setCoughValue = (v) => {
     setCough(v);
