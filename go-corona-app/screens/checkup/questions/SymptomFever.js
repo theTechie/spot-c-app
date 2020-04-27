@@ -4,7 +4,7 @@ import { Divider, RadioButton } from 'react-native-paper';
 import Congestion from '../../../assets/images/Congestion.svg';
 
 
-export default function SymptomFever(props) {
+export default function SymptomFever({ setValues }) {
   const [fever, setFever] = useState('false')
   const [feverType, setFeverType] = useState(0)
 
@@ -13,8 +13,12 @@ export default function SymptomFever(props) {
   }
 
   useEffect(() => {
-    props.setValues({ fever: +feverType })
+    setValues({ fever: +feverType })
   }, [feverType])
+
+  useEffect(() => {
+    setValues({ fever: fever === 'true' ? +feverType : 0 })
+  }, [fever])
 
   return (
     <ScrollView>
@@ -24,13 +28,13 @@ export default function SymptomFever(props) {
           <Congestion style={styles.image} width="200" height="120" />
         </View>
         <Text style={styles.textSty}>Do you have fever?</Text>
-        <Divider />
         <View style={styles.agreeContainer}>
           <RadioButton.Group
             onValueChange={values => setFeverValue(values)}
             value={fever}
           >
             <View style={styles.agreeContainer}>
+              <Divider />
               <View style={styles.radAlign}>
                 <RadioButton.Android value="false" color="#E03D51" uncheckedColor="#D2D2D2" />
                 <Text style={styles.radTxt}>No</Text>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Divider, RadioButton } from 'react-native-paper';
 import { CheckBox } from 'react-native-elements';
@@ -6,47 +6,23 @@ import TermsImage from '../../../assets/images/IntersectionTerms.svg';
 
 
 
-export default function SymptomCough(props) {
+export default function SymptomCough({ setValues }) {
   const [cough, setCough] = useState('false');
-  const [checkedItems, setCheckedItems] = useState({ dc: false, cws: false, cwcp: false, cwap: false, cwb: false });
-  const symps = [
-    {
-      name: 'Dry cough',
-      key: 'dc'
-
-    },
-    {
-      name: 'Cough with sputum',
-      key: 'cws'
-
-    },
-    {
-      name: 'Cough with chest pain',
-      key: 'cwcp'
-
-    },
-    {
-      name: 'Cough with abdominal pain',
-      key: 'cwap'
-
-    },
-    {
-      name: 'Cough with blood in it',
-      key: 'cwb'
-
-    },
-
-  ];
+  const [coughType, setCoughType] = useState(0)
 
   const setCoughValue = (v) => {
-    props.setValues({ cough: v === 'true' });
     setCough(v);
   }
 
-  const handleChange = (item) => {
-    setCheckedItems({ ...checkedItems, [item.key]: !checkedItems[item.key] });
-    //console.log("checkedItems: ", checkedItems);
-  }
+  useEffect(() => {
+    setValues({ cough: +coughType })
+  }, [coughType])
+
+  useEffect(() => {
+    setValues({ cough: cough === 'true' ? +coughType : 0})
+  }, [cough])
+
+
   return (
     <ScrollView>
       <View style={styles.viewContainer}>
@@ -55,12 +31,19 @@ export default function SymptomCough(props) {
           <TermsImage style={styles.image} width="120" height="120" />
         </View>
         <Text style={styles.textSty}>Do you have cough?</Text>
-        <Divider />
         <View style={styles.agreeContainer}>
           <RadioButton.Group
             onValueChange={value => setCoughValue(value)}
             value={cough}
           >
+            <View style={styles.agreeContainer}>
+              <Divider />
+              <View style={styles.radAlign}>
+                <RadioButton.Android value="false" color="#E03D51" uncheckedColor="#D2D2D2" />
+                <Text style={styles.radTxt}>No</Text>
+              </View>
+              <Divider />
+            </View>
             <View style={styles.agreeContainer}>
               <View style={styles.radAlign}>
                 <RadioButton.Android value="true" color="#E03D51" uncheckedColor="#D2D2D2" />
@@ -68,25 +51,47 @@ export default function SymptomCough(props) {
               </View>
               <Divider />
             </View>
-            <View style={styles.agreeContainer}>
-              <View style={styles.radAlign}>
-                <RadioButton.Android value="false" color="#E03D51" uncheckedColor="#D2D2D2" />
-                <Text style={styles.radTxt}>No</Text>
-              </View>
-              <Divider />
-            </View>
           </RadioButton.Group>
         </View>
-        <Text style={styles.textSty}>If yes, then check the following</Text>
-        <View style={styles.agreeContainer}>
-          {symps.map((item) => (
-            <View key={item.key}>
-              <CheckBox key={item.key} containerStyle={styles.contStyle} textStyle={styles.txtStyle} title={item.name} checked={checkedItems[item.key]} onPress={() => handleChange(item)} uncheckedColor='#D2D2D2' checkedColor='#E03D51' />
-              <Divider />
+        {cough === 'true' ?
+          <Fragment>
+            <Text style={styles.textSty}>Can you describe your cough?</Text>
+            <View style={styles.agreeContainer}>
+              <RadioButton.Group
+                onValueChange={coughType => setCoughType(coughType)}
+                value={coughType}
+              >
+                <View style={styles.agreeContainer}>
+                  <View style={styles.radAlign}>
+                    <RadioButton.Android value="1" color="#E03D51" uncheckedColor="#D2D2D2" />
+                    <Text style={styles.radTxt}>Dry cough</Text>
+                  </View>
+                  <Divider />
+                </View>
+                <View style={styles.agreeContainer}>
+                  <View style={styles.radAlign}>
+                    <RadioButton.Android value="2" color="#E03D51" uncheckedColor="#D2D2D2" />
+                    <Text style={styles.radTxt}>Dry cough with sputum</Text>
+                  </View>
+                  <Divider />
+                </View>
+                <View style={styles.agreeContainer}>
+                  <View style={styles.radAlign}>
+                    <RadioButton.Android value="3" color="#E03D51" uncheckedColor="#D2D2D2" />
+                    <Text style={styles.radTxt}>Dry cough with chest pain</Text>
+                  </View>
+                  <Divider />
+                </View>
+                <View style={styles.agreeContainer}>
+                  <View style={styles.radAlign}>
+                    <RadioButton.Android value="4" color="#E03D51" uncheckedColor="#D2D2D2" />
+                    <Text style={styles.radTxt}>Dry cough with abdominal pain</Text>
+                  </View>
+                  <Divider />
+                </View>
+              </RadioButton.Group>
             </View>
-          )
-          )}
-        </View>
+          </Fragment> : null}
       </View>
     </ScrollView>
   );
