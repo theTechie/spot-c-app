@@ -30,6 +30,7 @@ import Terms from './Terms';
 
 const formInitValues = {
   policyRead: false,
+  gender: 'male',
   age: 30,
   height: 160,
   weight: 80,
@@ -41,6 +42,7 @@ const formInitValues = {
   hypertension: false,
   hiv: false,
   transplant: false,
+  smokes: false,
   fever: 0,
   cough: 0,
   breathlessness: false,
@@ -54,7 +56,6 @@ const formInitValues = {
   chills: false,
   nausea_or_vomiting: false,
   diarrhea: false,
-  gender: 'male',
   conjunctival_congestion: false,
   symptoms_improvement: 0
 }
@@ -105,38 +106,38 @@ const screens = [
   },
   {
     questions: [
-      { name: 'healthHistory', value: formInitValues.healthHistory },
+      // { name: 'healthHistory', value: formInitValues.healthHistory },
     ],
     component: HealthHistory
   },
   // Fever Screen
   {
     questions: [
-      { name: 'feverSymp', value: formInitValues.feverSymp },
+      // { name: 'feverSymp', value: formInitValues.feverSymp },
     ],
     component: SymptomFever
   },
   {
     questions: [
-      { name: 'coughSymp', value: formInitValues.coughSymp },
+      // { name: 'coughSymp', value: formInitValues.coughSymp },
     ],
     component: SymptomCough
   },
   {
     questions: [
-      { name: 'breathlessSymp', value: formInitValues.breathlessSymp },
+      // { name: 'breathlessSymp', value: formInitValues.breathlessSymp },
     ],
     component: SymptomBreathlessNess
   },
   {
     questions: [
-      { name: 'soreThroatSymp', value: formInitValues.soreThroatSymp },
+      // { name: 'soreThroatSymp', value: formInitValues.soreThroatSymp },
     ],
     component: SymptomSoreThroat
   },
   {
     questions: [
-      { name: 'bodyPainSymp', value: formInitValues.bodyPainSymp },
+      // { name: 'bodyPainSymp', value: formInitValues.bodyPainSymp },
     ],
     component: SymptomBodyPain
   },

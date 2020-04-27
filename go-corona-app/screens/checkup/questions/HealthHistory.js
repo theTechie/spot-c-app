@@ -19,14 +19,14 @@ const initialValues = questions.reduce((s, c) => {
   return s;
 }, {})
 
-export default function HealthHistory(props) {
+export default function HealthHistory({ setValues}) {
   const [checkedItems, setCheckedItems] = useState(initialValues);
   const [smokes, setSmokes] = useState('false')
   const [transplant, setTransplant] = useState('false')
 
   const handleChange = (item) => {
-    console.log(item)
     let updatedItems = {}
+    
     if (item.name === "none") {
       updatedItems = { ...initialValues, 'none': !checkedItems[item.name] }
     } else {
@@ -34,16 +34,16 @@ export default function HealthHistory(props) {
     }
 
     setCheckedItems(updatedItems);
-    props.setValues(updatedItems);
+    setValues(updatedItems);
   }
 
   const setSmokesValue = (value) => {
-    props.setValues({ 'smokes': value === 'true' });
+    setValues({ 'smokes': value === 'true' });
     setSmokes(value);
   }
 
   const setTransplantValue = (value) => {
-    props.setValues({ 'transplant': value === 'true', 'hiv': value === 'true' });
+    setValues({ 'transplant': value === 'true', 'hiv': value === 'true' });
     setTransplant(value);
   }
 
