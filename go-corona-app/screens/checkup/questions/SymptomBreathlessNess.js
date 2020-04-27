@@ -14,11 +14,11 @@ export default function SymptomBreathlessNess({ setValues }) {
   }
 
   useEffect(() => {
-    setValues({ breathlessnessType: +breathlessnessType })
+    setValues({ breathlessness_type: +breathlessnessType })
   }, [breathlessnessType])
 
   useEffect(() => {
-    setValues({ breathlessnessType: breathlessness === 'true' ? +breathlessnessType : 0 })
+    setValues({ breathlessness_type: breathlessness === 'true' ? +breathlessnessType : 0 })
   }, [breathlessness])
 
   const symptoms = [

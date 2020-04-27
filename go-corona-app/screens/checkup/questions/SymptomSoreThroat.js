@@ -1,17 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Divider, RadioButton } from 'react-native-paper';
+
 import Congestion from '../../../assets/images/Congestion.svg';
 
+export default function SymptomSoreThroat({ setValues }) {
+  const [soreThroat, setSoreThroat] = useState('false')
+  const [nasalCongestion, setNasalCongestion] = useState('false')
+  const [tasteOrSmell, setTasteOrSmell] = useState('false')
 
-export default function SymptomSoreThroat(props) {
-  const [sore_throat, setSore_throat] = useState('false')
-  const [valueNext, setValueNext] = useState('Yes')
-  const [yesNo, setYesNo] = useState('y')
-  const setSore_throatValue = (v) => {
-    props.setValues({ sore_throat: v === 'true' });
-    setSore_throat(v);
-  }
+  useEffect(() => {
+    setValues({ sore_throat: soreThroat === 'true' })
+  }, [soreThroat])
+
+  useEffect(() => {
+    setValues({ nasal_congestion: nasalCongestion === 'true' })
+  }, [nasalCongestion])
+
+  useEffect(() => {
+    setValues({ loss_of_taste_and_smell: tasteOrSmell === 'true' })
+  }, [tasteOrSmell])
+
   return (
     <ScrollView>
       <View style={styles.viewContainer}>
@@ -23,20 +32,20 @@ export default function SymptomSoreThroat(props) {
         <Divider />
         <View style={styles.agreeContainer}>
           <RadioButton.Group
-            onValueChange={values => setSore_throatValue(values)}
-            value={sore_throat}
+            onValueChange={values => setSoreThroat(values)}
+            value={soreThroat}
           >
             <View style={styles.agreeContainer}>
               <View style={styles.radAlign}>
-                <RadioButton.Android value="true" color="#E03D51" uncheckedColor="#D2D2D2" />
-                <Text style={styles.radTxt}>Yes</Text>
+                <RadioButton.Android value="false" color="#E03D51" uncheckedColor="#D2D2D2" />
+                <Text style={styles.radTxt}>No</Text>
               </View>
               <Divider />
             </View>
             <View style={styles.agreeContainer}>
               <View style={styles.radAlign}>
-                <RadioButton.Android value="false" color="#E03D51" uncheckedColor="#D2D2D2" />
-                <Text style={styles.radTxt}>No</Text>
+                <RadioButton.Android value="true" color="#E03D51" uncheckedColor="#D2D2D2" />
+                <Text style={styles.radTxt}>Yes</Text>
               </View>
               <Divider />
             </View>
@@ -45,20 +54,20 @@ export default function SymptomSoreThroat(props) {
         <Text style={styles.textSty}>Do you have nasal congestion?</Text>
         <View style={styles.agreeContainer}>
           <RadioButton.Group
-            onValueChange={valueNext => setValueNext(valueNext)}
-            value={valueNext}
+            onValueChange={nasalCongestion => setNasalCongestion(nasalCongestion)}
+            value={nasalCongestion}
           >
             <View style={styles.agreeContainer}>
               <View style={styles.radAlign}>
-                <RadioButton.Android value="Yes" color="#E03D51" uncheckedColor="#D2D2D2" />
-                <Text style={styles.radTxt}>Yes</Text>
+                <RadioButton.Android value="false" color="#E03D51" uncheckedColor="#D2D2D2" />
+                <Text style={styles.radTxt}>No</Text>
               </View>
               <Divider />
             </View>
             <View style={styles.agreeContainer}>
               <View style={styles.radAlign}>
-                <RadioButton.Android value="No" color="#E03D51" uncheckedColor="#D2D2D2" />
-                <Text style={styles.radTxt}>No</Text>
+                <RadioButton.Android value="true" color="#E03D51" uncheckedColor="#D2D2D2" />
+                <Text style={styles.radTxt}>Yes</Text>
               </View>
               <Divider />
             </View>
@@ -67,20 +76,20 @@ export default function SymptomSoreThroat(props) {
         <Text style={styles.textSty}>Have you lost a sense of taste or smell?</Text>
         <View style={styles.agreeContainer}>
           <RadioButton.Group
-            onValueChange={yesNo => setYesNo(yesNo)}
-            value={yesNo}
+            onValueChange={tasteOrSmell => setTasteOrSmell(tasteOrSmell)}
+            value={tasteOrSmell}
           >
             <View style={styles.agreeContainer}>
               <View style={styles.radAlign}>
-                <RadioButton.Android value="y" color="#E03D51" uncheckedColor="#D2D2D2" />
-                <Text style={styles.radTxt}>Yes</Text>
+                <RadioButton.Android value="false" color="#E03D51" uncheckedColor="#D2D2D2" />
+                <Text style={styles.radTxt}>No</Text>
               </View>
               <Divider />
             </View>
             <View style={styles.agreeContainer}>
               <View style={styles.radAlign}>
-                <RadioButton.Android value="n" color="#E03D51" uncheckedColor="#D2D2D2" />
-                <Text style={styles.radTxt}>No</Text>
+                <RadioButton.Android value="true" color="#E03D51" uncheckedColor="#D2D2D2" />
+                <Text style={styles.radTxt}>Yes</Text>
               </View>
               <Divider />
             </View>

@@ -10,18 +10,9 @@ export default function SymptomCough({ setValues }) {
   const [cough, setCough] = useState('false');
   const [coughType, setCoughType] = useState("0")
 
-  const setCoughValue = (v) => {
-    setCough(v);
-  }
-
-  useEffect(() => {
-    setValues({ cough: +coughType })
-  }, [coughType])
-
   useEffect(() => {
     setValues({ cough: cough === 'true' ? +coughType : 0})
   }, [cough])
-
 
   return (
     <ScrollView>
@@ -33,7 +24,7 @@ export default function SymptomCough({ setValues }) {
         <Text style={styles.textSty}>Do you have cough?</Text>
         <View style={styles.agreeContainer}>
           <RadioButton.Group
-            onValueChange={value => setCoughValue(value)}
+            onValueChange={value => setCough(value)}
             value={cough}
           >
             <View style={styles.agreeContainer}>

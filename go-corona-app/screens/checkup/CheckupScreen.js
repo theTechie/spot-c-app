@@ -44,6 +44,7 @@ const formInitValues = {
   fever: 0,
   cough: 0,
   breathlessness: false,
+  breathlessness_type: 0,
   fatigue: false,
   joint_pain: false,
   loss_of_taste_and_smell: false,
