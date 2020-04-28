@@ -198,7 +198,7 @@ export default function CheckupScreen() {
     setLoading(true);
     const UUIDs = await getUUIDs()
     const medicalUUID = UUIDs.medicalUUID;
-    formValues['med_uuid'] = "8"+ medicalUUID;
+    formValues['med_uuid'] = medicalUUID;
     let data = 0;
 
     try {
