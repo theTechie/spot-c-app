@@ -1,16 +1,16 @@
 {
   "expo": {
-    "name": "go-corona-app",
-    "slug": "go-corona-app",
+    "name": "Spot Corona",
+    "slug": "spot-corona",
     "platforms": [
       "ios",
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "0.2.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "spotcorona",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
@@ -23,11 +23,27 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.gocorona.spotcorona",
+      "supportsTablet": true,
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.918586690411-t4r800e8q0k4pblii04aidqbcatgp24g"
+        },
+        "googleMapsApiKey": "AIzaSyCOr4hmCjLvGqEJEB7luD9ce7C6lE2BFvM"
+      }
     },
     "android": {
       "package": "com.gocorona.spotcorona",
-      "versionCode": 1
+      "versionCode": 2,
+      "config": {
+        "googleSignIn": {
+          "apiKey": "AIzaSyBPumxts7Ybw_idIW1ezSblRsg-Ei2ia2k",
+          "certificateHash": "773D4B15AA51C411A23865E8FA48C9EA3BA91690"
+        },
+        "googleMaps": {
+          "apiKey": "AIzaSyBPumxts7Ybw_idIW1ezSblRsg-Ei2ia2k"
+        }
+      }
     },
     "packagerOpts": {
       "config": "metro.config.js",
