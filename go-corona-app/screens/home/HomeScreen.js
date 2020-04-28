@@ -38,6 +38,13 @@ export default function HomeScreen() {
     init()
   }, [])
 
+  useEffect(() => {
+    const update = async () => {
+      await updateMapData()
+    }
+    update()
+  }, [])
+
   // fetch heatmap data everytime we navigate to Map View
   useEffect(() => {
     const focusSubscription = navigation.addListener('focus', async () => {
