@@ -146,15 +146,15 @@ const screens = [
     component: SymptomBodyPain
   },
   // TODO: how long will be shown based on answers to previous questions (fever, cough and headache)
-  {
-    questions: [
-      // { name: 'howLongSymptomsFever', value: formInitValues.howLongSymptomsFever },
-      // { name: 'hwoLongSymptomsCough', value: formInitValues.howLongSymptomsCough },
-      // { name: 'howLongSymptomsHeadache', value: formInitValues.howLongSymptomsHeadache },
-      // { name: 'howLongSymptomsProgression', value: formInitValues.howLongSymptomsProgression },
-    ],
-    component: HowLongSinceSymptoms
-  },
+  // {
+  //   questions: [
+  //     // { name: 'howLongSymptomsFever', value: formInitValues.howLongSymptomsFever },
+  //     // { name: 'hwoLongSymptomsCough', value: formInitValues.howLongSymptomsCough },
+  //     // { name: 'howLongSymptomsHeadache', value: formInitValues.howLongSymptomsHeadache },
+  //     // { name: 'howLongSymptomsProgression', value: formInitValues.howLongSymptomsProgression },
+  //   ],
+  //   component: HowLongSinceSymptoms
+  // },
   {
     component: Thankyou
   },
@@ -225,6 +225,13 @@ export default function CheckupScreen() {
     goToNextStep();
     setLoading(false);
   }
+
+  const reset = () => {
+    setFormValues(formInitValues)
+    setCurrentIndex(0)
+    viewPager.current.setPage(0)
+  }
+
   //#endregion page selection
 
   //#region values setting
@@ -296,7 +303,7 @@ export default function CheckupScreen() {
             <Submit onSubmit={() => { submitForm() }} />
           </View> : null}
            {displayDone ? <View>
-            <Submit label="Done" onSubmit={() => { }} />
+            <Submit label="Done" onSubmit={() => { reset() }} />
           </View> : null}
         </View>
       </View>
