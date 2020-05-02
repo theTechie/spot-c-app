@@ -25,6 +25,7 @@ import Thankyou from './questions/Thankyou';
 import WeightQuestion from './questions/Weight';
 import Terms from './Terms';
 import Loading from './questions/Loading'
+import Profession from './questions/Profession.js';
 
 const formInitValues = {
   policyRead: false,
@@ -32,6 +33,7 @@ const formInitValues = {
   age: 30,
   height: 160,
   weight: 80,
+  profession: 0,
   diabetes: false,
   kidney: false,
   heart: false,
@@ -101,6 +103,10 @@ const screens = [
       { name: 'weight', value: formInitValues.weight },
     ],
     component: WeightQuestion
+  },
+  {
+    questions: [],
+    component: Profession
   },
   {
     questions: [
