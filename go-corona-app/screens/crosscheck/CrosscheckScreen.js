@@ -22,12 +22,12 @@ export default function CrosscheckScreen() {
         onPress={() => navigation.navigate('TravelQuestionnaire')}
       />
       <Separator />
-      <CheckupType
+      {/* <CheckupType
         title="Know if you have met a COVID +ve person"
         Image={IntersectionImage}
         buttonTitle="Open intersection calculator"
         onPress={() => navigation.navigate('IntersectionCalculator')}
-      />
+      /> */}
     </View>
   );
 }
