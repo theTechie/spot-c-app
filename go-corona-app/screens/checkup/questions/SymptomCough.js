@@ -62,21 +62,21 @@ export default function SymptomCough({ setValues }) {
                 <View style={styles.agreeContainer}>
                   <View style={styles.radAlign}>
                     <RadioButton.Android value="2" color="#E03D51" uncheckedColor="#D2D2D2" />
-                    <Text style={styles.radTxt}>Dry cough with sputum</Text>
+                    <Text style={styles.radTxt}>Cough with sputum</Text>
                   </View>
                   <Divider />
                 </View>
                 <View style={styles.agreeContainer}>
                   <View style={styles.radAlign}>
                     <RadioButton.Android value="3" color="#E03D51" uncheckedColor="#D2D2D2" />
-                    <Text style={styles.radTxt}>Dry cough with chest pain</Text>
+                    <Text style={styles.radTxt}>Cough with chest pain</Text>
                   </View>
                   <Divider />
                 </View>
                 <View style={styles.agreeContainer}>
                   <View style={styles.radAlign}>
                     <RadioButton.Android value="4" color="#E03D51" uncheckedColor="#D2D2D2" />
-                    <Text style={styles.radTxt}>Dry cough with abdominal pain</Text>
+                    <Text style={styles.radTxt}>Cough with abdominal pain</Text>
                   </View>
                   <Divider />
                 </View>
