@@ -1,31 +1,33 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Divider, RadioButton } from 'react-native-paper';
-import { CheckBox } from 'react-native-elements';
-import TermsImage from '../../../assets/images/IntersectionTerms.svg';
+import Lockdown from '../../../assets/images/Lockdown.svg';
 
 
-
-export default function SymptomCough({ setValues }) {
-  const [cough, setCough] = useState('false');
-  const [coughType, setCoughType] = useState("0")
+export default function Profession({ setValues }) {
+  const [wfh, setWfh] = useState('false')
+  const [profession, setProfession] = useState("0")
 
   useEffect(() => {
-    setValues({ cough: cough === 'true' ? +coughType : 0})
-  }, [cough])
+    setValues({ wfh: +profession })
+  }, [profession])
+
+  useEffect(() => {
+    setValues({ wfh: wfh === 'true' ? +profession : 0 })
+  }, [wfh])
 
   return (
     <ScrollView>
       <View style={styles.viewContainer}>
         <View style={styles.sectionContainer}>
-          <Text style={styles.title}>Please tell us about your symptoms</Text>
-          <TermsImage style={styles.image} width="120" height="120" />
+          <Text style={styles.title}>Nature of work</Text>
+          <Lockdown style={styles.image} width="200" height="120" />
         </View>
-        <Text style={styles.textSty}>Do you have cough?</Text>
+        <Text style={styles.textSty}>Are you currently working from home?</Text>
         <View style={styles.agreeContainer}>
           <RadioButton.Group
-            onValueChange={value => setCough(value)}
-            value={cough}
+            onValueChange={setWfh}
+            value={wfh}
           >
             <View style={styles.agreeContainer}>
               <Divider />
@@ -44,39 +46,39 @@ export default function SymptomCough({ setValues }) {
             </View>
           </RadioButton.Group>
         </View>
-        {cough === 'true' ?
+        {wfh === 'true' ?
           <Fragment>
-            <Text style={styles.textSty}>Can you describe your cough?</Text>
+            <Text style={styles.textSty}>What's your profession?</Text>
             <View style={styles.agreeContainer}>
               <RadioButton.Group
-                onValueChange={coughType => setCoughType(coughType)}
-                value={coughType}
+                onValueChange={profession => setProfession(profession)}
+                value={profession}
               >
                 <View style={styles.agreeContainer}>
                   <View style={styles.radAlign}>
                     <RadioButton.Android value="1" color="#E03D51" uncheckedColor="#D2D2D2" />
-                    <Text style={styles.radTxt}>Dry cough</Text>
+                    <Text style={styles.radTxt}>Doctor or Health personnel</Text>
                   </View>
                   <Divider />
                 </View>
                 <View style={styles.agreeContainer}>
                   <View style={styles.radAlign}>
                     <RadioButton.Android value="2" color="#E03D51" uncheckedColor="#D2D2D2" />
-                    <Text style={styles.radTxt}>Cough with sputum</Text>
+                    <Text style={styles.radTxt}>Police or any other force</Text>
                   </View>
                   <Divider />
                 </View>
                 <View style={styles.agreeContainer}>
                   <View style={styles.radAlign}>
                     <RadioButton.Android value="3" color="#E03D51" uncheckedColor="#D2D2D2" />
-                    <Text style={styles.radTxt}>Cough with chest pain</Text>
+                    <Text style={styles.radTxt}>Delivery person</Text>
                   </View>
                   <Divider />
                 </View>
                 <View style={styles.agreeContainer}>
                   <View style={styles.radAlign}>
                     <RadioButton.Android value="4" color="#E03D51" uncheckedColor="#D2D2D2" />
-                    <Text style={styles.radTxt}>Cough with abdominal pain</Text>
+                    <Text style={styles.radTxt}>Others</Text>
                   </View>
                   <Divider />
                 </View>
@@ -138,5 +140,9 @@ const styles = StyleSheet.create({
   },
   radTxt: {
     marginTop: 8
+  },
+  image: {
+    alignSelf: 'center',
+    marginTop: 10
   }
 });

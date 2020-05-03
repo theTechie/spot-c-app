@@ -57,16 +57,16 @@ export default function Lockdown({ questions, setValues }) {
           style={{ alignSelf: "center", marginTop: 10 }}
         />
         <Text style={styles.subQuestionStyle}>
-          Which city are you from and where are you staying now?
+          Where are you staying now?
         </Text>
 
         <View>
-          <Input placeholder="Hometown" onChangeText={setHometown} />
+          <Input placeholder="District" onChangeText={setHometown} />
         </View>
 
         <Divider />
         <View style={{ paddingTop: 10 }}>
-          <Input placeholder="Current location" onChangeText={setCurrentLocation} />
+          <Input placeholder="Current city" onChangeText={setCurrentLocation} />
         </View>
         <Divider />
 

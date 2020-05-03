@@ -25,6 +25,7 @@ import Thankyou from './questions/Thankyou';
 import WeightQuestion from './questions/Weight';
 import Terms from './Terms';
 import Loading from './questions/Loading'
+import Profession from './questions/Profession.js';
 
 const formInitValues = {
   policyRead: false,
@@ -32,6 +33,7 @@ const formInitValues = {
   age: 30,
   height: 160,
   weight: 80,
+  profession: 0,
   diabetes: false,
   kidney: false,
   heart: false,
@@ -103,6 +105,10 @@ const screens = [
     component: WeightQuestion
   },
   {
+    questions: [],
+    component: Profession
+  },
+  {
     questions: [
       // { name: 'healthHistory', value: formInitValues.healthHistory },
     ],
@@ -140,15 +146,15 @@ const screens = [
     component: SymptomBodyPain
   },
   // TODO: how long will be shown based on answers to previous questions (fever, cough and headache)
-  {
-    questions: [
-      // { name: 'howLongSymptomsFever', value: formInitValues.howLongSymptomsFever },
-      // { name: 'hwoLongSymptomsCough', value: formInitValues.howLongSymptomsCough },
-      // { name: 'howLongSymptomsHeadache', value: formInitValues.howLongSymptomsHeadache },
-      // { name: 'howLongSymptomsProgression', value: formInitValues.howLongSymptomsProgression },
-    ],
-    component: HowLongSinceSymptoms
-  },
+  // {
+  //   questions: [
+  //     // { name: 'howLongSymptomsFever', value: formInitValues.howLongSymptomsFever },
+  //     // { name: 'hwoLongSymptomsCough', value: formInitValues.howLongSymptomsCough },
+  //     // { name: 'howLongSymptomsHeadache', value: formInitValues.howLongSymptomsHeadache },
+  //     // { name: 'howLongSymptomsProgression', value: formInitValues.howLongSymptomsProgression },
+  //   ],
+  //   component: HowLongSinceSymptoms
+  // },
   {
     component: Thankyou
   },
@@ -219,6 +225,13 @@ export default function CheckupScreen() {
     goToNextStep();
     setLoading(false);
   }
+
+  const reset = () => {
+    setFormValues(formInitValues)
+    setCurrentIndex(0)
+    viewPager.current.setPage(0)
+  }
+
   //#endregion page selection
 
   //#region values setting
@@ -290,7 +303,7 @@ export default function CheckupScreen() {
             <Submit onSubmit={() => { submitForm() }} />
           </View> : null}
            {displayDone ? <View>
-            <Submit label="Done" onSubmit={() => { }} />
+            <Submit label="Done" onSubmit={() => { reset() }} />
           </View> : null}
         </View>
       </View>
